@@ -1,0 +1,151 @@
+.carousel-control-background{
+	  background-image:none !important;
+}
+
+a {
+color: #FFF;
+text-decoration: none;
+}
+
+.width-full{
+    width: 100%
+}
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+
+  /* Navbar positioning foo */
+  .navbar-wrapper {
+   position: relative;
+   background-color: #2BC6DA;
+  }
+  .navbar-wrapper .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .navbar-wrapper .navbar {
+    padding-right: 0;
+    padding-left: 0;
+    margin-bottom: 0px;
+  }
+
+  /* The navbar becomes detached from the top, so we round the corners */
+  .navbar-wrapper .navbar {
+    border-radius: 4px;
+  }
+
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1268px;
+  }
+}
+
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-bottom: 40px;
+  background-color: #03143F;
+
+}
+
+
+
+/* CUSTOMIZE THE NAVBAR  #2BC6DA
+-------------------------------------------------- */
+.navbar-blue {
+    background-color: #03143F;
+    border-color: #03143F;
+}
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+position: relative;   
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+  padding-bottom: 5px;
+  background-color: #03143F
+}
+
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navbar-wrapper .navbar {
+  padding-right: 15px;
+  padding-left: 15px;
+   margin-bottom: 0px;
+}
+.navbar-wrapper .navbar .container {
+  width: auto;
+}
+
+.carousel-bgcolor{
+	background-color: #2BC6DA;
+}
+
+.div-content-bgcolor{
+	background-color:#FFF;
+	padding-top: 2px;
+	margin-top: 5px;
+	padding-bottom: 2px;
+	padding-left: 2px;
+}
+
+.div-content-bgcolor .tag{
+	background-color:#FFF;
+	padding-top: 2px;
+	margin-top: 5px;
+	padding-bottom: 2px;
+	padding-left: 2px;
+	min-height: 180px;
+}
+
+.tag span{
+	margin-left: 5px;
+	margin-bottom: 5px;
+font-size: 20px;
+background-color: #B6B6B6;
+border-color: #FFF;
+padding-left: 4px;
+padding-right: 4px;
+
+	
+}
+.div-header-bgcolor{
+	background-color:#03143F;
+	padding-bottom: 10px;
+}
+.read{
+	background-color:#03143F;
+	width: auto;
+}
+.div-bgcolor{
+	background-color: #03143F;
+	position: relative ;
+	height:100%;
+	padding-bottom:5px;
+	padding-top:5px;
+	
+}
+
+.t-color{
+	color:#FFF;
+}

@@ -1,0 +1,240 @@
+var BaseService = require('./BaseService');
+var jwt = require("jsonwebtoken");
+var fs = require('fs');
+var request = require('request');
+
+class AuthService extends BaseService {
+
+    findOneOTP(query, selectFields = '') {
+        return domain.Otp.findOne(query).select(selectFields);
+    }
+
+    removeOTP(query, selectFields = '') {
+        return domain.Otp.remove(query).select(selectFields);
+    }
+
+    async registerVendor(vendor, callback) {
+        console.log("4")
+        vendor.save((err, vendorObj) => {
+            if (err || !vendorObj) {
+                callback(err, null);
+            } else {
+                console.log("5")
+                var loginTokenObj;
+                if (vendor.loginFrom == 'OTP') {
+                    loginTokenObj = {
+                        mobile: vendor.mobile,
+                    };
+                } else {
+                    loginTokenObj = {
+                        email: vendorObj.email,
+                        password: vendorObj.password
+                    };
+                }
+
+                var token = jwt.sign(loginTokenObj, "4phd7fdjEUewFB0dYRuHyw==", {
+                    expiresIn: "1h"
+                });
+                callback(err, {
+                    vendorDetails: vendorObj,
+                    authToken: token
+                });
+            }
+        });
+    }
+
+    async login_Vendor(payload, callback) {
+        let email = payload.email;
+        let password = payload.password;
+        console.log(email, password);
+        const query = {
+            email: email.toLowerCase()
+        }
+
+        const [err, user] = await To(domain.Vendor.findOne(query));
+
+        if (err || !user) return callback(new Error("Invalid email or Password"));
+
+        // if (user.isAccountLocked == true) return callback(new Error('Your account is locked.Please contact to site admin.'))
+
+        // if (user.isAccountActive == false) return callback(new Error("Verify your email."));
+
+        if (configHolder.encryptUtil.verifyPassword(user, password)) {
+            this.generateAuthenticationToken(email, password, user, callback);
+        } else {
+            callback(new Error("Invalid 1 Email or Password"), null);
+        }
+    }
+
+    async Send_OTP(mobile, callback) {
+
+        var availableNumbers = "0123456789";
+        var otp = '';
+        for (var i = 0; i <= 3; i++) {
+            var symbol = availableNumbers[(Math.floor(Math.random() * availableNumbers.length))];
+            otp += symbol;
+        }
+
+        console.log(mobile, "mobile")
+        var url = configHolder.config.otpUrl + mobile + "/" + otp
+        console.log("Final OTP url", url);
+        request(url, function (err) {
+            if (err) {
+                callback(err, null)
+            } else {
+                // callback(null, success);
+                var otpObj = new domain.Otp({
+                    "otp": otp,
+                    mobileNumber: mobile,
+                    countrycode: "+91"
+                });
+                otpObj.save(function (err, success) {
+                    if (err) {
+                        callback(err, null)
+                    } else {
+                        callback(null, success)
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    async Verify_OTP(body, callback) {
+        console.log("mo", body, "body", body.mobile, body.otp);
+
+        const query = {
+            mobileNumber: body.mobile,
+            otp: body.otp,
+        }
+
+        const [err, otpDetails] = await To(this.findOneOTP(query));
+        const [errors, otpRemoveDetails] = await To(this.removeOTP(query));
+        console.log("otpDetails", otpDetails);
+
+        if (otpDetails == null) {
+            callback(null, {
+                "msg": "OTP is not found",
+                "otpDetails": otpDetails,
+            })
+        } else {
+            const UserObj = {
+                mobile: body.mobile,
+                password: body.otp
+            }
+
+            var token = jwt.sign(UserObj, "4phd7fdjEUewFB0dYRuHyw==", {
+                expiresIn: "1h"
+            });
+
+            const [error, UserData] = await To(domain.Vendor.findOne({
+                mobile: body.mobile
+            }));
+            console.log("2", UserData, error)
+
+            if (otpDetails && UserData) {
+                callback(null, {
+                    "msg": "OTP is valid",
+                    "otpDetails": otpDetails,
+                    "otpRemoveDetails": otpRemoveDetails,
+                    "UserData":UserData,
+                    "authToken": token,
+
+
+                })
+            } else {
+                console.log("3")
+                var salt = uuid.v4();
+
+                let vendor = new domain.Vendor(body);
+                vendor.role = 'ROLE_VENDOR';
+                vendor.salt = salt;
+                vendor.password = configHolder.encryptUtil.encryptPassword(salt, body.mobile.toString());
+                console.log(vendor, "--------------------------")
+                this.registerVendor(vendor, callback)
+            }
+        }
+    };
+
+    async Forgot_Password(body,callback){
+
+        let query ;
+        if(body.loginFrom == 'OTP'){
+            query = {
+                mobile : body.mobile
+            }
+        }else{
+            query = {
+                email : body.email
+            }
+        }
+
+
+        const [error, vendorDetails] = await To(domain.Vendor.findOne(query));
+        console.log("2", vendorDetails, error)
+
+        if(vendorDetails){
+             this.sendEmailToUser(body.email, "Change Passwprd",callback);
+        }
+        
+    }
+
+    generateAuthenticationToken(email, password, userData, callback) {
+        var UserObj = {
+            email: email,
+            password: password
+        };
+        var token = jwt.sign(UserObj, "4phd7fdjEUewFB0dYRuHyw==", {
+            expiresIn: "1h"
+        });
+        console.log(token)
+        callback(null, {
+            authToken: token,
+            userDetails: userData
+        })
+    }
+
+
+sendEmailToUser(email, subject, callback) {
+     
+    var availableNumbers = "0123456789";
+        var otp = '';
+        for (var i = 0; i <= 3; i++) {
+            var symbol = availableNumbers[(Math.floor(Math.random() * availableNumbers.length))];
+            otp += symbol;
+        }
+
+    const emailBody = `Hi,
+            Your OTP is .
+            ${otp} 
+    Thank you`;
+
+    var otpObj = new domain.Otp({
+        "otp": otp,
+        mobileNumber: null,
+        countrycode: "+91"
+    });
+    otpObj.save(function (err, success) {
+        if (err) {
+            callback(err, null)
+        } else {
+            callback(null, {
+                message: 'Email has been sent to your mail.Please check it.'
+            });
+        }
+    });
+
+    return configHolder.EmailUtil.sendMail(email, subject, emailBody);
+}
+
+
+}
+
+
+
+
+
+module.exports = function (app) {
+    return new AuthService(app);
+};
