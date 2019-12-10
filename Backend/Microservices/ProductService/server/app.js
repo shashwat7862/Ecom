@@ -1,6 +1,9 @@
 global.express = require('express');
 global.app = module.exports = express();
-app.listen(8001);
+let port = 8002;
+app.listen(port,function(err){
+    console.log(`app is listening on port : ${port}`)
+});
 
 global.router = express.Router();
 var cors = require('cors')

@@ -8,14 +8,19 @@ var otpTokenSchema = new mongooseSchema({
     },
     mobileNumber: {
         type: Number,
-        trim:true,
-        required:true
-        
+        trim: true,
+        required: true
+
+    },
+    userRole: {
+        type: String,
+        trim: true,
+        required: true
     },
     countrycode:
-        {
-            type: String
-        }
+    {
+        type: String
+    }
 });
 
 function stringNotNull(obj) {

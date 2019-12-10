@@ -11,8 +11,7 @@ domain.industrial_product = require("../application/models/industrial_product.js
 domain.FashionNonBrandedProduct = require("../application/models/FashionNonBrandedProduct.js");
 domain.AgricultureAndFood = require('../application/models/AgricultureAndFood.js');
 domain.Vendor = require('../application/models/Vendor.js');
-// domain.Products = require('../application/models/Seller.js');
-
+domain.Customer = require('../application/models/Customer.js');
 domain.FashionBrandedProductDetails = require("../application/models/FashionBrandedProductDetails.js");
 domain.FashionNonBrandedProductDetails = require("../application/models/FashionNonBrandedProductDetails.js");
 

@@ -7,8 +7,8 @@
 
 var initApp = function() {
     Logger.info("config" + configHolder.config.accessLevels["anonymous"]);
-    createSuperAdmin();
-    createLogFolders();
+    // createSuperAdmin();
+    // createLogFolders();
 }
 
 function createLogFolders() {

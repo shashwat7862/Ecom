@@ -37,6 +37,74 @@
 	            }
 			}],
 
+			"/Delete_Product/:category/:id": [{
+	            method: "DELETE",
+	            action: controllers.productController.Delete_Product,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/Filter_Products/:category": [{
+	            method: "GET",
+	            action: controllers.productController.Filter_Products,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/Search_Products/:category": [{
+	            method: "GET",
+	            action: controllers.productController.Search_Products,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/Cart/:action": [{
+	            method: "PUT",
+	            action: controllers.productController.Cart,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+
+			"/Wish_List/:action": [{
+	            method: "PUT",
+	            action: controllers.productController.Wish_List,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			
+			"/Cart_List/:userId": [{
+	            method: "GET",
+	            action: controllers.productController.Cart_List,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/GetAll_WishLists/:userId": [{
+	            method: "GET",
+	            action: controllers.productController.GetAll_WishLists,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/search_Products_ForCustomers/:category": [{
+	            method: "GET",
+	            action: controllers.productController.productSearchForCustomers,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			
+
+			
+
 			
 			
 

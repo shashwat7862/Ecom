@@ -1,12 +1,12 @@
-let AuthService = require('./auth.endpoints');
-let ProductService = require('./product.endpoints');
+let VendorService = require('./vendor.endpoints');
+let CustomerService = require('./customer.endpoint')
 
 
 module.exports = function () {
 
   return {
-    AuthService,
-    ProductService
+    VendorService,
+    CustomerService
   };
 }
 

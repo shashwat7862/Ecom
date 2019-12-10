@@ -77,41 +77,94 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/api/v1/vendor/ProfileUpdate/:id": [{
+	            method: "PUT",
+	            action: controllers.vendorController.ProfileUpdate,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/vendor/DeleteProduct/:category/:id": [{
+	            method: "DELETE",
+	            action: controllers.vendorController.DeleteProduct,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/vendor/FilterProducts/:category": [{
+	            method: "GET",
+	            action: controllers.vendorController.FilterProducts,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/vendor/SearchProducts/:category": [{
+	            method: "GET",
+	            action: controllers.vendorController.SearchProducts,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/customer/Register": [{
+	            method: "POST",
+	            action: controllers.customerController.registerCustomer,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/customer/Login": [{
+	            method: "POST",
+	            action: controllers.customerController.CustomerLogin,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/customer/Cart/:action": [{
+	            method: "PUT",
+	            action: controllers.customerController.Cart,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/customer/CartList/:userId": [{
+	            method: "GET",
+	            action: controllers.customerController.CartList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/customer/WishList/:action": [{
+	            method: "PUT",
+	            action: controllers.customerController.WishList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/customer/GetAllWishLists/:userId": [{
+	            method: "GET",
+	            action: controllers.customerController.GetAllWishLists,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/customer/searchProducts/:categroy": [{
+	            method: "GET",
+	            action: controllers.customerController.searchProducts,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
 	    };
 	};
 
-
-	//sudo service mongod start
-
-// 	-- UI
-// seller popup
-// profiile list fix
-// user profile 
-// seller profile
-// chat set
-// etc
-
-// --main site
-
-// product id -> product info ->api
-
-// buyproduct api 
-// payment gatway set
-// searching api fix
-
-// -=dashboard 
-// payment list
-
-// -----done
-
-// contact us -> api
-// req for quatation api
-
-
-// contact query list 
-// user list api
-// seller list api
-
-
-
-// https://github.com/Instamojo/instamojo-nodejs/blob/master/instamojo.js#L8
+ 
+  

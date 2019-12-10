@@ -52,6 +52,34 @@ module.exports = function (app) {
 			}
 		}],
 
+		"/Vendor_Profile_Update/:id": [{
+			method: "PUT",
+			action: controllers.vendorController.Vendor_Profile_Update,
+			views: {
+				json: views.jsonView
+			}
+		}],
+
+		"/register_Customer": [{
+			method: "POST",
+			action: controllers.authController.registerCustomer,
+			views: {
+				json: views.jsonView
+			}
+		}],
+
+		
+		"/Customer_Login": [{
+			method: "POST",
+			action: controllers.authController.Customer_Login,
+			views: {
+				json: views.jsonView
+			}
+		}],
+		
+		
+		
+
 
 
 	};

@@ -20,7 +20,7 @@ global.Joi = require('joi');
 // Database dependencies and Connection setting 
 global.mongoose = require('mongoose');
 global.mongooseSchema = mongoose.Schema;
-global.dbConnection = require('./Datasource.js').getDbConnection();
+// global.dbConnection = require('./Datasource.js').getDbConnection();
 global.ObjectId = mongoose.Types.ObjectId;
 
 //global variable to hold all the environment specific configuration 

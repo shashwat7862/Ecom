@@ -39,6 +39,22 @@ module.exports = function () {
 	var EditProductsDetails = function (req, res, callback) {
 		this.services.vendorService.EditProductsDetails(req,callback);
 	}
+
+	var ProfileUpdate = function(req,res,callback){
+		this.services.vendorService.ProfileUpdate(req,callback);
+	}
+
+	var DeleteProduct = function(req,res,callback){
+		this.services.vendorService.DeleteProduct(req,callback);
+	}
+
+	var FilterProducts = function(req,res,callback){
+		this.services.vendorService.FilterProducts(req,callback);
+	}
+
+	var SearchProducts = function(req,res,callback){
+		this.services.vendorService.SearchProducts(req,callback);
+	}
 	
 
 	return {
@@ -51,6 +67,10 @@ module.exports = function () {
 		SaveProducts,
 		ProductsList,
 		ProductApprovalRequest,
-		EditProductsDetails
+		EditProductsDetails,
+		ProfileUpdate,
+		DeleteProduct,
+		FilterProducts,
+		SearchProducts
 	}
 };

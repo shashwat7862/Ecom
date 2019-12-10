@@ -43,22 +43,47 @@ class AuthService extends BaseService {
         });
     }
 
+    async registerCustomer(customer, callback) {
+        console.log("4")
+        customer.save((err, customerObj) => {
+            if (err || !customerObj) {
+                callback(err, null);
+            } else {
+                console.log("5")
+                var loginTokenObj;
+                if (customer.loginFrom == 'OTP') {
+                    loginTokenObj = {
+                        mobile: customer.mobile,
+                    };
+                } else {
+                    loginTokenObj = {
+                        email: customerObj.email,
+                        password: customerObj.password
+                    };
+                }
+
+                var token = jwt.sign(loginTokenObj, "4phd7fdjEUewFB0dYRuHyw==", {
+                    expiresIn: "1h"
+                });
+                callback(err, {
+                    customerDetails: customerObj,
+                    authToken: token
+                });
+            }
+        });
+    }
+
+
+
+
     async login_Vendor(payload, callback) {
         let email = payload.email;
         let password = payload.password;
-        console.log(email, password);
         const query = {
             email: email.toLowerCase()
         }
-
         const [err, user] = await To(domain.Vendor.findOne(query));
-
         if (err || !user) return callback(new Error("Invalid email or Password"));
-
-        // if (user.isAccountLocked == true) return callback(new Error('Your account is locked.Please contact to site admin.'))
-
-        // if (user.isAccountActive == false) return callback(new Error("Verify your email."));
-
         if (configHolder.encryptUtil.verifyPassword(user, password)) {
             this.generateAuthenticationToken(email, password, user, callback);
         } else {
@@ -66,8 +91,28 @@ class AuthService extends BaseService {
         }
     }
 
-    async Send_OTP(mobile, callback) {
 
+    async Customer_Login(payload, callback) {
+        let email = payload.email;
+        let password = payload.password;
+        console.log(email, password)
+        const query = {
+            email: email.toLowerCase()
+        }
+        const [err, user] = await To(domain.Customer.findOne(query));
+        console.log(user, "user ---")
+        if (err || !user) return callback(new Error("Invalid email or Password"));
+        if (configHolder.encryptUtil.verifyPassword(user, password)) {
+            this.generateAuthenticationToken(email, password, user, callback);
+        } else {
+            callback(new Error("Invalid 1 Email or Password"), null);
+        }
+    }
+
+
+
+    async Send_OTP(body, callback) {
+        let mobile = body.mobile
         var availableNumbers = "0123456789";
         var otp = '';
         for (var i = 0; i <= 3; i++) {
@@ -85,6 +130,7 @@ class AuthService extends BaseService {
                 // callback(null, success);
                 var otpObj = new domain.Otp({
                     "otp": otp,
+                    userRole: body.userRole,
                     mobileNumber: mobile,
                     countrycode: "+91"
                 });
@@ -128,45 +174,66 @@ class AuthService extends BaseService {
                 expiresIn: "1h"
             });
 
-            const [error, UserData] = await To(domain.Vendor.findOne({
-                mobile: body.mobile
-            }));
-            console.log("2", UserData, error)
-
-            if (otpDetails && UserData) {
-                callback(null, {
-                    "msg": "OTP is valid",
-                    "otpDetails": otpDetails,
-                    "otpRemoveDetails": otpRemoveDetails,
-                    "UserData":UserData,
-                    "authToken": token,
-
-
-                })
+            if (body.userRole == 'VENDOR') {
+                const [error, UserData] = await To(domain.Vendor.findOne({
+                    mobile: body.mobile
+                }));
+                console.log("2", UserData, error)
+                this.registerRoleBYOTP(otpDetails, otpRemoveDetails, UserData, token, body, callback)
             } else {
-                console.log("3")
-                var salt = uuid.v4();
+                const [error, UserData] = await To(domain.Customer.findOne({
+                    mobile: body.mobile
+                }));
+                console.log("2", UserData, error)
+                this.registerRoleBYOTP(otpDetails, otpRemoveDetails, UserData, token, body, callback)
+            }
+        }
+    };
 
+    async registerRoleBYOTP(otpDetails, otpRemoveDetails, UserData, token, body, callback) {
+        console.log(callback, "callback")
+        if (otpDetails && UserData) {
+            callback(null, {
+                "msg": "OTP is valid",
+                "otpDetails": otpDetails,
+                "otpRemoveDetails": otpRemoveDetails,
+                "UserData": UserData,
+                "authToken": token,
+
+
+            })
+        } else {
+            var salt = uuid.v4();
+
+            if (body.userRole == 'VENDOR') {
                 let vendor = new domain.Vendor(body);
                 vendor.role = 'ROLE_VENDOR';
                 vendor.salt = salt;
                 vendor.password = configHolder.encryptUtil.encryptPassword(salt, body.mobile.toString());
                 console.log(vendor, "--------------------------")
                 this.registerVendor(vendor, callback)
+            } else {
+                let customer = new domain.Customer(body);
+                customer.role = 'ROLE_CUSTOMER';
+                customer.salt = salt;
+                customer.password = configHolder.encryptUtil.encryptPassword(salt, body.mobile.toString());
+                console.log(customer, "--------------------------")
+                this.registerCustomer(customer, callback)
             }
+
         }
-    };
+    }
 
-    async Forgot_Password(body,callback){
+    async Forgot_Password(body, callback) {
 
-        let query ;
-        if(body.loginFrom == 'OTP'){
+        let query;
+        if (body.loginFrom == 'OTP') {
             query = {
-                mobile : body.mobile
+                mobile: body.mobile
             }
-        }else{
+        } else {
             query = {
-                email : body.email
+                email: body.email
             }
         }
 
@@ -174,10 +241,10 @@ class AuthService extends BaseService {
         const [error, vendorDetails] = await To(domain.Vendor.findOne(query));
         console.log("2", vendorDetails, error)
 
-        if(vendorDetails){
-             this.sendEmailToUser(body.email, "Change Passwprd",callback);
+        if (vendorDetails) {
+            this.sendEmailToUser(body.email, "Change Passwprd", callback);
         }
-        
+
     }
 
     generateAuthenticationToken(email, password, userData, callback) {
@@ -196,37 +263,37 @@ class AuthService extends BaseService {
     }
 
 
-sendEmailToUser(email, subject, callback) {
-     
-    var availableNumbers = "0123456789";
+    sendEmailToUser(email, subject, callback) {
+
+        var availableNumbers = "0123456789";
         var otp = '';
         for (var i = 0; i <= 3; i++) {
             var symbol = availableNumbers[(Math.floor(Math.random() * availableNumbers.length))];
             otp += symbol;
         }
 
-    const emailBody = `Hi,
+        const emailBody = `Hi,
             Your OTP is .
             ${otp} 
     Thank you`;
 
-    var otpObj = new domain.Otp({
-        "otp": otp,
-        mobileNumber: null,
-        countrycode: "+91"
-    });
-    otpObj.save(function (err, success) {
-        if (err) {
-            callback(err, null)
-        } else {
-            callback(null, {
-                message: 'Email has been sent to your mail.Please check it.'
-            });
-        }
-    });
+        var otpObj = new domain.Otp({
+            "otp": otp,
+            mobileNumber: null,
+            countrycode: "+91"
+        });
+        otpObj.save(function (err, success) {
+            if (err) {
+                callback(err, null)
+            } else {
+                callback(null, {
+                    message: 'Email has been sent to your mail.Please check it.'
+                });
+            }
+        });
 
-    return configHolder.EmailUtil.sendMail(email, subject, emailBody);
-}
+        return configHolder.EmailUtil.sendMail(email, subject, emailBody);
+    }
 
 
 }

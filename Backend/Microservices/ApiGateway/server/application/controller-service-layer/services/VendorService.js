@@ -1,6 +1,6 @@
 var BaseService = require('./BaseService');
-let { register_Vendor, login_Vendor, Send_OTP, Verify_OTP } = require('../endpoints/auth.endpoints');
-let { Save_Products, Products_List, Product_ApprovalRequest, Edit_ProductsDetails } = require('../endpoints/product.endpoints');
+let { register_Vendor, login_Vendor, Send_OTP, Verify_OTP, Vendor_Profile_Update, Save_Products,
+    Products_List, Product_ApprovalRequest, Edit_ProductsDetails, Delete_Product, Filter_Products, Search_Products } = require('../endpoints/vendor.endpoints');
 
 
 class VendorService extends BaseService {
@@ -57,10 +57,27 @@ class VendorService extends BaseService {
         callback(null, request)
     }
 
+    async ProfileUpdate(req, callback) {
+        console.log("req.body, req.params.id", req.body, req.params.id)
+        let updatedDetails = await Vendor_Profile_Update(req.body, req.params.id);
+        callback(null, updatedDetails)
+    }
 
 
+    async DeleteProduct(req, callback) {
+        let deleteResult = await Delete_Product(req.params);
+        callback(null, deleteResult)
+    }
 
+    async FilterProducts(req, callback) {
+        let filterResult = await Filter_Products(req.params, req.query);
+        callback(null, filterResult)
+    }
 
+    async SearchProducts(req, callback) {
+        let searchResult = await Search_Products(req.params, req.query);
+        callback(null, searchResult)
+    }
 
 }
 

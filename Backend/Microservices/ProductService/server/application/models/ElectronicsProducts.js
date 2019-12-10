@@ -12,6 +12,12 @@ var ElectronicProductSchema = new mongooseSchema({
         required: true,
         trim: true,
     },
+    title: {
+        type: String,
+        max: 100,
+        required: true,
+        trim: true,
+    },
     productName: {
         type: String,
         default: '',
@@ -30,42 +36,19 @@ var ElectronicProductSchema = new mongooseSchema({
         required: false,
         trim: true
     },
-    Material_type: {
-        type: String,
-        default: "",
-        trim: true,
-        required: false,
-    },
-    shopName: {
-        type: String,
-        default: '',
-        trim: true
-    },
-    area: {
-        type: String,
-        default: '',
-        trim: true
-    },
-    city: {
-        type: String,
-        trim: true,
-    },
-    pincode: {
-        type: Number,
-    },
-    dealerName: {
-        type: String,
-        trim: true,
-    },
-    productDescription: [{
-        data: String,
-    }],
 
-    color: {
+    vendorName: {
         type: String,
-        default: '',
         trim: true,
     },
+    vendorId: {
+        type: mongoose.Schema.ObjectId,
+        required: true
+    },
+    productDescription: {
+        data: String,
+    },
+
 
     brandName: {
         type: String,
@@ -73,17 +56,19 @@ var ElectronicProductSchema = new mongooseSchema({
         required: true,
         trim: true
     },
+    attributes: {
+        waist: String,
+        color: String,
+        size: String,
+        Material_type:String
+    },
     price: {
         type: Number,
         default: '',
         required: true,
         trim: true
     },
-    dealerStatus: {
-        type: Boolean,
-        default: true,
-        trim: true
-    },
+    
     isAvailable: {
         type: Boolean,
         default: true,

@@ -54,6 +54,42 @@ module.exports = function () {
 		}
 	}
 
+	var Delete_Product = function (req, res, callback) {
+		let dynamicDomain = getDynamicDomain(req.params.category)
+		if (dynamicDomain) {
+			this.services.productService.Delete_Product(req.params.id, dynamicDomain, callback);
+		} else {
+			callback(null, {
+				"msg": "Category is not valid"
+			})
+		}
+	}
+
+	var Filter_Products = function (req, res, callback) {
+		let dynamicDomain = getDynamicDomain(req.params.category)
+		if (dynamicDomain) {
+			this.services.productService.Filter_Products(req.query, dynamicDomain, callback);
+		} else {
+			callback(null, {
+				"msg": "Category is not valid"
+			})
+		}
+
+	}
+
+	var Search_Products = function (req, res, callback) {
+		let dynamicDomain = getDynamicDomain(req.params.category)
+		if (dynamicDomain) {
+			this.services.productService.Search_Products(req.query, dynamicDomain, callback);
+		} else {
+			callback(null, {
+				"msg": "Category is not valid"
+			})
+		}
+
+	}
+
+
 	function getDynamicDomain(category) {
 		if (category) {
 			switch (category) {
@@ -84,13 +120,49 @@ module.exports = function () {
 		}
 	}
 
+	var Cart = function (req, res, callback) {
+		this.services.productService.Cart(req.params.action, req.body, callback);
+	}
+
+	var Wish_List = function (req, res, callback) {
+		this.services.productService.Wish_List(req.params.action, req.body, callback);
+	}
+
+	var Cart_List = function (req, res, callback) {
+		this.services.productService.Cart_List(req.params.userId, callback);
+	}
+
+	var GetAll_WishLists = function (req, res, callback) {
+		this.services.productService.GetAll_WishLists(req.params.userId, callback);
+	}
+
+	var productSearchForCustomers = function (req, res, callback) {
+		let dynamicDomain = getDynamicDomain(req.params.category);
+		console.log(dynamicDomain , req.params.category,"----------------------------" )
+		if (dynamicDomain) {
+			this.services.productService.productSearchForCustomers(req.query, dynamicDomain, callback);
+		} else {
+			callback(null, {
+				"msg": "Category is not valid"
+			})
+		}
+
+	}
 
 
 	return {
 		Save_Products,
 		Products_List,
 		Product_ApprovalRequest,
-		Edit_ProductsDetails
+		Edit_ProductsDetails,
+		Delete_Product,
+		Filter_Products,
+		Search_Products,
+		Cart,
+		Wish_List,
+		Cart_List,
+		GetAll_WishLists,
+		productSearchForCustomers
 	}
 
 

@@ -83,6 +83,214 @@ class ProductService extends BaseService {
         }
     }
 
+    async Delete_Product(product_id, dynamicDomain, callback) {
+        console.log(product_id, "dynamicDomain", dynamicDomain);
+        domain[dynamicDomain].remove({ _id: product_id }, function (err) {
+            if (err) {
+                console.log(err, "error------------")
+                callback(err, null)
+            }
+            else {
+                callback(null, {
+                    id: product_id,
+                    msg: "Producted Deleted Successfully"
+                })
+            }
+        });
+    }
+
+    async Filter_Products(query, dynamicDomain, callback) {
+        console.log(query, dynamicDomain);
+        let dbQuery;
+        if (query) {
+            dbQuery = {
+                $or: [{
+                    firstName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }, {
+                    lastName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }, {
+                    email: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }]
+            };
+        }
+    }
+
+    async Cart(action, body, callback) {
+        console.log(action, "action", body);
+        if (action == "ADD") {
+            domain.Cart.update(
+                { UserId: body.userId },
+                { $push: { productDetails: body.productData } },
+                {
+                    upsert: true
+                }, function (err, result) {
+                    if (err) {
+                        callback(err, null)
+                    }
+                    else {
+                        callback(null, {
+                            data: result
+                        })
+                    }
+                });
+        } else if (action == "REMOVE") {
+            domain.Cart.update(
+                { UserId: body.userId },
+                {
+                    $pull: { productDetails: { productId: body.productId } }
+                },
+             function (err, result) {
+                if (err) {
+                    callback(err, null)
+                }
+                else {
+                    callback(null, {
+                        data: result
+                    })
+                }
+            });
+        }
+
+    }
+
+
+    
+
+    
+
+    async Wish_List(action, body, callback) {
+        console.log(action, "action", body);
+        if (action == "ADD") {
+            domain.WishList.update(
+                { UserId: body.userId },
+                { $push: { productDetails: body.productData } },
+                {
+                    upsert: true
+                }, function (err, result) {
+                    if (err) {
+                        callback(err, null)
+                    }
+                    else {
+                        callback(null, {
+                            data: result
+                        })
+                    }
+                });
+        } else if (action == "REMOVE") {
+            domain.WishList.update(
+                { UserId: body.userId },
+                {
+                    $pull: { productDetails: { productId: body.productId } }
+                },
+             function (err, result) {
+                if (err) {
+                    callback(err, null)
+                }
+                else {
+                    callback(null, {
+                        data: result
+                    })
+                }
+            });
+        }
+
+    }
+
+    async Cart_List(userId,callback){
+        try {
+            domain.Cart.find({
+                UserId: userId
+            }).exec(function (error, cartList) {
+                if (error) {
+                    callback(error, null)
+                } else {
+                    callback(null, cartList)
+                }
+            });
+        } catch (e) {
+            callback({
+                "error": "error while saving"
+            }, null)
+        }
+    }
+
+    async GetAll_WishLists(userId,callback){
+        try {
+            domain.WishList.find({
+                UserId: userId
+            }).exec(function (error, WishList) {
+                if (error) {
+                    callback(error, null)
+                } else {
+                    callback(null, WishList)
+                }
+            });
+        } catch (e) {
+            callback({
+                "error": "error while saving"
+            }, null)
+        }
+    }
+
+    
+
+    async productSearchForCustomers(query, dynamicDomain = 'electronics', callback) {
+        console.log(query, dynamicDomain);
+
+        let dbQuery;
+        if (query && dynamicDomain ) {
+            dbQuery = {
+                $or: [{
+                    productName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }, {
+                    modelNo: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }, {
+                    brandName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }]
+            };
+
+            domain[dynamicDomain].find(dbQuery, function (err, searchResult) {
+
+                if (err) {
+                    console.log(err, "errors")
+                    callback(err, null)
+                }
+                else {
+                    callback(null, searchResult)
+                }
+            });
+        }else{
+            callback(null,null)
+        }
+    }
+
+    async Search_Products(query, dynamicDomain, callback) {
+        console.log(query, dynamicDomain);
+        let dbQuery;
+        if (query) {
+            dbQuery = {
+                $or: [{
+                    productName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }, {
+                    modelNo: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }, {
+                    brandName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
+                }]
+            };
+
+            domain[dynamicDomain].find(dbQuery, function (err, searchResult) {
+
+                if (err) {
+                    console.log(err, "errors")
+                    callback(err, null)
+                }
+                else {
+                    callback(null, searchResult)
+                }
+            });
+        }
+    }
+
 
 }
 

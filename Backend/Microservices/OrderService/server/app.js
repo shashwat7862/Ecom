@@ -1,9 +1,10 @@
 global.express = require('express');
 global.app = module.exports = express();
 
-// var app = express();
-var server = app.listen(8086);
-var io = require('socket.io').listen(server);
+let port = 8004;
+app.listen(port,function(err){
+    console.log(`app is listening on port : ${port}`)
+});
 
 global.router = express.Router();
 var cors = require('cors')
@@ -43,22 +44,7 @@ app.use(function(req, res, next) {
 });
 
 
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
-
-
-// socket io
-io.on('connection', function(socket) {
-    console.log('User connected');
-    // socket.on('disconnect', function() {
-    //     console.log('User disconnected');
-    // });
-    socket.on('All-Messages', function(msg) {
-        console.log("All-Messages :" + msg);
-        // io.emit('new-message', { message: data });
-    });
-});
-
+ 
 require("./application/controller-service-layer/endpoints/index")
 
 

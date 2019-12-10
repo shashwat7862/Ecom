@@ -1,25 +1,40 @@
 module.exports = function () {
 
 	var registerVendor = function (req, res, callback) {
-		console.log("1")
 		var salt = uuid.v4();
 		vendor = new domain.Vendor(req.body);
 		vendor.role = 'ROLE_VENDOR';
 		vendor.salt = salt;
-		console.log("2")
 		if (req.body.password) {
 			vendor.password = configHolder.encryptUtil.encryptPassword(salt, req.body.password);
 		}
-		console.log("3")
 		this.services.authService.registerVendor(vendor, callback);
+	}
+
+	
+
+	var registerCustomer = function (req, res, callback) {
+		var salt = uuid.v4();
+		customer = new domain.Customer(req.body);
+		customer.role = 'ROLE_customer';
+		customer.salt = salt;
+		if (req.body.password) {
+			customer.password = configHolder.encryptUtil.encryptPassword(salt, req.body.password);
+		}
+		this.services.authService.registerCustomer(customer, callback);
 	}
 
 	var login_Vendor = function (req, res, callback) {
 		this.services.authService.login_Vendor(req.body, callback);
 	}
+	var Customer_Login = function (req, res, callback) {
+		this.services.authService.Customer_Login(req.body, callback);
+	}
+
+	
 
 	var Send_OTP = function (req, res, callback) {
-		this.services.authService.Send_OTP(req.body.mobile, callback);
+		this.services.authService.Send_OTP(req.body, callback);
 	}
 
 	var Verify_OTP = function (req, res, callback) {
@@ -37,7 +52,9 @@ module.exports = function () {
 
 	return {
 		registerVendor,
+		registerCustomer,
 		login_Vendor,
+		Customer_Login,
 		Send_OTP,
 		Verify_OTP,
 		Forgot_Password,

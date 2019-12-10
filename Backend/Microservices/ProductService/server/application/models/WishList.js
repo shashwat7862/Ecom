@@ -1,11 +1,10 @@
 
-var CartSchema = new mongooseSchema({
+var WishListSchema = new mongooseSchema({
     productDetails: [
         {
             productId: String,
             productName: String,
             price: Number,
-            productCount: Number,
             category: String
         }
     ],
@@ -19,11 +18,11 @@ var CartSchema = new mongooseSchema({
 
 
 
-CartSchema.plugin(mongoose_timestamps);
-CartSchema.plugin(mongoose_softDelete);
+WishListSchema.plugin(mongoose_timestamps);
+WishListSchema.plugin(mongoose_softDelete);
 
 
 
-var Cart = mongoose.model('Cart', CartSchema);
-module.exports = Cart
+var WishList = mongoose.model('WishList', WishListSchema);
+module.exports = WishList
 

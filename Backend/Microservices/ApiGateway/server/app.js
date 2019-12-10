@@ -2,7 +2,10 @@ global.express = require('express');
 global.app = module.exports = express();
 
 // var app = express();
-var server = app.listen(8080);
+let port = 8080;
+app.listen(port,function(err){
+    console.log(`app is listening on port : ${port}`)
+});
 
 
 global.router = express.Router();

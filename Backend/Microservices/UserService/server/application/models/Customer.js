@@ -1,4 +1,4 @@
-const VendorSchema = new mongooseSchema({
+const CustomerSchema = new mongooseSchema({
     fullName: {
         type: String,
         required: false,
@@ -10,7 +10,7 @@ const VendorSchema = new mongooseSchema({
         trim: true,
         unique: true
     },
-    VendorImage: {
+    CustomerImage: {
         type: String,
         default: '',
         required: false,
@@ -131,7 +131,7 @@ const VendorSchema = new mongooseSchema({
     }
 });
 
-VendorSchema.pre('findOneAndUpdate', function (next) {
+CustomerSchema.pre('findOneAndUpdate', function (next) {
     if (this.email) {
         this.email = this.email.toLowerCase();
     }
@@ -139,10 +139,10 @@ VendorSchema.pre('findOneAndUpdate', function (next) {
     next();
 });
 
-VendorSchema.plugin(mongoose_timestamps);
-VendorSchema.plugin(mongoose_softDelete);
+CustomerSchema.plugin(mongoose_timestamps);
+CustomerSchema.plugin(mongoose_softDelete);
 
  
 
-var Vendor = mongoose.model('Vendor', VendorSchema);
-module.exports = Vendor
+var Customer = mongoose.model('Customer', CustomerSchema);
+module.exports = Customer
