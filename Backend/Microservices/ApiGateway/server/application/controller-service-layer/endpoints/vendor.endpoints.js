@@ -63,7 +63,7 @@ exports.module = Save_Products = async (body, qs) => (
 );
 
 exports.module = Products_List = async (qs) => (
-  Productwrapper.proxyJsonRequest(`Products_List/${qs.category}/${qs.isApprove}/${qs.limit}/${qs.skip}`, 'GET')
+  Productwrapper.proxyJsonRequest(`Products_List/${qs.vendor_id}/${qs.category}/${qs.isApprove}/${qs.limit}/${qs.skip}`, 'GET')
 );
 
 exports.module = Product_ApprovalRequest = async (body, qs) => (
@@ -90,8 +90,15 @@ exports.module = Filter_Products = async (params, qs) => (
 
 
 exports.module = Search_Products = async (params, qs) => (
-  Productwrapper.proxyJsonRequest(`Search_Products/${params.category}?search=${qs.search}`, 'GET')
+  Productwrapper.proxyJsonRequest(`Search_Products/${params.vendor_id}/${params.category}?search=${qs.search}`, 'GET')
 );
+
+
+exports.module = AllProducts_List = async ( qs) => (
+  Productwrapper.proxyJsonRequest(`All_Products_List/${qs.category}/${qs.isApprove}/${qs.limit}/${qs.skip}`, 'GET')
+);
+
+
 
 
 module.exports = {
@@ -108,6 +115,7 @@ module.exports = {
   Edit_ProductsDetails,
   Filter_Products,
   Delete_Product,
-  Search_Products
+  Search_Products,
+  AllProducts_List
 
 }

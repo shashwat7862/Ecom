@@ -1,41 +1,170 @@
 import React, { Component, Fragment } from 'react'
 import Breadcrumb from '../../common/breadcrumb';
-import data from '../../../assets/data/pro_list';
-import Datatable from '../../common/datatable'
+import ReactTable from 'react-table';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { productList, provideApproval } from '../../../Action/ProductAction';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
 
 export class Digital_pro_list extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            ProductsList: [{}],
+            cols: ["productName", "id"],
+            isLoading: false,
+        }
+    }
+
+    responseFacebook(response) {
+        console.log(response);
+    }
+
+
+    editProductData(data) {
+        console.log(JSON.stringify(data.original), "JSON.stringify(data.original)")
+        this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/${JSON.stringify(data.original)}`);
+    }
+
+
+    componentDidMount() {
+        this.props.getProductList()
+    }
+
+    provideApproval(val,props) {
+        console.log(val,props.original._id,"-----------------")
+        this.props.ProvideApproval({
+            "id": props.original._id,
+            "isApprove": val
+        })
+        window.location.reload()
+    }
+
+
+
     render() {
+        console.log(this.state, "this.state-------------------------------render");
+        console.log(this.props, "this.props-------------------------------render");
+
+        const columns = [{
+            Header: 'Product ID',
+            accessor: '_id',
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 50
+        }, {
+            Header: 'Product Name',
+            accessor: 'productName',
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 70
+        }, {
+            Header: 'Brand',
+            accessor: 'brandName',
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 40
+        }, {
+            Header: 'Vendor`s Email',
+            accessor: 'vendorId.email',
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 70
+        }, {
+            Header: 'Price',
+            accessor: 'price',
+            sortable: false,
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 45
+        }, {
+            Header: "Date",
+            accessor: 'createdAt',
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 35
+        }, {
+            Header: 'Action',
+            Cell: (props) => (
+                <div>
+                    <span onClick={() => {
+
+                        this.provideApproval(true, props)
+
+                    }}>
+                        <i className="fa fa-check" title="Approve" style={{ width: 35, fontSize: 20, padding: 11, color: '#e4566e' }}
+                        ></i>
+                    </span>
+
+                    <span onClick={() => {
+                        if (window.confirm('Are you sure you wish to disappove this item?')) {
+                            this.provideApproval(false, props)
+                        }
+
+
+                    }}><i className="fa fa-remove" title="Disapprove" style={{ width: 35, fontSize: 20, padding: 11, color: 'rgb(40, 167, 69)' }}></i></span>
+                </div>
+            ),
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 50
+        }];
+
         return (
             <Fragment>
-                <Breadcrumb title="Product List" parent="Digital" />
-                {/* <!-- Container-fluid starts--> */}
+                <ToastContainer />
+                <Breadcrumb title="All Product List" parent="Digital" />
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card">
-                                <div className="card-header">
-                                    <h5>Product Lists</h5>
-                                </div>
                                 <div className="card-body">
+                                    {/* <input type="text" onChange={this.onSearch} placeholder="Search" className="form-control" /> */}
                                     <div className="clearfix"></div>
                                     <div id="basicScenario" className="product-physical">
-                                        <Datatable
-                                            multiSelectOption={false}
-                                            myData={data}
-                                            pageSize={9}
-                                            pagination={false}
-                                            class="-striped -highlight"
+                                        <ReactTable
+                                            data={(typeof this.props.ProductsList == 'object') ? this.props.ProductsList : []}
+                                            columns={columns}
+                                            defaultPageSize={7}
+                                            noDataText={"Please Add Products to see the Product List"}
                                         />
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <!-- Container-fluid Ends--> */}
             </Fragment>
         )
     }
 }
 
-export default Digital_pro_list
+
+const mapStateToProps = (state) => {
+    console.log("state---------mapto", state);
+    return {
+        ProductsList: (state.ProductReducer != "" && state.ProductReducer.object.object && Array.isArray(state.ProductReducer.object.object) && !state.ProductReducer.object.object.hasOwnProperty('Details')) ? state.ProductReducer.object.object : []
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getProductList: (vendor_id) => { dispatch(productList(vendor_id)) },
+        ProvideApproval: (query) => { dispatch(provideApproval(query)) }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Digital_pro_list);

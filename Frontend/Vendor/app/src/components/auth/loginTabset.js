@@ -6,6 +6,12 @@ import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
 
+import * as actionCreator from '../../Action/LoginAction';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export class LoginTabset extends Component {
     constructor(props) {
@@ -13,6 +19,7 @@ export class LoginTabset extends Component {
         this.state = {
             activeShow: true,
             startDate: new Date(),
+            userData: {},
             email: '',
             password: '',
             mobile: null,
@@ -26,8 +33,27 @@ export class LoginTabset extends Component {
         this.registerVendor = this.registerVendor.bind(this);
         this.loginVendor = this.loginVendor.bind(this);
         this.onUpdateOTPForm = this.onUpdateOTPForm.bind(this);
-        this.sendOTP = this.sendOTP.bind(this);
         this.VerifyOTP = this.VerifyOTP.bind(this);
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        console.log(nextProps, "nextProps");
+        console.log(this.state, "state");
+        console.log(this.props, "this.props")
+
+
+        if (nextProps.url.LoginReducer !== this.props.url.LoginReducer) {
+            this.setState({
+                userData: nextProps.url.LoginReducer.object.object.UserData,
+                authToken: nextProps.url.LoginReducer.object.object.authToken
+            });
+
+            localStorage.setItem('authToken', nextProps.url.LoginReducer.object.object.authToken);
+            localStorage.setItem('vendorDetails', JSON.stringify(nextProps.url.LoginReducer.object.object.vendorDetails));
+            this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+        }
 
     }
 
@@ -37,7 +63,7 @@ export class LoginTabset extends Component {
 
     responseGoogle = (response) => {
         console.log(response);
-      }
+    }
 
     clickActive = (event) => {
         document.querySelector(".nav-link").classList.remove('show');
@@ -61,37 +87,29 @@ export class LoginTabset extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+
+        if (e.target.name == 'mobileFromOTPForm') {
+            if (e.target.value.length == 10) {
+                let mobile = this.state.mobileFromOTPForm
+                this.props.sendOtp({
+                    "mobile": mobile,
+                    "userRole": "VENDOR"
+                })
+                setTimeout(function () {
+                    toast.success("OTP has been sent");
+                }, 1000)
+            }
+        }
     }
-
-    sendOTP() {
-        axios.post('//localhost:8080/api/v1/vendor/SendOTP', {
-            "mobile": this.state.mobileFromOTPForm,
-        }).then(response => {
-                alert("OTP has been Sent");
-                console.log(response, "data")
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-
 
     VerifyOTP() {
-        axios.post('//localhost:8080/api/v1/vendor/VerifyOTP', {
+        this.props.verifyOTP({
             "mobile": this.state.mobileFromOTPForm,
             "otp": this.state.otp,
-            "email": this.state.emailFromOTPForm
+            //         "email": this.state.emailFromOTPForm
         })
-            .then(response => {
-                alert(response.data.object.object.msg)
-                localStorage.setItem('authToken', response.data.object.object.authToken);
-                this.props.history.push(`${process.env.PUBLIC_URL}/dashboard`);
-            })
-            .catch(error => {
-                console.log(error);
-            });
     }
+
 
 
 
@@ -103,11 +121,11 @@ export class LoginTabset extends Component {
             "loginFrom": "email"
         })
             .then(response => {
-                alert("registered")
                 console.log(response, "data")
                 console.log(response.data.object.object.authToken);
                 localStorage.setItem('authToken', response.data.object.object.authToken);
-                this.props.history.push(`${process.env.PUBLIC_URL}/dashboard`);
+                localStorage.setItem('vendorDetails', JSON.stringify(response.data.object.object.vendorDetails));
+                this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
             })
             .catch(error => {
                 console.log(error);
@@ -122,11 +140,11 @@ export class LoginTabset extends Component {
             "loginFrom": "email"
         })
             .then(response => {
-                alert("logged IN")
                 console.log(response, "login Data")
                 console.log(response.data.object.object.authToken);
                 localStorage.setItem('authToken', response.data.object.object.authToken);
-                this.props.history.push(`${process.env.PUBLIC_URL}/dashboard`);
+                localStorage.setItem('vendorDetails', JSON.stringify(response.data.object.object.vendorDetails));
+                this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
             })
             .catch(error => {
                 console.log(error);
@@ -140,6 +158,7 @@ export class LoginTabset extends Component {
         return (
             <div>
                 <Fragment>
+                    <ToastContainer />
                     <Tabs>
                         <TabList className="nav nav-tabs tab-coupon" >
                             <Tab className="nav-link" onClick={(e) => this.clickActive(e)}><User />Login</Tab>
@@ -159,36 +178,37 @@ export class LoginTabset extends Component {
                                 </div>
                                 <input type="text" name="loginPassword" className="form-control" placeholder="Password" onChange={this.onUpdateFormValue} aria-label="First name" className="form-control" />
                             </div>
-                            <button onClick={this.loginVendor} className='btn btn-primary' >Login</button>
+                            <button onClick={this.loginVendor} className='btn btn-primary' >Login With Email</button>
                             <br></br><hr></hr><br></br>
-                            <input type="number" name="mobileFromOTPForm" className="form-control" onChange={this.onUpdateOTPForm} placeholder="Enter Your Number"></input>
+                            {/* <input type="number" name="mobileFromOTPForm" className="form-control" onChange={this.onUpdateOTPForm} placeholder="Enter Your Number"></input> */}
 
-                            <br></br>
-                            <input type="email" name="emailFromOTPForm" className="form-control" onChange={this.onUpdateOTPForm} placeholder="Enter Your Email"></input>
-                            <br></br>
-                            <input type="number" name="otp" className="form-control" onChange={this.onUpdateOTPForm} placeholder="Enter OTP"></input> <br></br>
-                            <button className='btn btn-primary' onClick={this.VerifyOTP} >Login</button>
-                            <button onClick={this.sendOTP} className='btn btn-primary' >Send OTP</button>
+
+                            {/* <br></br> */}
+                            {/* <input type="email" name="emailFromOTPForm" className="form-control" onChange={this.onUpdateOTPForm} placeholder="Enter Your Email"></input> */}
+                            {/* <br></br> */}
+                            {/* <input type="number" name="otp" className="form-control" onChange={this.onUpdateOTPForm} placeholder="Enter OTP"></input> <br></br> */}
+                            {/* <button className='btn btn-primary' onClick={this.VerifyOTP} >Login With OTP</button> */}
+
                             <br></br>
                             <div className="form-footer">
 
-                                Login up with social platforms
+                                {/* Login up with social platforms */}
                                 <br />
                                 <ul className="social">
-                                    <FacebookLogin
+                                    {/* <FacebookLogin
                                         appId="119401125387521"
                                         autoLoad={false}
                                         fields="name,email,picture"
                                         scope="public_profile,user_friends,user_actions.books"
                                         callback={this.responseFacebook}
-                                    /><br/>
-                                        <GoogleLogin
-                                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                                            buttonText="Login"
-                                            onSuccess={this.responseGoogle}
-                                            onFailure={this.responseGoogle}
-                                            cookiePolicy={'single_host_origin'}
-                                        />
+                                    /><br />
+                                    <GoogleLogin
+                                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                                        buttonText="Login"
+                                        onSuccess={this.responseGoogle}
+                                        onFailure={this.responseGoogle}
+                                        cookiePolicy={'single_host_origin'}
+                                    /> */}
                                     {/* <li><a className="fa fa-facebook" href=""></a></li>
                                     <li><a className="fa fa-twitter" href=""></a></li>
                                     <li><a className="fa fa-instagram" href=""></a></li>
@@ -226,5 +246,14 @@ export class LoginTabset extends Component {
     }
 }
 
-export default withRouter(LoginTabset)
+const mapStateToProps = state => ({
+    url: state,
+});
+
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, actionCreator)
+)(LoginTabset);
+
 

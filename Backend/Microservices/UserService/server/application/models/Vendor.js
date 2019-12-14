@@ -3,12 +3,26 @@ const VendorSchema = new mongooseSchema({
         type: String,
         required: false,
         trim: true,
+        default: '',
+        ref: 'ElectronicProduct'
     },
     email: {
         type: String,
         required: false,
         trim: true,
         unique: true
+    },
+    Gender: {
+        type: String,
+        trim: true,
+        required: false,
+        default: '',
+    },
+    DOB: {
+        type: String,
+        trim: true,
+        required: false,
+        default: '',
     },
     VendorImage: {
         type: String,
@@ -28,7 +42,6 @@ const VendorSchema = new mongooseSchema({
         default: '',
         required: false,
         trim: true,
-        unique: true
     },
     city: {
         type: String,
@@ -75,16 +88,19 @@ const VendorSchema = new mongooseSchema({
         type: Number,
         required: false,
         trim: true,
+        default: '',
     },
     mobile: {
         type: String,
         required: true,
         trim: true,
+        unique: true
     },
     account_no: {
         type: Number,
         required: false,
-        trim: true
+        trim: true,
+        default: null,
     },
     IFSC: {
         type: String,
@@ -105,21 +121,25 @@ const VendorSchema = new mongooseSchema({
     GST_number: {
         type: String,
         trim: true,
-        required: false
+        required: false,
+        default: '',
     },
     Pan_number: {
         type: String,
         trim: true,
-        required: false
+        required: false,
+        default: '',
     },
     loginFrom: {
         type: String,
         trim: true,
-        required: false
+        required: false,
+        default: '',
     },
     role: {
         type: String,
         trim: true,
+        default: 'ROLE_VENDOR',
     },
     isApproved: {
         type: Boolean,
@@ -142,7 +162,7 @@ VendorSchema.pre('findOneAndUpdate', function (next) {
 VendorSchema.plugin(mongoose_timestamps);
 VendorSchema.plugin(mongoose_softDelete);
 
- 
+
 
 var Vendor = mongoose.model('Vendor', VendorSchema);
 module.exports = Vendor

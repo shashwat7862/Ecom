@@ -54,9 +54,16 @@
 	            }
 			}],
 			
-			"/api/v1/vendor/ProductsList/:category/:isApprove/:limit/:skip": [{
+			"/api/v1/vendor/:vendor_id/ProductsList/:category/:isApprove/:limit/:skip": [{
 	            method: "GET",
 	            action: controllers.vendorController.ProductsList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/All/ProductsList/:category/:isApprove/:limit/:skip": [{
+	            method: "GET",
+	            action: controllers.vendorController.AllProductsList,
 	            views: {
 	                json: views.jsonView
 	            }
@@ -101,7 +108,7 @@
 	            }
 			}],
 
-			"/api/v1/vendor/SearchProducts/:category": [{
+			"/api/v1/vendor/:vendor_id/SearchProducts/:category": [{
 	            method: "GET",
 	            action: controllers.vendorController.SearchProducts,
 	            views: {

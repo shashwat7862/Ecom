@@ -13,7 +13,7 @@
 	            }
 			}],
 
-	        "/Products_List/:category/:isApprove/:limit/:skip": [{
+	        "/Products_List/:vendor_id/:category/:isApprove/:limit/:skip": [{
 	            method: "GET",
 	            action: controllers.productController.Products_List,
 	            views: {
@@ -53,7 +53,7 @@
 	            }
 			}],
 
-			"/Search_Products/:category": [{
+			"/Search_Products/:vendor_id/:category": [{
 	            method: "GET",
 	            action: controllers.productController.Search_Products,
 	            views: {
@@ -101,6 +101,16 @@
 	                json: views.jsonView
 	            }
 			}],
+
+			"/All_Products_List/:category/:isApprove/:limit/:skip": [{
+	            method: "GET",
+	            action: controllers.productController.All_Products_List,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			
 			
 
 			

@@ -42,9 +42,9 @@ export class User_menu extends Component {
                         </div>
                         <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
                             <li><Link to={`${process.env.PUBLIC_URL}/settings/profile`} ><i data-feather="user"></i>Edit Profile</Link></li>
-                            <li><a href="javascript:void(0)"><i data-feather="mail"></i>Inbox</a></li>
-                            <li><a href="javascript:void(0)"><i data-feather="lock"></i>Lock Screen</a></li>
-                            <li><a href="javascript:void(0)"><i data-feather="settings"></i>Settings</a></li>
+                            {/* <li><a href="javascript:void(0)"><i data-feather="mail"></i>Inbox</a></li> */}
+                            {/* <li><a href="javascript:void(0)"><i data-feather="lock"></i>Lock Screen</a></li> */}
+                            {/* <li><a href="javascript:void(0)"><i data-feather="settings"></i>Settings</a></li> */}
                             <li onClick={this.logout}><i data-feather="log-out"></i>Logout</li>
                         </ul>
                     </li>

@@ -1,29 +1,35 @@
 import React, { Component, Fragment } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
 import CKEditors from "react-ckeditor-component";
-import MyDropzone from '../../common/dropzone'
-import axios from 'axios';
+import MyDropzone from '../../common/dropzone';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { addProduct } from '../../../Action/ProductAction';
+import { connect } from 'react-redux';
+
 
 export class Digital_add_pro extends Component {
     constructor(props) {
         super(props)
         this.state = {
             category: "electronics",
+            title: '',
             productName: "",
             Material_type: "",
-            productDescription: [{
-                data: ""
-            }],
+            productDescription: "",
             brandName: "",
             price: 0,
             color: "",
             isAvailable: true,
-            model: ''
+            model: '',
+            size:'',
+            vendorData : JSON.parse(localStorage.getItem('vendorDetails'))
         }
 
         this.onUpdateChange = this.onUpdateChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
-        this.addProduct = this.addProduct.bind(this);
+        this.addProductToDB = this.addProductToDB.bind(this);
 
     }
 
@@ -37,36 +43,70 @@ export class Digital_add_pro extends Component {
     onDescriptionChange(e) {
         var newContent = e.editor.getData();
         this.setState({
-            productDescription: [{
-                data: newContent
-            }]
+            productDescription: newContent
         })
 
     }
 
-    addProduct() {
-        axios.post('//localhost:8080/api/v1/vendor/SaveProducts/electronics', {
+   
+
+    addProductToDB() {
+        let VendorData = localStorage.getItem('VendorData');
+        this.props.AddProductToDB({
             subCategory: this.state.category,
             productName: this.state.productName,
-            Material_type: this.state.Material_type,
-            productDescription: this.state.productDescription,
+            productDescription: this.remove_html_tags(this.state.productDescription),
             brandName: this.state.brandName,
+            attributes:{
+                color: this.state.color,
+                size: this.state.size,
+                Material_type:this.state.Material_type
+            },
+            modelNo:this.state.model,
             price: this.state.price,
-            color: this.state.color,
-            isAvailable: (this.state.isAvailable == 'on') ? true : false
-        }).then(response => {
-            alert("product Saved")
-            console.log(response, "data")
+            isAvailable: (this.state.isAvailable == 'on') ? true : false,
+            title: this.state.title,
+            vendorId: this.state.vendorData._id
         })
-            .catch(error => {
-                console.log(error);
-            });
     }
 
+    componentWillReceiveProps(nextProps, ) {
+        console.log("nextProps------->>", nextProps.addProductResult)
+        if (this.props !== nextProps) {
+            toast.success("Product Saved Successfully");
+            this.setState({
+                category: '',
+                productName: '',
+                Material_type: '',
+                productDescription: "",
+                brandName: '',
+                price: 0,
+                color: '',
+                isAvailable: false,
+                title: '',
+                size:'',
+                model:''
+
+            })
+
+        }
+    }
+
+    remove_html_tags(str) {
+        if ((str === null) || (str === ''))
+            return false;
+        else
+            str = str.toString();
+        return str.replace(/<[^>]*>/g, '');
+    }
+
+
     render() {
+
         console.log(this.state, "this.state")
         return (
             <Fragment>
+                <ToastContainer />
                 <Breadcrumb title="Add Products" parent="Digital" />
                 <div className="container-fluid">
                     <div className="row product-adding">
@@ -78,28 +118,32 @@ export class Digital_add_pro extends Component {
                                 <div className="card-body">
                                     <div className="digital-add needs-validation">
                                         <div className="form-group">
+                                            <label className="col-form-label pt-0"><span>*</span> Title</label>
+                                            <input className="form-control" name="title" value={this.state.title} onChange={this.onUpdateChange} id="validationCustom01" type="text" required="" />
+                                        </div>
+                                        <div className="form-group">
                                             <label className="col-form-label pt-0"><span>*</span> Product Name</label>
-                                            <input className="form-control" name="productName" onChange={this.onUpdateChange} id="validationCustom01" type="text" required="" />
+                                            <input className="form-control" name="productName" value={this.state.productName} onChange={this.onUpdateChange} id="validationCustom01" type="text" required="" />
                                         </div>
                                         <div className="form-group">
                                             <label className="col-form-label pt-0"><span>*</span> Model</label>
-                                            <input className="form-control" name="model" onChange={this.onUpdateChange} id="validationCustom02" type="text" required="" />
+                                            <input className="form-control" name="model" value={this.state.model} onChange={this.onUpdateChange} id="validationCustom02" type="text" required="" />
                                         </div>
                                         <div className="form-group">
                                             <label className="col-form-label"><span>*</span> Categories</label>
-                                            <select className="custom-select" required="">
+                                            <select className="custom-select" name="categories" id="categories">
                                                 <option value="">--Select--</option>
-                                                <option value="1">Electronics</option>
+                                                <option value="Electronics" >Electronics</option>
 
                                             </select>
                                         </div>
                                         <div className="form-group">
                                             <label className="col-form-label">Color</label>
-                                            <input className="form-control" name="color" onChange={this.onUpdateChange} id="validationCustom02" type="text" required="" />
+                                            <input className="form-control" name="color" value={this.state.color} onChange={this.onUpdateChange} id="validationCustom02" type="text" required="" />
                                         </div>
                                         <div className="form-group">
                                             <label className="col-form-label"><span>*</span> Product Price</label>
-                                            <input className="form-control" name="price" onChange={this.onUpdateChange} id="validationCustom02" type="number" required="" />
+                                            <input className="form-control" name="price" value={this.state.price} onChange={this.onUpdateChange} id="validationCustom02" type="number" required="" />
                                         </div>
                                         <div className="form-group">
                                             <label className="col-form-label"><span>*</span> Status</label>
@@ -130,8 +174,9 @@ export class Digital_add_pro extends Component {
                                         <div className="form-group mb-0">
                                             <div className="description-sm">
                                                 <CKEditors
+                                                   value={this.state.productDescription}
                                                     activeclassName="p10"
-                                                    content={this.state.productDescription[0].data}
+                                                    content={this.state.productDescription}
                                                     events={{
                                                         "blur": this.onBlur,
                                                         "afterPaste": this.afterPaste,
@@ -151,15 +196,19 @@ export class Digital_add_pro extends Component {
                                     <div className="digital-add needs-validation">
                                         <div className="form-group">
                                             <label className="col-form-label pt-0"> Brand Name</label>
-                                            <input className="form-control" name="brandName" onChange={this.onUpdateChange} id="validationCustom05" type="text" required="" />
+                                            <input className="form-control" value={this.state.brandName} name="brandName" onChange={this.onUpdateChange} id="validationCustom05" type="text" required="" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-form-label pt-0"> Size</label>
+                                            <input className="form-control" value={this.state.size} name="size" onChange={this.onUpdateChange} id="validationCustom05" type="text" required="" />
                                         </div>
                                         <div className="form-group">
                                             <label className="col-form-label">Material Type</label>
-                                            <input className="form-control" name="Material_type" onChange={this.onUpdateChange} id="validationCustom05" type="text" required="" />
+                                            <input className="form-control" value={this.state.Material_type} name="Material_type" onChange={this.onUpdateChange} id="validationCustom05" type="text" required="" />
                                         </div>
                                         <div className="form-group mb-0">
                                             <div className="product-buttons text-center">
-                                                <button type="button" onClick={this.addProduct} className="btn btn-primary">Add</button>
+                                                <button type="button" onClick={this.addProductToDB} className="btn btn-primary">Add Product</button>
                                                 {/* <button type="button" className="btn btn-light">Discard</button> */}
                                             </div>
                                         </div>
@@ -174,4 +223,19 @@ export class Digital_add_pro extends Component {
     }
 }
 
-export default Digital_add_pro
+
+const mapStateToProps = (state) => {
+    console.log("state---------mapto", state);
+    return {
+        addProductResult: (state.ProductReducer != "") ? state.ProductReducer.object.object : []
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        AddProductToDB: (payload) => { dispatch(addProduct(payload)) }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Digital_add_pro);

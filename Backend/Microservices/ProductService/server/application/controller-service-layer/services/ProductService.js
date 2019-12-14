@@ -24,7 +24,8 @@ class ProductService extends BaseService {
     async Products_List(category, pagination, callback) {
         try {
             domain[category].find({
-                isApproved: pagination.isApprove
+                isApproved: pagination.isApprove,
+                vendorId: pagination.vendor_id
             }).skip(pagination.skip).limit(pagination.limit).exec(function (error, productList) {
                 if (error) {
                     callback(error, null)
@@ -39,6 +40,27 @@ class ProductService extends BaseService {
         }
 
     }
+
+    async All_Products_List(category, pagination, callback) {
+        try {
+            domain[category].find({
+                isApproved: pagination.isApprove,
+            }).populate('vendorId').skip(pagination.skip).limit(pagination.limit).exec(function (error, productList) {
+                if (error) {
+                    callback(error, null)
+                } else {
+                    callback(null, productList)
+                }
+            });
+        } catch (e) {
+            callback({
+                "error": "error while saving"
+            }, null)
+        }
+
+    }
+
+    
 
     async Product_ApprovalRequest(body, dynamicDomain, callback) {
         console.log(body, dynamicDomain)
@@ -139,24 +161,24 @@ class ProductService extends BaseService {
                 {
                     $pull: { productDetails: { productId: body.productId } }
                 },
-             function (err, result) {
-                if (err) {
-                    callback(err, null)
-                }
-                else {
-                    callback(null, {
-                        data: result
-                    })
-                }
-            });
+                function (err, result) {
+                    if (err) {
+                        callback(err, null)
+                    }
+                    else {
+                        callback(null, {
+                            data: result
+                        })
+                    }
+                });
         }
 
     }
 
 
-    
 
-    
+
+
 
     async Wish_List(action, body, callback) {
         console.log(action, "action", body);
@@ -182,21 +204,21 @@ class ProductService extends BaseService {
                 {
                     $pull: { productDetails: { productId: body.productId } }
                 },
-             function (err, result) {
-                if (err) {
-                    callback(err, null)
-                }
-                else {
-                    callback(null, {
-                        data: result
-                    })
-                }
-            });
+                function (err, result) {
+                    if (err) {
+                        callback(err, null)
+                    }
+                    else {
+                        callback(null, {
+                            data: result
+                        })
+                    }
+                });
         }
 
     }
 
-    async Cart_List(userId,callback){
+    async Cart_List(userId, callback) {
         try {
             domain.Cart.find({
                 UserId: userId
@@ -214,7 +236,7 @@ class ProductService extends BaseService {
         }
     }
 
-    async GetAll_WishLists(userId,callback){
+    async GetAll_WishLists(userId, callback) {
         try {
             domain.WishList.find({
                 UserId: userId
@@ -232,13 +254,13 @@ class ProductService extends BaseService {
         }
     }
 
-    
+
 
     async productSearchForCustomers(query, dynamicDomain = 'electronics', callback) {
         console.log(query, dynamicDomain);
 
         let dbQuery;
-        if (query && dynamicDomain ) {
+        if (query && dynamicDomain) {
             dbQuery = {
                 $or: [{
                     productName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
@@ -259,16 +281,17 @@ class ProductService extends BaseService {
                     callback(null, searchResult)
                 }
             });
-        }else{
-            callback(null,null)
+        } else {
+            callback(null, null)
         }
     }
 
-    async Search_Products(query, dynamicDomain, callback) {
+    async Search_Products(query, dynamicDomain, vendorId, callback) {
         console.log(query, dynamicDomain);
         let dbQuery;
         if (query) {
             dbQuery = {
+                vendorId: vendorId,
                 $or: [{
                     productName: new RegExp('(^' + query.search + '|' + query.search + ')', 'i')
                 }, {
