@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { func } from 'prop-types';
+import Baseurl from '../assets/data/urls';
 
 export const ProductList = 'product:ProductList';
 export const AddProduct = 'product:AddProduct';
@@ -36,7 +36,7 @@ function Search_Products(data){
 
 export function productList(vendor_id) {
   return function (dispatch) {
-    return axios.get(`//localhost:8080/api/v1/vendor/${vendor_id}/ProductsList/electronics/false/100/0`)
+    return axios.get(`${Baseurl}/api/v1/vendor/${vendor_id}/ProductsList/electronics/false/100/0`)
       .then(({ data }) => {
         console.log(data)
         dispatch(Product_List(data));
@@ -46,7 +46,7 @@ export function productList(vendor_id) {
 
 export function addProduct(payload) {
   return function (dispatch) {
-    return axios.post('//localhost:8080/api/v1/vendor/SaveProducts/electronics', payload)
+    return axios.post(`${Baseurl}/api/v1/vendor/SaveProducts/electronics`, payload)
       .then(({ data }) => {
         console.log(data)
         dispatch(Add_Product(data));
@@ -56,7 +56,7 @@ export function addProduct(payload) {
 
 export function EditProductToDB(payload){
   return function (dispatch) {
-    return axios.put('//localhost:8080/api/v1/vendor/EditProductsDetails/electronics', payload)
+    return axios.put(`${Baseurl}/api/v1/vendor/EditProductsDetails/electronics`, payload)
       .then(({ data }) => {
         console.log(data)
         dispatch(Edit_Product(data));
@@ -67,7 +67,7 @@ export function EditProductToDB(payload){
 
 export function searchProducts(searchQuery,vendor_id){
   return function (dispatch) {
-    return axios.get(`//localhost:8080/api/v1/vendor/${vendor_id}/searchProducts/electronics?search=${searchQuery}`)
+    return axios.get(`${Baseurl}/api/v1/vendor/${vendor_id}/searchProducts/electronics?search=${searchQuery}`)
       .then(({ data }) => {
         console.log(data)
         dispatch(Search_Products(data));

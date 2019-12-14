@@ -1,12 +1,46 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 import Breadcrumb from "../common/breadcrumb";
 
 class Login extends Component {
 
-    constructor (props) {
-        super (props)
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            email: '',
+            Password: '',
+        }
+        this.loginCustomer = this.loginCustomer.bind(this)
+
+    }
+
+    loginCustomer() {
+        axios.post('//localhost:8080/api/v1/customer/Login', {
+            "email": this.state.email,
+            "password": this.state.password,
+            "loginFrom": "email"
+        })
+            .then(response => {
+                localStorage.clear();
+                console.log(response, "data")
+                console.log(response.data.object.object.authToken);
+                localStorage.setItem('authToken', response.data.object.object.authToken);
+                localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
+                this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    }
+
+    onUpdateFormValue = (e) => {
+        console.log(e.target.name, e.target.value, "change")
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     render (){
@@ -27,15 +61,15 @@ class Login extends Component {
                                     <form className="theme-form">
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
-                                            <input type="text" className="form-control" id="email" placeholder="Email"
+                                            <input type="text" name="email" onChange={this.onUpdateFormValue} className="form-control" id="email" placeholder="Email"
                                                    required="" />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="review">Password</label>
-                                            <input type="password" className="form-control" id="review"
+                                            <input type="password" name="password" onChange={this.onUpdateFormValue} className="form-control" id="review"
                                                    placeholder="Enter your password" required="" />
                                         </div>
-                                        <a href="#" className="btn btn-solid">Login</a>
+                                        <a onClick={this.loginCustomer} className="btn btn-solid">Login</a>
                                     </form>
                                 </div>
                             </div>
@@ -46,7 +80,7 @@ class Login extends Component {
                                     <p>Sign up for a free account at our store. Registration is quick and easy. It
                                         allows you to be able to order from our shop. To start shopping click
                                         register.</p>
-                                    <a href="#" className="btn btn-solid">Create an Account</a>
+                                    <a href="/register" className="btn btn-solid">Create an Account</a>
                                 </div>
                             </div>
                         </div>

@@ -15,7 +15,7 @@ class TopBarWhite extends Component {
                                 <div className="header-contact">
                                     <ul>
                                         <li>{translate('topbar_title', { theme_name: ' Multikart' })}</li>
-                                        <li><i className="fa fa-phone" aria-hidden="true"></i>{translate('call_us')}:  123 - 456 - 7890</li>
+                                        {/* <li><i className="fa fa-phone" aria-hidden="true"></i>{translate('call_us')}:  123 - 456 - 7890</li> */}
                                     </ul>
                                 </div>
                             </div>

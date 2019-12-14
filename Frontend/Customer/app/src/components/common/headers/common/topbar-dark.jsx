@@ -12,8 +12,8 @@ class TopBarDark extends Component {
                         <div className="col-lg-6">
                             <div className="header-contact">
                                 <ul>
-                                    <li>Welcome to Our store Multikart</li>
-                                    <li><i className="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li>
+                                    <li>Welcome to Our store Emart</li>
+                                    {/* <li><i className="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li> */}
                                 </ul>
                             </div>
                         </div>

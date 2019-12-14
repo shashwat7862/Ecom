@@ -101,7 +101,7 @@ var module = {
     en: {
         locale: 'en_US',
         messages: {
-            topbar_title: 'Welcome to Our store Multikart',
+            topbar_title: 'Welcome to Our store Emart',
             call_us: 'Call Us',
             home: 'home',
             features: 'features',

@@ -7,6 +7,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { addProduct } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
+import S3FileUpload from 'react-s3';
+
+const config = {
+    bucketName: 'emart-product-images',
+    // dirName: 'photos', /* optional */
+    region: 'ap-south-1',
+    accessKeyId: 'AKIAJIVK52LYVQCLYK7Q',
+    secretAccessKey: '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',
+}
 
 
 export class Digital_add_pro extends Component {
@@ -16,6 +25,7 @@ export class Digital_add_pro extends Component {
             category: "electronics",
             title: '',
             productName: "",
+            productImage: "",
             Material_type: "",
             productDescription: "",
             brandName: "",
@@ -23,13 +33,15 @@ export class Digital_add_pro extends Component {
             color: "",
             isAvailable: true,
             model: '',
-            size:'',
-            vendorData : JSON.parse(localStorage.getItem('vendorDetails'))
+            size: '',
+            vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
         }
 
         this.onUpdateChange = this.onUpdateChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
         this.addProductToDB = this.addProductToDB.bind(this);
+        this.uploadProductImage = this.uploadProductImage.bind(this);
+        
 
     }
 
@@ -40,6 +52,20 @@ export class Digital_add_pro extends Component {
         })
     }
 
+    uploadProductImage(e) {
+        console.log(e.target.files[0]);
+
+        S3FileUpload
+            .uploadFile(e.target.files[0], config)
+            .then(data => {
+                console.log(data.location)
+                this.setState({
+                    productImage: data.location
+                })
+            })
+            .catch(err => console.error(err))
+    }
+
     onDescriptionChange(e) {
         var newContent = e.editor.getData();
         this.setState({
@@ -48,7 +74,7 @@ export class Digital_add_pro extends Component {
 
     }
 
-   
+
 
     addProductToDB() {
         let VendorData = localStorage.getItem('VendorData');
@@ -57,16 +83,17 @@ export class Digital_add_pro extends Component {
             productName: this.state.productName,
             productDescription: this.remove_html_tags(this.state.productDescription),
             brandName: this.state.brandName,
-            attributes:{
+            attributes: {
                 color: this.state.color,
                 size: this.state.size,
-                Material_type:this.state.Material_type
+                Material_type: this.state.Material_type
             },
-            modelNo:this.state.model,
+            modelNo: this.state.model,
             price: this.state.price,
             isAvailable: (this.state.isAvailable == 'on') ? true : false,
             title: this.state.title,
-            vendorId: this.state.vendorData._id
+            vendorId: this.state.vendorData._id,
+            productImage: this.state.productImage
         })
     }
 
@@ -84,8 +111,8 @@ export class Digital_add_pro extends Component {
                 color: '',
                 isAvailable: false,
                 title: '',
-                size:'',
-                model:''
+                size: '',
+                model: ''
 
             })
 
@@ -159,7 +186,7 @@ export class Digital_add_pro extends Component {
                                             </div>
                                         </div>
                                         <label className="col-form-label pt-0"> Product Upload</label>
-                                        <MyDropzone />
+                                        <input type="file" onChange={this.uploadProductImage} ></input>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +201,7 @@ export class Digital_add_pro extends Component {
                                         <div className="form-group mb-0">
                                             <div className="description-sm">
                                                 <CKEditors
-                                                   value={this.state.productDescription}
+                                                    value={this.state.productDescription}
                                                     activeclassName="p10"
                                                     content={this.state.productDescription}
                                                     events={{

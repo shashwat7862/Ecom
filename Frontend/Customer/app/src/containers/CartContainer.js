@@ -27,8 +27,8 @@ const CartContainer = ({cartList, total, symbol, removeFromCart}) => (
                     <Link to={`${process.env.PUBLIC_URL}/checkout`} className="checkout">checkout</Link>
                 </div>
             </li></div>
-                    :
-            <li><h5>Your cart is currently empty.</h5></li>}
+                    : null
+            }
         </ul>
 
     </li>

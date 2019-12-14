@@ -21,7 +21,7 @@ export const MENUITEMS = [
             // { path: '/products/digital/digital-category', title: 'Category', type: 'link' },
             // { path: '/products/digital/digital-sub-category', title: 'Sub Category', type: 'link' },
             { path: '/products/digital/digital-product-list', title: 'Product List', type: 'link' },
-            // { path: '/products/digital/digital-add-product', title: 'Add Product', type: 'link' },
+            { path: '/products/digital/digital-add-product', title: 'Add Product', type: 'link' },
         ]
             
         

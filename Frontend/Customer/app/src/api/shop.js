@@ -6,6 +6,8 @@ import _products from './data.json'
 const TIMEOUT = 100
 
 export default {
-    getProducts: (cb, timeout) => setTimeout(() => cb(_products), timeout || TIMEOUT),
+    getProducts: (cb, timeout) => {
+        console.log(cb,timeout)
+    },
     buyProducts: (payload, cb, timeout) => setTimeout(() => cb(), timeout || TIMEOUT)
 }
