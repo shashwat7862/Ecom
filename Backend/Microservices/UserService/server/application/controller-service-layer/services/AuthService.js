@@ -82,10 +82,11 @@ class AuthService extends BaseService {
         const query = {
             email: email.toLowerCase()
         }
+        console.log(query, "vendorlogin ", payload.password)
         const [err, user] = await To(domain.Vendor.findOne(query));
         if (err || !user) return callback(new Error("Invalid email or Password"));
         if (configHolder.encryptUtil.verifyPassword(user, password)) {
-            this.generateAuthenticationToken(email, password, user, callback);
+            this.generateAuthenticationToken(email, password, user, 'vendor', callback);
         } else {
             callback(new Error("Invalid 1 Email or Password"), null);
         }
@@ -103,7 +104,7 @@ class AuthService extends BaseService {
         console.log(user, "user ---")
         if (err || !user) return callback(new Error("Invalid email or Password"));
         if (configHolder.encryptUtil.verifyPassword(user, password)) {
-            this.generateAuthenticationToken(email, password, user, callback);
+            this.generateAuthenticationToken(email, password, user, 'customer', callback);
         } else {
             callback(new Error("Invalid 1 Email or Password"), null);
         }
@@ -247,7 +248,7 @@ class AuthService extends BaseService {
 
     }
 
-    generateAuthenticationToken(email, password, userData, callback) {
+    generateAuthenticationToken(email, password, userData, calledFrom, callback) {
         var UserObj = {
             email: email,
             password: password
@@ -255,11 +256,14 @@ class AuthService extends BaseService {
         var token = jwt.sign(UserObj, "4phd7fdjEUewFB0dYRuHyw==", {
             expiresIn: "1h"
         });
-        console.log(token)
-        callback(null, {
+        console.log(token);
+        let response = {
             authToken: token,
-            userDetails: userData
-        })
+            // userDetails: userData
+        };
+        response[calledFrom + 'Details'] = userData
+
+        callback(null, response)
     }
 
 

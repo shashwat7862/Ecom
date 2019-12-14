@@ -24,6 +24,7 @@ module.exports = function () {
 	}
 
 	var SaveProducts = function (req, res, callback) {
+		console.log("------------------ss",req.body)
 		this.services.vendorService.SaveProducts(req,callback);
 	}
 
@@ -55,6 +56,12 @@ module.exports = function () {
 	var SearchProducts = function(req,res,callback){
 		this.services.vendorService.SearchProducts(req,callback);
 	}
+
+	var AllProductsList = function(req,res,callback){
+		this.services.vendorService.AllProductsList(req,callback);
+	}
+
+	
 	
 
 	return {
@@ -71,6 +78,7 @@ module.exports = function () {
 		ProfileUpdate,
 		DeleteProduct,
 		FilterProducts,
-		SearchProducts
+		SearchProducts,
+		AllProductsList
 	}
 };

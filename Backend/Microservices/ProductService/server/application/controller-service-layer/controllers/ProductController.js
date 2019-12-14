@@ -8,7 +8,8 @@ module.exports = function () {
 			let pagination = {
 				limit: req.params.limit,
 				skip: req.params.skip,
-				isApprove: req.params.isApprove
+				isApprove: req.params.isApprove,
+				vendor_id: req.params.vendor_id
 			}
 			console.log("paginations", pagination)
 			this.services.productService.Products_List(dynamicDomain, pagination, callback);
@@ -44,6 +45,7 @@ module.exports = function () {
 	var Save_Products = function (req, res, callback) {
 		let dynamicDomain = getDynamicDomain(req.params.category)
 		if (dynamicDomain) {
+			console.log("req.body while save product", req.body)
 			var productData = new domain[dynamicDomain](req.body);
 			productData.category = req.params.category;
 			this.services.productService.Save_Products(productData, callback);
@@ -80,7 +82,7 @@ module.exports = function () {
 	var Search_Products = function (req, res, callback) {
 		let dynamicDomain = getDynamicDomain(req.params.category)
 		if (dynamicDomain) {
-			this.services.productService.Search_Products(req.query, dynamicDomain, callback);
+			this.services.productService.Search_Products(req.query, dynamicDomain, req.params.vendor_id, callback);
 		} else {
 			callback(null, {
 				"msg": "Category is not valid"
@@ -138,7 +140,7 @@ module.exports = function () {
 
 	var productSearchForCustomers = function (req, res, callback) {
 		let dynamicDomain = getDynamicDomain(req.params.category);
-		console.log(dynamicDomain , req.params.category,"----------------------------" )
+		console.log(dynamicDomain, req.params.category, "----------------------------")
 		if (dynamicDomain) {
 			this.services.productService.productSearchForCustomers(req.query, dynamicDomain, callback);
 		} else {
@@ -147,6 +149,25 @@ module.exports = function () {
 			})
 		}
 
+	}
+
+	var All_Products_List = function (req, res, callback) {
+		console.log("1")
+		let dynamicDomain = getDynamicDomain(req.params.category)
+		if (dynamicDomain) {
+			console.log("2")
+			let pagination = {
+				limit: req.params.limit,
+				skip: req.params.skip,
+				isApprove: req.params.isApprove,
+			}
+			console.log("paginations", pagination)
+			this.services.productService.All_Products_List(dynamicDomain, pagination, callback);
+		} else {
+			callback(null, {
+				"msg": "Category is not valid"
+			})
+		}
 	}
 
 
@@ -162,7 +183,8 @@ module.exports = function () {
 		Wish_List,
 		Cart_List,
 		GetAll_WishLists,
-		productSearchForCustomers
+		productSearchForCustomers,
+		All_Products_List
 	}
 
 

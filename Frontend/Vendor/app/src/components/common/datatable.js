@@ -90,7 +90,6 @@ export class Datatable extends Component {
                 editable = null;
             }
 
-            if(key == 'productName' || key == 'price' || key == 'brandName' || key == 'Material_type'){
                 columns.push(
                     {
                         Header: <b>{this.Capitalize(key.toString())}</b>,
@@ -100,7 +99,6 @@ export class Datatable extends Component {
                             textAlign: 'center'
                         }
                     });
-            }
             
         }
 

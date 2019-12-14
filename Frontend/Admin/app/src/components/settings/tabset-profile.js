@@ -1,17 +1,120 @@
 import React, { Component } from 'react';
 import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
-import {User,Settings} from 'react-feather'
+import { User, Settings } from 'react-feather';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { EditVendorProfile } from '../../Action/ProfileAction';
+import { connect } from 'react-redux';
 
 export class Tabset_profile extends Component {
+
+    constructor(props) {
+        let vendorData = JSON.parse(localStorage.getItem('vendorDetails'));
+
+
+        super(props);
+        this.state = {
+            id: vendorData._id,
+            email: vendorData.email,
+            mobile: vendorData.mobile,
+            fullName: vendorData.fullName,
+            Gender: vendorData.Gender,
+            DOB: vendorData.DOB,
+            country: vendorData.country,
+            account_no: vendorData.account_no,
+            business_name: vendorData.business_name,
+            business_category: vendorData.business_category,
+            GST_number: vendorData.GST_number,
+            Pan_number: vendorData.Pan_number,
+            vendorData: vendorData,
+            enableEditSection: false,
+
+        }
+        this.onUpdateChange = this.onUpdateChange.bind(this);
+        this.enable_edit = this.enable_edit.bind(this);
+        this.cencelEdit = this.cencelEdit.bind(this);
+        this.edit_Profile_vendor = this.edit_Profile_vendor.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps, ) {
+        console.log("nextProps------->>", nextProps)
+        if (this.props !== nextProps) {
+            console.log(nextProps.editProfileResult.length > 0 ,"nextProps.editProfileResult.length", nextProps.editProfileResult.length)
+                console.log(nextProps.editProfileResult,"nextProps.editProfileResult")
+                console.log("inside in")
+                localStorage.setItem('vendorDetails',JSON.stringify(nextProps.editProfileResult));
+            }
+
+            toast.success("Profile Edited Successfully");
+            this.setState({
+                enableEditSection: false
+            })
+        
+    }
+
+
+
+    enable_edit() {
+        this.setState({
+            enableEditSection: true
+        })
+
+    }
+
+    edit_Profile_vendor() {
+        this.props.EditProfile({
+            email: this.state.email,
+            mobile: this.state.mobile,
+            fullName: this.state.fullName,
+            Gender: this.state.Gender,
+            DOB: this.state.DOB,
+            country: this.state.country,
+            account_no: this.state.account_no,
+            IFSC: this.state.IFSC,
+            business_name: this.state.business_name,
+            business_category: this.state.business_category,
+            GST_number: this.state.GST_number,
+            Pan_number: this.state.Pan_number,
+        }, this.state.id)
+    }
+
+    cencelEdit() {
+        this.setState({
+            enableEditSection: false
+        })
+    }
+
+
+    onUpdateChange(e) {
+        console.log(e.target.name, e.target.value, "change");
+
+
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+
     render() {
+
         return (
             <div>
                 <Tabs>
+                    <div style={{ float: 'right' }}>
+                        <span onClick={() => {
+                            this.enable_edit()
+
+                        }}><i className="fa fa-pencil" style={{ width: 35, fontSize: 20, padding: 11, color: 'rgb(40, 167, 69)' }}></i></span>
+                        {this.state.enableEditSection ? <span onClick={() => { this.cencelEdit() }}><i className="fa fa-remove" style={{ width: 35, fontSize: 20, padding: 11 }}></i></span> : null}
+
+
+                    </div>
                     <TabList className="nav nav-tabs tab-coupon" >
                         <Tab className="nav-link"><User className="mr-2" />Profile</Tab>
-                        <Tab className="nav-link"><Settings className="mr-2" />Contact</Tab>
+                        <Tab className="nav-link"><Settings className="mr-2" />Business</Tab>
                     </TabList>
-
+                    <ToastContainer />
                     <TabPanel>
                         <div className="tab-pane fade show active">
                             <h5 className="f-w-600 f-16">Profile</h5>
@@ -19,32 +122,31 @@ export class Tabset_profile extends Component {
                                 <table className="table table-responsive">
                                     <tbody>
                                         <tr>
-                                            <td>First Name:</td>
-                                            <td>John</td>
+                                            <td>Full Name:</td>
+                                            {this.state.enableEditSection ? <td><input className="form-control" name="fullName" onChange={this.onUpdateChange} value={this.state.fullName} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.fullName) ? this.state.fullName : 'NA'}</td>}
+
+
                                         </tr>
-                                        <tr>
-                                            <td>Last Name:</td>
-                                            <td>Deo</td>
-                                        </tr>
+
                                         <tr>
                                             <td>Email:</td>
-                                            <td>johndeo@gmail.com</td>
+                                            {this.state.enableEditSection ? <td><input className="form-control" name="email" onChange={this.onUpdateChange} value={this.state.email} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.email) ? this.state.email : 'NA'}</td>}
                                         </tr>
                                         <tr>
                                             <td>Gender:</td>
-                                            <td>Male</td>
+                                            {this.state.enableEditSection ? <td><input className="form-control" name="Gender" onChange={this.onUpdateChange} value={this.state.Gender} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.Gender) ? this.state.Gender : 'NA'}</td>}
                                         </tr>
                                         <tr>
                                             <td>Mobile Number:</td>
-                                            <td>2124821463</td>
+                                            {this.state.enableEditSection ? <td><input className="form-control" name="mobile" onChange={this.onUpdateChange} value={this.state.mobile} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.mobile) ? this.state.mobile : 'NA'}</td>}
                                         </tr>
                                         <tr>
                                             <td>DOB:</td>
-                                            <td>Dec, 15 1993</td>
+                                            {this.state.enableEditSection ? <td><input className="form-control" name="DOB" onChange={this.onUpdateChange} value={this.state.DOB} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.DOB) ? this.state.DOB : 'NA'}</td>}
                                         </tr>
                                         <tr>
                                             <td>Location:</td>
-                                            <td>USA</td>
+                                            {this.state.enableEditSection ? <td><input className="form-control" name="country" onChange={this.onUpdateChange} value={this.state.country} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.country) ? this.state.country : 'NA'}</td>}
                                         </tr>
                                     </tbody>
                                 </table>
@@ -53,76 +155,72 @@ export class Tabset_profile extends Component {
                     </TabPanel>
                     <TabPanel>
                         {/* <div className="tab-pane fade"> */}
-                            <div className="account-setting">
-                                
-                                <h5 className="f-w-600 f-16">Notifications</h5>
-                                <div className="row">
-                                    <div className="col">
-                                        <label className="d-block" >
-                                            <input className="checkbox_animated" id="chk-ani" type="checkbox" defaultChecked />
-                                            Allow Desktop Notifications
-                                                    </label>
-                                        <label className="d-block">
-                                            <input className="checkbox_animated" id="chk-ani1" type="checkbox" />
-                                            Enable Notifications
-                                                    </label>
-                                        <label className="d-block">
-                                            <input className="checkbox_animated" id="chk-ani2" type="checkbox" />
-                                            Get notification for my own activity
-                                                    </label>
-                                        <label className="d-block mb-0" >
-                                            <input className="checkbox_animated" id="chk-ani3" type="checkbox" defaultChecked />
-                                            DND
-                                                    </label>
-                                    </div>
+                        <div className="account-setting">
+
+                            <div className="tab-pane fade show active">
+                                <h5 className="f-w-600 f-16">Bank</h5>
+                                <div className="table-responsive profile-table">
+                                    <table className="table table-responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td>Account Number</td>
+                                                {this.state.enableEditSection ? <td><input className="form-control" name="account_no" onChange={this.onUpdateChange} value={this.state.account_no} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.account_no) ? this.state.account_no : 'NA'}</td>}
+                                            </tr>
+
+                                            <tr>
+                                                <td>IFSC Code:</td>
+                                                {this.state.enableEditSection ? <td><input className="form-control" name="IFSC" onChange={this.onUpdateChange} value={this.state.IFSC} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.IFSC) ? this.state.IFSC : 'NA'}</td>}
+
+                                            </tr>
+                                            <br></br>
+                                            <h5 className="f-w-600 f-16">Business</h5>
+                                            <tr>
+                                                <td>Business Name:</td>
+                                                {this.state.enableEditSection ? <td><input className="form-control" name="business_name" onChange={this.onUpdateChange} value={this.state.business_name} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.business_name) ? this.state.business_name : 'NA'}</td>}
+                                            </tr>
+                                            <tr>
+                                                <td>Business Category:</td>
+                                                {this.state.enableEditSection ? <td><input className="form-control" name="business_category" onChange={this.onUpdateChange} value={this.state.business_category} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.business_category) ? this.state.business_category : 'NA'}</td>}
+                                            </tr>
+                                            <tr>
+                                                <td>GST Number:</td>
+                                                {this.state.enableEditSection ? <td><input className="form-control" name="GST_number" onChange={this.onUpdateChange} value={this.state.GST_number} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.GST_number) ? this.state.GST_number : 'NA'}</td>}
+                                            </tr>
+                                            <tr>
+                                                <td>Pan Number:</td>
+                                                {this.state.enableEditSection ? <td><input className="form-control" name="Pan_number" onChange={this.onUpdateChange} value={this.state.Pan_number} id="validationCustom01" type="text" required="" /></td> : <td>{(this.state.Pan_number) ? this.state.Pan_number : 'NA'}</td>}
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div className="account-setting deactivate-account">
-                                <h5 className="f-w-600 f-16">Deactivate Account</h5>
-                                <div className="row">
-                                    <div className="col">
-                                        <label className="d-block" >
-                                            <input className="radio_animated" id="edo-ani" type="radio" name="rdo-ani" defaultChecked />
-                                            I have a privacy concern
-                                                    </label>
-                                        <label className="d-block" >
-                                            <input className="radio_animated" id="edo-ani1" type="radio" name="rdo-ani" />
-                                            This is temporary
-                                                    </label>
-                                        <label className="d-block mb-0" >
-                                            <input className="radio_animated" id="edo-ani2" type="radio" name="rdo-ani" defaultChecked />
-                                            Other
-                                                    </label>
-                                    </div>
-                                </div>
-                                <button type="button" className="btn btn-primary">Deactivate Account</button>
-                            </div>
-                            <div className="account-setting deactivate-account">
-                                <h5 className="f-w-600 f-16">Delete Account</h5>
-                                <div className="row">
-                                    <div className="col">
-                                        <label className="d-block" >
-                                            <input className="radio_animated" id="edo-ani3" type="radio" name="rdo-ani1" defaultChecked />
-                                            No longer usable
-                                                    </label>
-                                        <label className="d-block">
-                                            <input className="radio_animated" id="edo-ani4" type="radio" name="rdo-ani1" />
-                                            Want to switch on other account
-                                                    </label>
-                                        <label className="d-block mb-0">
-                                            <input className="radio_animated" id="edo-ani5" type="radio" name="rdo-ani1" defaultChecked />
-                                            Other
-                                                    </label>
-                                    </div>
-                                </div>
-                                <button type="button" className="btn btn-primary">Delete Account</button>
-                            </div>
-                        {/* </div> */}
+                        </div>
                     </TabPanel>
+                    {this.state.enableEditSection ? <input type="submit" className="btn btn-success" value="Edit Profile" onClick={this.edit_Profile_vendor} ></input> : null}
+
                 </Tabs>
             </div>
         )
     }
 }
 
-export default Tabset_profile
+
+
+
+const mapStateToProps = (state) => {
+    console.log("state---------mapto", state);
+    return {
+        editProfileResult: (state.ProfileReducer != "") ? state.ProfileReducer.object.object : []
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        EditProfile: (payload, vendorId) => { dispatch(EditVendorProfile(payload, vendorId)) }
+
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tabset_profile);

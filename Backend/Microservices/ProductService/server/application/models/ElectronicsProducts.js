@@ -43,10 +43,11 @@ var ElectronicProductSchema = new mongooseSchema({
     },
     vendorId: {
         type: mongoose.Schema.ObjectId,
-        required: true
+        required: true,
+        ref:'Vendor'
     },
     productDescription: {
-        data: String,
+        type: String,
     },
 
 
@@ -84,6 +85,12 @@ var ElectronicProductSchema = new mongooseSchema({
     }
 
 });
+
+
+
+ElectronicProductSchema.plugin(mongoose_timestamps);
+ElectronicProductSchema.plugin(mongoose_softDelete);
+
 
 
 

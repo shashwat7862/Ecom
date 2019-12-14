@@ -82,9 +82,9 @@ export class Header extends Component {
                         </div>
                         <div className="nav-right col">
                             <ul className={"nav-menus " + (this.state.navMenus ? 'open' : '')}>
-                                <li>
+                                {/* <li>
                                     <SearchHeader />
-                                </li>
+                                </li> */}
                                 <li><a onClick={this.goFull} className="text-dark" href="#!"><Maximize2 /></a></li>
                                 <li className="onhover-dropdown"><a className="txt-dark" href="#">
                                     <h6>EN</h6></a>

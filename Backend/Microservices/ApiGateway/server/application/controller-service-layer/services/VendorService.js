@@ -46,6 +46,11 @@ class VendorService extends BaseService {
         callback(null, listOfProducts)
     }
 
+    async AllProductsList(req, callback) {
+        let listOfProducts = await AllProducts_List(req.params);
+        callback(null, listOfProducts)
+    }
+
 
     async ProductApprovalRequest(req, callback) {
         let request = await Product_ApprovalRequest(req.body, req.params);

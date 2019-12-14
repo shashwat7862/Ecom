@@ -14,6 +14,12 @@ export class Datatable extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.myData != this.props.myData){
+            this.setState({myData:nextProps.myData})
+        }
+    }
+
     selectRow = (e, i) => {
         if (!e.target.checked) {
             this.setState({
@@ -63,9 +69,9 @@ export class Datatable extends Component {
     render() {
         const { pageSize, myClass, multiSelectOption, pagination } = this.props;
         const { myData } = this.state
-
         const columns = [];
         for (var key in myData[0]) {
+            console.log("key",key)
 
             let editable = this.renderEditable
             if (key === "image") {
@@ -84,15 +90,16 @@ export class Datatable extends Component {
                 editable = null;
             }
 
-            columns.push(
-                {
-                    Header: <b>{this.Capitalize(key.toString())}</b>,
-                    accessor: key,
-                    Cell: editable,
-                    style: {
-                        textAlign: 'center'
-                    }
-                });
+                columns.push(
+                    {
+                        Header: <b>{this.Capitalize(key.toString())}</b>,
+                        accessor: key,
+                        Cell: editable,
+                        style: {
+                            textAlign: 'center'
+                        }
+                    });
+            
         }
 
         if (multiSelectOption == true) {

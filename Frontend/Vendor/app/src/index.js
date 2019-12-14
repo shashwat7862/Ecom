@@ -20,6 +20,7 @@ import Digital_category from './components/products/digital/digital-category';
 import Digital_sub_category from './components/products/digital/digital-sub-category';
 import Digital_pro_list from './components/products/digital/digital-pro-list';
 import Digital_add_pro from './components/products/digital/digital-add-pro';
+import Digital_edit_product from './components/products/digital/digital-edit-Product'
 
 //Sales
 import Orders from './components/sales/orders';
@@ -47,6 +48,9 @@ import Invoice from './components/invoice';
 import Datatable from './components/common/datatable'
 import Login from './components/auth/login';
 
+import store from './store/store'
+import { Provider } from 'react-redux'
+
 
 
 class Root extends Component {
@@ -55,12 +59,12 @@ class Root extends Component {
             <BrowserRouter basename={'/'}>
                 <ScrollContext>
                     <Switch>
-                    <Route exact path={`${process.env.PUBLIC_URL}/`} component={Login} />
+                        <Route exact path={`${process.env.PUBLIC_URL}/`} component={Login} />
                         <Route exact path={`${process.env.PUBLIC_URL}/auth/login`} component={Login} />
 
                         <App>
                             <Route path={`${process.env.PUBLIC_URL}/dashboard`} component={Dashboard} />
-                                
+
                             <Route path={`${process.env.PUBLIC_URL}/products/physical/category`} component={Category} />
                             <Route path={`${process.env.PUBLIC_URL}/products/physical/sub-category`} component={Sub_category} />
                             <Route path={`${process.env.PUBLIC_URL}/products/physical/product-list`} component={Product_list} />
@@ -71,6 +75,8 @@ class Root extends Component {
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-sub-category`} component={Digital_sub_category} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-product-list`} component={Digital_pro_list} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-add-product`} component={Digital_add_pro} />
+                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/:data`} component={Digital_edit_product} />
+                            
 
                             <Route path={`${process.env.PUBLIC_URL}/sales/orders`} component={Orders} />
                             <Route path={`${process.env.PUBLIC_URL}/sales/transactions`} component={Transactions_sales} />
@@ -105,6 +111,7 @@ class Root extends Component {
                             <Route path={`${process.env.PUBLIC_URL}/data-table`} component={Datatable} />
 
                         </App>
+
                     </Switch>
                 </ScrollContext>
             </BrowserRouter>
@@ -112,6 +119,9 @@ class Root extends Component {
     }
 }
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <Root />
+    </Provider>, document.getElementById('root'));
 
 
