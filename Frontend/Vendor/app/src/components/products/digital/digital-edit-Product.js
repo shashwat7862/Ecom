@@ -4,10 +4,10 @@ import CKEditors from "react-ckeditor-component";
 import MyDropzone from '../../common/dropzone';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Baseurl from '../../../assets/data/urls';
 import { EditProductToDB } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
 
 export class Digital_edit_product extends Component {
     constructor(props) {
@@ -27,20 +27,35 @@ export class Digital_edit_product extends Component {
             brandName: "",
             price: 0,
             color: "",
+            productImage: "",
             isAvailable: true,
             model: '',
-            vendorData : JSON.parse(localStorage.getItem('vendorDetails'))
+            vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
         }
 
         this.onUpdateChange = this.onUpdateChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
         this.editProductDetails = this.editProductDetails.bind(this);
-        this.setStatus = this.setStatus.bind(this)
+        this.setStatus = this.setStatus.bind(this);
+        this.uploadProductImage = this.uploadProductImage.bind(this)
     }
 
     componentDidMount() {
-        const { match: { params } } = this.props;
-        let data = JSON.parse(params.data);
+        // const { match: { params } } = this.props;
+        // let data = JSON.parse(params.data);
+
+        let enc = window.location.href
+        var dec = decodeURI(enc).split('/{')
+
+        let product;
+        let data;
+        for (let val of dec) {
+            if (val.length > 50) {
+                product = val
+            }
+        }
+        data = JSON.parse("{" + product);
+
         this.setState({
             price: (data.price == null) ? '' : data.price,
             productName: (data.productName == null) ? '' : data.productName,
@@ -48,14 +63,15 @@ export class Digital_edit_product extends Component {
             productDescription: (data.productDescription == null) ? '' : data.productDescription,
             brandName: (data.brandName == null) ? '' : data.brandName,
             isAvailable: (data.isAvailable == null) ? 'on' : (data.isAvailable) ? 'on' : 'off',
-            model: (data.modelNo == null) ? '' : data.modelNo ,
-            title: (data.title == null) ? '' : data.title ,
+            model: (data.modelNo == null) ? '' : data.modelNo,
+            title: (data.title == null) ? '' : data.title,
             attributes: {
-                color: (!data.hasOwnProperty('attributes')) ? '' : data.attributes.color ,
-                size: (!data.hasOwnProperty('attributes')) ? '' : data.attributes.size ,
-                Material_type: (!data.hasOwnProperty('attributes')) ? '' : data.attributes.Material_type 
+                color: (!data.hasOwnProperty('attributes')) ? '' : data.attributes.color,
+                size: (!data.hasOwnProperty('attributes')) ? '' : data.attributes.size,
+                Material_type: (!data.hasOwnProperty('attributes')) ? '' : data.attributes.Material_type
             },
-            id: (data._id == null) ? '' : data._id  
+            id: (data._id == null) ? '' : data._id,
+            productImage: data.productImage
 
         })
     }
@@ -77,6 +93,7 @@ export class Digital_edit_product extends Component {
 
 
     editProductDetails() {
+        console.log("productImage--------------edit", this.state, this.state.productImage)
         let VendorData = localStorage.getItem('VendorData');
         this.props.EditProductToDB({
             id: this.state.id,
@@ -93,8 +110,11 @@ export class Digital_edit_product extends Component {
             price: this.state.price,
             isAvailable: (this.state.isAvailable == 'on') ? true : false,
             title: this.state.title,
+            productImage: this.state.productImage,
             vendorId: this.state.vendorData._id
         })
+
+
     }
 
     componentWillReceiveProps(nextProps, ) {
@@ -113,6 +133,11 @@ export class Digital_edit_product extends Component {
                 title: ''
 
             })
+            let history =this.props.history
+
+            setTimeout(function(){
+                history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+            },1000)
 
 
         }
@@ -125,9 +150,34 @@ export class Digital_edit_product extends Component {
         })
     }
 
+    uploadProductImage(e) {
+        console.log(e.target.files[0]);
+
+        if (e.target.files[0]) {
+            const fd = new FormData();
+            fd.append('file', e.target.files[0], e.target.files[0].name)
+            axios.post(`${Baseurl}/api/v1/common/aws/saveAllImages`, fd)
+                .then(response => {
+                    console.log(this.state.productImage)
+                    console.log(response, "product--------------- Data");
+                    this.setState({
+                        productImage: response.data.object.name
+                    })
+                    console.log(this.state.productImage)
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        }
+    }
+
 
 
     render() {
+
+
 
         console.log(this.state, "this.state")
         return (
@@ -155,14 +205,14 @@ export class Digital_edit_product extends Component {
                                             <label className="col-form-label pt-0"><span>*</span> Model</label>
                                             <input className="form-control" name="model" onChange={this.onUpdateChange} value={this.state.model} id="validationCustom02" type="text" required="" />
                                         </div>
-                                        <div className="form-group">
+                                        {/* <div className="form-group">
                                             <label className="col-form-label"><span>*</span> Categories</label>
                                             <select className="custom-select" required="">
                                                 <option value="">--Select--</option>
                                                 <option value="1" selected>Electronics</option>
 
                                             </select>
-                                        </div>
+                                        </div> */}
                                         <div className="form-group">
                                             <label className="col-form-label">Color</label>
                                             <input className="form-control" name="color" value={this.state.attributes.color} onChange={this.onUpdateChange} id="validationCustom02" type="text" required="" />
@@ -175,17 +225,17 @@ export class Digital_edit_product extends Component {
                                             <label className="col-form-label"><span>*</span> Status</label>
                                             <div className="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
                                                 <label className="d-block">
-                                                    <input className="radio_animated" onClick={this.setStatus} id="isAvailable" name="isAvailable" value="on" checked={this.state.isAvailable} type="radio" />
+                                                    <input className="radio_animated" onClick={this.setStatus} id="isAvailable" name="isAvailable" value="on" defaultChecked={this.state.isAvailable} type="radio" />
                                                     Enable
                                             </label>
                                                 <label className="d-block" >
-                                                    <input className="radio_animated" onClick={this.setStatus} id="isAvailable" name="isAvailable" value="off" checked={!this.state.isAvailable} type="radio" />
+                                                    <input className="radio_animated" onClick={this.setStatus} id="isAvailable" name="isAvailable" value="off" defaultChecked={!this.state.isAvailable} type="radio" />
                                                     Disable
                                             </label>
                                             </div>
                                         </div>
-                                        <label className="col-form-label pt-0"> Product Upload</label>
-                                        <MyDropzone />
+                                        <label className="col-form-label pt-0"> Product Upload</label><br></br>
+                                        <input type="file" onChange={this.uploadProductImage} ></input>
                                     </div>
                                 </div>
                             </div>

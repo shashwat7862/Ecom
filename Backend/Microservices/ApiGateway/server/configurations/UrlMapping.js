@@ -170,6 +170,14 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/api/v1/common/aws/saveAllImages": [{
+				method: "POST",
+				middleware: [multipartMiddleware],
+	            action: controllers.vendorController.saveAllImages,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
 	    };
 	};
 

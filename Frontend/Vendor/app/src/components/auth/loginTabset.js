@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
-
+import Baseurl from '../../assets/data/urls';
 import * as actionCreator from '../../Action/LoginAction';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -114,7 +114,7 @@ export class LoginTabset extends Component {
 
 
     registerVendor() {
-        axios.post('//localhost:8080/api/v1/vendor/Register', {
+        axios.post(`${Baseurl}/api/v1/vendor/Register`, {
             "email": this.state.email,
             "mobile": this.state.mobile,
             "password": this.state.password,
@@ -134,7 +134,7 @@ export class LoginTabset extends Component {
     }
 
     loginVendor() {
-        axios.post('//localhost:8080/api/v1/vendor/Login', {
+        axios.post(`${Baseurl}/api/v1/vendor/Login`, {
             "email": this.state.loginEmail,
             "password": this.state.loginPassword,
             "loginFrom": "email"

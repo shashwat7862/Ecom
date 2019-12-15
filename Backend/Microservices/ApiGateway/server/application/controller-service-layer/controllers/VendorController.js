@@ -61,6 +61,10 @@ module.exports = function () {
 		this.services.vendorService.AllProductsList(req,callback);
 	}
 
+	var saveAllImages = function(req,res,callback){
+		this.services.vendorService.saveAllImages(req,callback);
+	}
+
 	
 	
 
@@ -79,6 +83,7 @@ module.exports = function () {
 		DeleteProduct,
 		FilterProducts,
 		SearchProducts,
-		AllProductsList
+		AllProductsList,
+		saveAllImages
 	}
 };

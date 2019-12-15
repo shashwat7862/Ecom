@@ -150,7 +150,7 @@ export class sidebar extends Component {
                     <div className="main-header-left d-none d-lg-block">
                         <div className="logo-wrapper">
                             <Link to={`${process.env.PUBLIC_URL}/dashboard`}>
-                                <img className="blur-up lazyloaded" src={logo} alt="" />
+                                <img className="blur-up lazyloaded" style={{height:150+'px',width:150 +'px'}} src={logo} alt="" />
                             </Link>
                         </div>
                     </div>

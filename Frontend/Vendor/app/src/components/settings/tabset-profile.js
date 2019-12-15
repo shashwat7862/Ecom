@@ -50,6 +50,10 @@ export class Tabset_profile extends Component {
             this.setState({
                 enableEditSection: false
             })
+
+            setTimeout(function(){
+                window.location.reload()
+            },1000)
         
     }
 
@@ -63,7 +67,7 @@ export class Tabset_profile extends Component {
     }
 
     edit_Profile_vendor() {
-        this.props.EditProfile({
+        this.props.Edit_Profile({
             email: this.state.email,
             mobile: this.state.mobile,
             fullName: this.state.fullName,
@@ -217,7 +221,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        EditProfile: (payload, vendorId) => { dispatch(EditVendorProfile(payload, vendorId)) }
+        Edit_Profile: (payload, vendorId) => { dispatch(EditVendorProfile(payload, vendorId)) }
 
     }
 }

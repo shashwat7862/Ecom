@@ -104,6 +104,7 @@ class DetailsWithPrice extends Component {
         return (
             
             <div className="col-lg-6 rtl-text">
+                
                 <ToastContainer />
                 <div className="product-right">
                     <h2> {item.productName} </h2>

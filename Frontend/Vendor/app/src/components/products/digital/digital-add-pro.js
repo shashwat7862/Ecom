@@ -1,22 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
 import CKEditors from "react-ckeditor-component";
-import MyDropzone from '../../common/dropzone';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Baseurl from '../../../assets/data/urls';
 import { addProduct } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
-import S3FileUpload from 'react-s3';
+import axios from 'axios';
 
-const config = {
-    bucketName: 'emart-product-images',
-    // dirName: 'photos', /* optional */
-    region: 'ap-south-1',
-    accessKeyId: 'AKIAJIVK52LYVQCLYK7Q',
-    secretAccessKey: '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',
-}
-
+ 
 
 export class Digital_add_pro extends Component {
     constructor(props) {
@@ -25,7 +17,6 @@ export class Digital_add_pro extends Component {
             category: "electronics",
             title: '',
             productName: "",
-            productImage: "",
             Material_type: "",
             productDescription: "",
             brandName: "",
@@ -34,6 +25,7 @@ export class Digital_add_pro extends Component {
             isAvailable: true,
             model: '',
             size: '',
+            productImage:'',
             vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
         }
 
@@ -41,7 +33,7 @@ export class Digital_add_pro extends Component {
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
         this.addProductToDB = this.addProductToDB.bind(this);
         this.uploadProductImage = this.uploadProductImage.bind(this);
-        
+
 
     }
 
@@ -55,15 +47,22 @@ export class Digital_add_pro extends Component {
     uploadProductImage(e) {
         console.log(e.target.files[0]);
 
-        S3FileUpload
-            .uploadFile(e.target.files[0], config)
-            .then(data => {
-                console.log(data.location)
-                this.setState({
-                    productImage: data.location
+        if (e.target.files[0]) {
+            const fd = new FormData();
+            fd.append('file', e.target.files[0], e.target.files[0].name)
+            axios.post(`${Baseurl}/api/v1/common/aws/saveAllImages`, fd)
+                .then(response => {
+                    console.log(response, "product--------------- Data");
+                    this.setState({
+                        productImage: response.data.object.name
+                    })
+
                 })
-            })
-            .catch(err => console.error(err))
+                .catch(error => {
+                    console.log(error);
+                });
+
+        }
     }
 
     onDescriptionChange(e) {
@@ -71,7 +70,6 @@ export class Digital_add_pro extends Component {
         this.setState({
             productDescription: newContent
         })
-
     }
 
 
@@ -101,6 +99,13 @@ export class Digital_add_pro extends Component {
         console.log("nextProps------->>", nextProps.addProductResult)
         if (this.props !== nextProps) {
             toast.success("Product Saved Successfully");
+
+            let history =this.props.history
+
+            setTimeout(function(){
+                history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+            },1000)
+            
             this.setState({
                 category: '',
                 productName: '',
@@ -185,7 +190,7 @@ export class Digital_add_pro extends Component {
                                             </label>
                                             </div>
                                         </div>
-                                        <label className="col-form-label pt-0"> Product Upload</label>
+                                        <label className="col-form-label pt-0"> Product Upload</label><br></br>
                                         <input type="file" onChange={this.uploadProductImage} ></input>
                                     </div>
                                 </div>

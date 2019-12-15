@@ -98,6 +98,10 @@ exports.module = AllProducts_List = async ( qs) => (
   Productwrapper.proxyJsonRequest(`All_Products_List/${qs.category}/${qs.isApprove}/${qs.limit}/${qs.skip}`, 'GET')
 );
 
+exports.module = saveAll_Images = async ( qs) => (
+  Productwrapper.proxyJsonRequest(`saveAll_Images`, 'POST')
+);
+
 
 
 
@@ -116,6 +120,7 @@ module.exports = {
   Filter_Products,
   Delete_Product,
   Search_Products,
-  AllProducts_List
+  AllProducts_List,
+  saveAll_Images
 
 }

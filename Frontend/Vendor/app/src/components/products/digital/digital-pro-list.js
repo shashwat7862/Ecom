@@ -3,7 +3,7 @@ import Breadcrumb from '../../common/breadcrumb';
 import ReactTable from 'react-table';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Baseurl from '../../../assets/data/urls'
 import { productList, searchProducts } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -17,7 +17,8 @@ export class Digital_pro_list extends Component {
             ProductsList: [{}],
             cols: ["productName", "Age"],
             isLoading: false,
-            vendorData : JSON.parse(localStorage.getItem('vendorDetails'))
+            defaultImage: "https://www.mnn.com/static/img/not_available.png",
+            vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
         }
     }
 
@@ -28,14 +29,17 @@ export class Digital_pro_list extends Component {
 
     onSearch = (e) => {
         let searchQuery = e.target.value;
-       this.props.productSearch(searchQuery,this.state.vendorData._id)
+        this.props.productSearch(searchQuery, this.state.vendorData._id)
     }
 
     deleteProduct(data) {
-        axios.delete(`//localhost:8080/api/v1/vendor/DeleteProduct/electronics/${data.original._id}`)
+        axios.delete(`${Baseurl}/api/v1/vendor/DeleteProduct/electronics/${data.original._id}`)
             .then(response => {
                 toast.success("Successfully Deleted !");
-                this.props.getProductList()
+                this.props.getProductList();
+                setTimeout(function(){
+                    window.location.reload()
+                },500)
             })
             .catch(error => {
                 console.error(error);
@@ -53,6 +57,7 @@ export class Digital_pro_list extends Component {
         this.props.getProductList(this.state.vendorData._id)
     }
 
+    
 
 
     render() {
@@ -66,6 +71,15 @@ export class Digital_pro_list extends Component {
                 "textAlign": "center"
             },
             minWidth: 130
+        },
+        {
+            Header: 'Image',
+            Cell: props => (
+                <div>
+                    <img className="img-responsive" style={{ height: 50 + 'px', width: 50 + 'px' }} src={(props.original.productImage !== "") ? Baseurl +"/"+ props.original.productImage : this.state.defaultImage} />
+                </div>
+            ),
+            minWidth: 55
         }, {
             Header: 'Product Name',
             accessor: 'productName',
@@ -156,14 +170,14 @@ export class Digital_pro_list extends Component {
 const mapStateToProps = (state) => {
     console.log("state---------mapto", state);
     return {
-        ProductsList: (state.ProductReducer != "" && state.ProductReducer.object.object && Array.isArray(state.ProductReducer.object.object)&&  !state.ProductReducer.object.object.hasOwnProperty('Details')) ? state.ProductReducer.object.object : [{}]
+        ProductsList: (state.ProductReducer != "" && state.ProductReducer.object.object && Array.isArray(state.ProductReducer.object.object) && !state.ProductReducer.object.object.hasOwnProperty('Details')) ? state.ProductReducer.object.object : [{}]
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getProductList: (vendor_id) => { dispatch(productList(vendor_id)) },
-        productSearch: (query,vendor_id) => { dispatch(searchProducts(query,vendor_id)) }
+        productSearch: (query, vendor_id) => { dispatch(searchProducts(query, vendor_id)) }
     }
 }
 
