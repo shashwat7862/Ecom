@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
-
 import { getTotal, getCartProducts } from '../../../reducers'
 import { addToCart, addToWishlist, addToCompare } from '../../../actions'
 import { getVisibleproducts } from '../../../services';
 import ProductListItem from "./product-list-item";
+import Baseurl from '../../../api/url';
 
 class ProductListing extends Component {
 
@@ -21,7 +21,7 @@ class ProductListing extends Component {
     }
 
     componentDidMount() {
-        axios.get('//localhost:8080/api/v1/All/ProductsList/electronics/true/10/0')
+        axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/10/0`)
             .then(response => {
                 console.log(response, "product--------------- Data");
                 this.setState({

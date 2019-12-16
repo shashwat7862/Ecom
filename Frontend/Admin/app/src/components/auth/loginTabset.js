@@ -27,7 +27,6 @@ export class LoginTabset extends Component {
     
    
     loginAdmin() {
-        alert("called");
         console.log(this.state)
         if(this.state.loginEmail == "admin@gmail.com" && this.state.loginPassword =="admin@123"){
             toast.success("Successfully login");

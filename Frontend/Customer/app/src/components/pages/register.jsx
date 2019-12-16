@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import Baseurl from '../../api/url'
 import Breadcrumb from "../common/breadcrumb";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +21,7 @@ class Register extends Component {
     }
 
     registerCustomer() {
-        axios.post('//localhost:8080/api/v1/customer/Register', {
+        axios.post(`${Baseurl}/api/v1/customer/Register`, {
             "email": this.state.email,
             "mobile": this.state.mobile,
             "password": this.state.password,

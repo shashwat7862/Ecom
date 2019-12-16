@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import Baseurl from '../../api/url'
 import Breadcrumb from "../common/breadcrumb";
 
 class Login extends Component {
@@ -17,7 +17,7 @@ class Login extends Component {
     }
 
     loginCustomer() {
-        axios.post('//localhost:8080/api/v1/customer/Login', {
+        axios.post(`${Baseurl}/api/v1/customer/Login`, {
             "email": this.state.email,
             "password": this.state.password,
             "loginFrom": "email"

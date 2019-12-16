@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { getBestSeller } from "../../services";
-
+import Baseurl from '../../api/url'
 
 class NewProduct extends Component {
 
@@ -13,13 +13,13 @@ class NewProduct extends Component {
 
         this.state = {
             products: [],
-            defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViO8G4EDQNh_mVK-EBDI_DD26dJNPZB9wR4KgOyPXxq88HM3hYQ&s"
+            defaultImage: "https://www.mnn.com/static/img/not_available.png",
         }
 
     }
 
     componentDidMount() {
-        axios.get('//localhost:8080/api/v1/All/ProductsList/electronics/true/10/0')
+        axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/10/0`)
             .then(response => {
                 console.log(response, "product--------------- Data");
                 this.setState({
@@ -34,7 +34,7 @@ class NewProduct extends Component {
 
     render() {
         const { products } = this.state;
-         let symbol = "₹";
+        let symbol = "₹";
         var arrays = [];
         while (products.length > 0) {
             arrays.push(products.splice(0, 3));
@@ -49,7 +49,7 @@ class NewProduct extends Component {
                             {products.map((product, i) =>
                                 <div className="media" key={i}>
                                     <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product._id}`}>
-                                    <img className="img-fluid" src={(product.productImage) ? product.productImage : this.state.defaultImage} alt="" /></Link>
+                                        <img className="img-fluid" src={(product.productImage != "") ? Baseurl + '/' + product.productImage : this.state.defaultImage} alt="" /></Link>
                                     <div className="media-body align-self-center">
                                         <div className="rating">
                                             <i className="fa fa-star"></i>

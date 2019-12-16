@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
-
+import Baseurl from '../../../api/url';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ProductListItem extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
+        const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
 
         this.state = {
             open: false,
             stock: 'InStock',
             quantity: 1,
             image: '',
-            defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViO8G4EDQNh_mVK-EBDI_DD26dJNPZB9wR4KgOyPXxq88HM3hYQ&s"
+            customerDetails: customerDetails,
+            defaultImage: "https://www.mnn.com/static/img/not_available.png",
         }
     }
 
@@ -28,6 +33,50 @@ class ProductListItem extends Component {
     onClickHandle(img) {
         this.setState({ image: img });
     }
+
+    addToWishList(productData){
+        console.log(productData,"add to cart")
+        axios.put(`${Baseurl}/api/v1/customer/WishList/ADD`, {
+            "productData": {
+                "productId": productData._id,
+                "productName": productData.productName,
+                "price": productData.price,
+                "category": productData.category,
+                "productImage":productData.productImage,
+            },
+            "userId": this.state.customerDetails._id
+        })
+            .then(response => {
+                toast.success("Product Added to WishList")
+                console.log(response, "data")
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+    addToCart(productData) {
+        console.log(productData,"add to cart")
+        axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
+            "productData": {
+                "productId": productData._id,
+                "productName": productData.productName,
+                "price": productData.price,
+                "productCount": this.state.quantity,
+                "category": productData.category,
+                "productImage":productData.productImage,
+            },
+            "userId": this.state.customerDetails._id
+        })
+            .then(response => {
+                toast.success("Product Add to Cart")
+                console.log(response, "data")
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    
 
     minusQty = () => {
         if (this.state.quantity > 1) {
@@ -49,10 +98,10 @@ class ProductListItem extends Component {
 
 
     render() {
-        const { product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked } = this.props;
+        const { product,onAddToCartClicked } = this.props;
         console.log("------------child", product);
 
-        
+
         const { open } = this.state;
 
         let RatingStars = []
@@ -63,26 +112,28 @@ class ProductListItem extends Component {
         return (
 
             <div className="product-box">
+                <ToastContainer />
                 <div className="img-wrapper">
                     <div className="front">
                         <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${JSON.stringify(product)}`} ><img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViO8G4EDQNh_mVK-EBDI_DD26dJNPZB9wR4KgOyPXxq88HM3hYQ&s"
+                            src={(product.productImage != "") ? Baseurl + '/' + product.productImage : this.state.defaultImage}
+                            style={{ height: 190 + 'px', width: 180 + 'px' }}
                             className="img-fluid"
                             alt="" /></Link>
                     </div>
                     <div className="cart-info cart-wrap">
-                        <button title="Add to cart" onClick={() => onAddToCartClicked(product, 1)}>
+                        <button title="Add to cart" onClick={() => this.addToCart(product)}>
                             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                         </button>
-                        <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
+                        <a href="javascript:void(0)" title="Add to Wishlist" onClick={() => this.addToWishList(product)}>
                             <i className="fa fa-heart" aria-hidden="true"></i>
                         </a>
                         <a href="javascript:void(0)" data-toggle="modal"
                             data-target="#quick-view"
                             title="Quick View"
                             onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
-                        <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
-                            <i className="fa fa-refresh" aria-hidden="true"></i></Link>
+                        {/* <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
+                            <i className="fa fa-refresh" aria-hidden="true"></i></Link> */}
                     </div>
 
                     {product.variants ?
@@ -123,7 +174,7 @@ class ProductListItem extends Component {
                                 <div className="row">
                                     <div className="col-lg-6  col-xs-12">
                                         <div className="quick-view-img">
-                                            <img src={(this.props.product.productImage != "") ? this.props.product.productImage : this.state.defaultImage} alt="" className="img-fluid" />
+                                            <img src={(product.productImage != "") ? Baseurl + '/' + product.productImage : this.state.defaultImage} alt="" className="img-fluid" />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 rtl-text">

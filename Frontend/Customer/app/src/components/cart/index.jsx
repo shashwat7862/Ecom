@@ -8,6 +8,7 @@ import { getCartTotal } from "../../services";
 import { removeFromCart, incrementQty, decrementQty } from '../../actions'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Baseurl from '../../api/url'
 
 class cartComponent extends Component {
 
@@ -19,7 +20,7 @@ class cartComponent extends Component {
             customerDetails: customerDetails,
             cartItems: [],
             totalSum: 0,
-            defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViO8G4EDQNh_mVK-EBDI_DD26dJNPZB9wR4KgOyPXxq88HM3hYQ&s"
+            defaultImage: "https://www.mnn.com/static/img/not_available.png",
         }
     }
 
@@ -28,8 +29,8 @@ class cartComponent extends Component {
 
     }
 
-    getCartList(){
-        axios.get(`//localhost:8080/api/v1/customer/CartList/${this.state.customerDetails._id}`)
+    getCartList() {
+        axios.get(`${Baseurl}/api/v1/customer/CartList/${this.state.customerDetails._id}`)
             .then(response => {
                 var sum = 0
                 response.data.object.object[0].productDetails.forEach(function (data) {
@@ -49,7 +50,7 @@ class cartComponent extends Component {
 
     removeFromCart(productData) {
         console.log(productData, "add to cart")
-        axios.put('//localhost:8080/api/v1/customer/Cart/REMOVE', {
+        axios.put(`${Baseurl}/api/v1/customer/Cart/REMOVE`, {
             "productId": productData.productId,
             "userId": this.state.customerDetails._id
         })
@@ -74,14 +75,15 @@ class cartComponent extends Component {
     render() {
 
         const { symbol, total } = this.props;
-        const { cartItems } = this.state
+        const { cartItems } = this.state;
+        console.log(cartItems,"cartItems")
 
 
         return (
             <div>
                 {/*SEO Support*/}
                 <Helmet>
-                    <title>MultiKart | Cart List Page</title>
+                    <title>WeShop | Cart List Page</title>
                     <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
                 </Helmet>
                 {/*SEO Support End */}
@@ -110,7 +112,7 @@ class cartComponent extends Component {
                                                     <tr>
                                                         <td>
                                                             <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item._id}`}>
-                                                                <img src={(item.hasOwnProperty('productImage')) ? item.productImage : this.state.defaultImage} alt="" />
+                                                                <img src={(item.productImage != "") ? Baseurl + '/' + item.productImage : this.state.defaultImage} alt="" />
                                                                 {/* <ImageZoom image={(item.productImage) ? item.productImage : this.state.defaultImage} /> */}
                                                             </Link>
                                                         </td>

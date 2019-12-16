@@ -7,7 +7,7 @@ import Baseurl from '../../../assets/data/urls'
 import { productList, searchProducts } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
 import axios from 'axios';
-
+import Switch from "react-switch";
 
 export class Digital_pro_list extends Component {
 
@@ -17,10 +17,23 @@ export class Digital_pro_list extends Component {
             ProductsList: [{}],
             cols: ["productName", "Age"],
             isLoading: false,
+            checked: true,
             defaultImage: "https://www.mnn.com/static/img/not_available.png",
             vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
-        }
+        };
+        this.handleChange = this.handleChange.bind(this);
+
     }
+
+    handleChange(checked) {
+    console.log(checked)
+        this.setState({
+            checked
+        });
+        this.props.getProductList(this.state.vendorData._id, checked)
+
+    }
+
 
     responseFacebook(response) {
         console.log(response);
@@ -37,9 +50,9 @@ export class Digital_pro_list extends Component {
             .then(response => {
                 toast.success("Successfully Deleted !");
                 this.props.getProductList();
-                setTimeout(function(){
+                setTimeout(function () {
                     window.location.reload()
-                },500)
+                }, 500)
             })
             .catch(error => {
                 console.error(error);
@@ -54,10 +67,10 @@ export class Digital_pro_list extends Component {
 
 
     componentDidMount() {
-        this.props.getProductList(this.state.vendorData._id)
+        this.props.getProductList(this.state.vendorData._id, true)
     }
 
-    
+
 
 
     render() {
@@ -76,7 +89,7 @@ export class Digital_pro_list extends Component {
             Header: 'Image',
             Cell: props => (
                 <div>
-                    <img className="img-responsive" style={{ height: 50 + 'px', width: 50 + 'px' }} src={(props.original.productImage !== "") ? Baseurl +"/"+ props.original.productImage : this.state.defaultImage} />
+                    <img className="img-responsive" style={{ height: 50 + 'px', width: 50 + 'px' }} src={(props.original.productImage !== "") ? Baseurl + "/" + props.original.productImage : this.state.defaultImage} />
                 </div>
             ),
             minWidth: 55
@@ -145,6 +158,9 @@ export class Digital_pro_list extends Component {
                         <div className="col-sm-12">
                             <div className="card">
                                 <div className="card-body">
+
+                                    <span> <Switch onChange={this.handleChange} checked={this.state.checked} uncheckedIcon="" /></span>
+                                    <br></br><br></br>
                                     <input type="text" onChange={this.onSearch} placeholder="Search" className="form-control" />
                                     <div className="clearfix"></div>
                                     <div id="basicScenario" className="product-physical">
@@ -176,7 +192,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getProductList: (vendor_id) => { dispatch(productList(vendor_id)) },
+        getProductList: (vendor_id, isApproved) => { dispatch(productList(vendor_id, isApproved)) },
         productSearch: (query, vendor_id) => { dispatch(searchProducts(query, vendor_id)) }
     }
 }

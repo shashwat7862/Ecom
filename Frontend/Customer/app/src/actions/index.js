@@ -4,7 +4,7 @@ import store from "../store";
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
-
+import Baseurl from '../api/url'
 export const fetchProductsBegin = () => ({
     type: types.FETCH_PRODUCTS_BEGIN
 });
@@ -19,7 +19,7 @@ export const receiveProducts = products => ({
 export const getAllProducts = () => dispatch => {
     dispatch(fetchProductsBegin());
     return function (dispatch) {
-        return axios.get(`//localhost:8080/api/v1/All/ProductsList/electronics/false/100/0`)
+        return axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/false/100/0`)
           .then(({ data }) => {
             console.log(data)
             dispatch(receiveProducts(data));

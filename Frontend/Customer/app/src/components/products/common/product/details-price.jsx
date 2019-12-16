@@ -5,6 +5,7 @@ import Modal from 'react-responsive-modal';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Baseurl from '../../../../api/url'
 
 class DetailsWithPrice extends Component {
 
@@ -17,7 +18,7 @@ class DetailsWithPrice extends Component {
             stock: 'InStock',
             nav3: null,
             customerDetails: customerDetails,
-            defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViO8G4EDQNh_mVK-EBDI_DD26dJNPZB9wR4KgOyPXxq88HM3hYQ&s"
+            defaultImage: "https://www.mnn.com/static/img/not_available.png",
         }
         console.log(this.state.customerDetails._id,"customerDetails")
     }
@@ -52,12 +53,13 @@ class DetailsWithPrice extends Component {
 
     addToWishList(productData){
         console.log(productData,"add to cart")
-        axios.put('//localhost:8080/api/v1/customer/WishList/ADD', {
+        axios.put(`${Baseurl}/api/v1/customer/WishList/ADD`, {
             "productData": {
                 "productId": productData._id,
                 "productName": productData.productName,
                 "price": productData.price,
-                "category": productData.category
+                "category": productData.category,
+                "productImage":productData.productImage,
             },
             "userId": this.state.customerDetails._id
         })
@@ -71,13 +73,14 @@ class DetailsWithPrice extends Component {
     }
     addToCart(productData) {
         console.log(productData,"add to cart")
-        axios.put('//localhost:8080/api/v1/customer/Cart/ADD', {
+        axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
             "productData": {
                 "productId": productData._id,
                 "productName": productData.productName,
                 "price": productData.price,
                 "productCount": this.state.quantity,
-                "category": productData.category
+                "category": productData.category,
+                "productImage":productData.productImage,
             },
             "userId": this.state.customerDetails._id
         })
@@ -222,7 +225,7 @@ class DetailsWithPrice extends Component {
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Sheer Straight Kurta</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">Size chart</h5>
                             </div>
                             <div className="modal-body">
                                 <img src={`${process.env.PUBLIC_URL}/assets/images/size-chart.jpg`} alt="" className="img-fluid" />

@@ -14,7 +14,7 @@ import DetailsTopTabs from "./common/details-top-tabs";
 // import { addToCart, addToCartUnsafe, addToWishlist } from '../../actions'
 import ImageZoom from './common/product/image-zoom'
 import SmallImages from './common/product/small-image'
-
+import Baseurl from '../../api/url'
 
 
 class LeftSideBar extends Component {
@@ -27,7 +27,7 @@ class LeftSideBar extends Component {
             open: false,
             nav1: null,
             nav2: null,
-            defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQViO8G4EDQNh_mVK-EBDI_DD26dJNPZB9wR4KgOyPXxq88HM3hYQ&s"
+            defaultImage: "https://www.mnn.com/static/img/not_available.png",
         };
     }
 
@@ -127,7 +127,7 @@ class LeftSideBar extends Component {
                                                     <Slider {...products} asNavFor={this.state.nav2} ref={slider => (this.slider1 = slider)} className="product-slick">
                                                         {
                                                             <div >
-                                                                <ImageZoom image={(item.productImage) ? item.productImage : this.state.defaultImage} />
+                                                                <ImageZoom image={(item.productImage != "")? Baseurl+'/'+item.productImage : this.state.defaultImage} />
                                                             </div>
 
                                                             // item.pictures.map((vari, index) =>

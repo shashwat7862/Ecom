@@ -34,9 +34,9 @@ function Search_Products(data){
   };
 }
 
-export function productList(vendor_id) {
+export function productList(vendor_id,isApproved) {
   return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/vendor/${vendor_id}/ProductsList/electronics/false/100/0`)
+    return axios.get(`${Baseurl}/api/v1/vendor/${vendor_id}/ProductsList/electronics/${isApproved}/100/0`)
       .then(({ data }) => {
         console.log(data)
         dispatch(Product_List(data));

@@ -19,9 +19,9 @@ function provide_Approval(data) {
 
 
 
-export function productList(vendor_id) {
+export function productList(isApprove) {
   return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/false/100/0`)
+    return axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/${isApprove}/100/0`)
       .then(({ data }) => {
         console.log(data)
         dispatch(Product_List(data));

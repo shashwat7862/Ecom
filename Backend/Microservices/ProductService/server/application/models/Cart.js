@@ -6,6 +6,7 @@ var CartSchema = new mongooseSchema({
             productName: String,
             price: Number,
             productCount: Number,
+            productImage:String,
             category: String
         }
     ],
