@@ -82,6 +82,9 @@ class Landing extends Component {
                                             </button>
                                             <div className={`collapse navbar-collapse ${this.state.toggle ? 'show' : ''}`} id="scroll-spy">
                                                 <ul className="navbar-nav mx-auto nav">
+                                                <li className="nav-item">
+                                                        <a className="nav-link" href='/products'>Products</a>
+                                                    </li>
                                                     <li className="nav-item">
                                                         <AnchorLink className="nav-link" href='#img-bg'>Home</AnchorLink>
                                                     </li>
