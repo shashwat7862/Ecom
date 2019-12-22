@@ -18,11 +18,8 @@ global.validate = require('express-validation');
 global.Joi = require('joi');
 
 // Database dependencies and Connection setting 
-global.mongoose = require('mongoose');
-global.mongooseSchema = mongoose.Schema;
-global.dbConnection = require('./Datasource.js').getDbConnection();
-global.ObjectId = mongoose.Types.ObjectId;
-
+global.knex = require('knex');
+global.dbConnection = require('./Datasource.js');
 //global variable to hold all the environment specific configuration 
 global.configHolder = {}
 

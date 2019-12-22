@@ -7,6 +7,8 @@ var WishListSchema = new mongooseSchema({
             price: Number,
             category: String,
             productImage:String,
+            VendorId: String,
+            VendorName: String,
         }
     ],
     UserId: {

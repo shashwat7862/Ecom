@@ -5,6 +5,7 @@ let proxy = require('@3g/request-proxy');
 
 const Userwrapper = proxy.createWrapper("http://localhost:8001/");
 const Productwrapper = proxy.createWrapper("http://localhost:8002/");
+const Orderwrapper = proxy.createWrapper("http://localhost:8005/");
 
 /*
   User Miroservice Apis
@@ -22,6 +23,47 @@ exports.module = Customer_Login = async (body) => (
     body,
   })
 )
+
+exports.module = create_Order = async (body) => (
+  Orderwrapper.proxyJsonRequest('create_Order', 'POST', {
+    body,
+  })
+)
+
+exports.module = get_OrderList = async (qs) => (
+  Orderwrapper.proxyJsonRequest(`get_OrderList/${qs.userId}/${qs.fetch}/${qs.limit}/${qs.skip}`, 'GET')
+)
+
+exports.module = get_OrderDetails = async (qs) => (
+  Orderwrapper.proxyJsonRequest(`get_OrderDetails/${qs.orderId}`, 'GET')
+)
+
+
+exports.module = search_Orders = async (qs) => (
+  Orderwrapper.proxyJsonRequest(`search_Orders/?q=${qs.q}`, 'GET')
+)
+
+exports.module = save_Address = async (body) => (
+  Orderwrapper.proxyJsonRequest(`save_Address`, 'POST',{
+    body,
+  })
+);
+
+exports.module = get_Address = async (qs) => (
+  Orderwrapper.proxyJsonRequest(`get_Address/${qs.userId}`, 'GET')
+);
+
+exports.module = edit_Address = async (body,qs) => (
+  Orderwrapper.proxyJsonRequest(`edit_Address/${qs.userId}/${qs.addressId}`, 'PUT',{
+    body,
+  })
+);
+
+exports.module = delete_Address = async (qs) => (
+  Orderwrapper.proxyJsonRequest(`delete_Address/${qs.userId}/${qs.addressId}`, 'DELETE')
+);
+
+ 
 
 
 /*
@@ -49,7 +91,7 @@ exports.module = GetAll_WishLists = async (userId) => (
   Productwrapper.proxyJsonRequest(`GetAll_WishLists/${userId}`, 'GET')
 );
 
-exports.module = search_Products_ForCustomers = async (params,qs) => (
+exports.module = search_Products_ForCustomers = async (params, qs) => (
   Productwrapper.proxyJsonRequest(`search_Products_ForCustomers/${params.categroy}?search=${qs.search}`, 'GET')
 );
 
@@ -65,5 +107,11 @@ module.exports = {
   Cart,
   Wish_List,
   Cart_List,
-  search_Products_ForCustomers
+  search_Products_ForCustomers,
+  create_Order,
+  get_OrderList,
+  get_OrderDetails,
+  save_Address,
+  get_Address,
+  edit_Address
 }

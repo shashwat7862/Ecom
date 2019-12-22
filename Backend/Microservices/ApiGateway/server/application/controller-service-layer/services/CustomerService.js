@@ -43,6 +43,47 @@ class CustomerService extends BaseService {
         callback(null, searchResult)
     }
 
+    async createOrder(req, callback) {
+        let orderResult = await create_Order(req.body);
+        callback(null, orderResult)
+    }
+
+    async getOrderList(req,callback){
+        let OrderList = await get_OrderList(req.params);
+        callback(null, OrderList)
+    }
+
+    async getOrderDetails(req,callback){
+        let OrderList = await get_OrderDetails(req.params);
+        callback(null, OrderList)
+    }
+
+    async searchOrders(req,callback){
+        let searchResult = await search_Orders(req.query);
+        callback(null, searchResult)
+    }
+
+    async saveAddress(req,callback){
+        let searchResult = await save_Address(req.body);
+        callback(null, searchResult)
+    }
+
+    async getAddress(req,callback){
+        let searchResult = await get_Address(req.params);
+        callback(null, searchResult)
+    }
+
+    async editAddress(req,callback){
+        let searchResult = await edit_Address(req.body,req.params);
+        callback(null, searchResult)
+    }
+
+    async deleteAddress(req,callback){
+        let searchResult = await delete_Address(req.params);
+        callback(null, searchResult)
+    }
+ 
+
     
 
 }

@@ -22,6 +22,7 @@ class cartComponent extends Component {
             totalSum: 0,
             defaultImage: "https://www.mnn.com/static/img/not_available.png",
         }
+        this.redirectToCheckOut = this.redirectToCheckOut.bind(this)
     }
 
     componentDidMount() {
@@ -29,23 +30,34 @@ class cartComponent extends Component {
 
     }
 
+    redirectToCheckOut() {
+        //alert("called");
+        this.props.history.push(`${process.env.PUBLIC_URL}/checkout/${JSON.stringify(this.state.cartItems)}`);
+    }
+
     getCartList() {
-        axios.get(`${Baseurl}/api/v1/customer/CartList/${this.state.customerDetails._id}`)
-            .then(response => {
-                var sum = 0
-                response.data.object.object[0].productDetails.forEach(function (data) {
-                    sum = sum + data.price
-                })
+        if (this.state.customerDetails) {
+            axios.get(`${Baseurl}/api/v1/customer/CartList/${this.state.customerDetails._id}`)
+                .then(response => {
+                    var sum = 0
+                    response.data.object.object[0].productDetails.forEach(function (data) {
+                        sum = sum + data.price
+                    });
 
-
-                this.setState({
-                    cartItems: response.data.object.object[0].productDetails,
-                    totalSum: sum
+                    this.setState({
+                        cartItems: response.data.object.object[0].productDetails,
+                        totalSum: sum
+                    })
                 })
+                .catch(error => {
+                    console.log(error);
+                });
+        } else {
+            this.setState({
+                cartItems: JSON.parse(localStorage.getItem('GuestCart')),
+                totalSum: 0
             })
-            .catch(error => {
-                console.log(error);
-            });
+        }
     }
 
     removeFromCart(productData) {
@@ -55,7 +67,7 @@ class cartComponent extends Component {
             "userId": this.state.customerDetails._id
         })
             .then(response => {
-                toast.success("Product Removed to Cart");
+                // toast.success("Product Removed to Cart");
                 this.getCartList();
                 console.log(response, "data")
             })
@@ -76,7 +88,8 @@ class cartComponent extends Component {
 
         const { symbol, total } = this.props;
         const { cartItems } = this.state;
-        console.log(cartItems,"cartItems")
+        console.log(cartItems, "cartItems")
+
 
 
         return (
@@ -84,7 +97,7 @@ class cartComponent extends Component {
                 {/*SEO Support*/}
                 <Helmet>
                     <title>WeShop | Cart List Page</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="cart" />
                 </Helmet>
                 {/*SEO Support End */}
 
@@ -182,7 +195,8 @@ class cartComponent extends Component {
                                     <Link to={`${process.env.PUBLIC_URL}/products`} className="btn btn-solid">continue shopping</Link>
                                 </div>
                                 <div className="col-6">
-                                    <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">check out</Link>
+                                    <button type="button" onClick={this.redirectToCheckOut} className="btn btn-solid" >Check Out</button>
+                                    {/* <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">check out</Link> */}
                                 </div>
                             </div>
                         </div>

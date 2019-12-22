@@ -60,7 +60,7 @@ class ProductService extends BaseService {
 
     }
 
-    
+
 
     async Product_ApprovalRequest(body, dynamicDomain, callback) {
         console.log(body, dynamicDomain)
@@ -138,41 +138,151 @@ class ProductService extends BaseService {
     }
 
     async Cart(action, body, callback) {
+        var self = this;
         console.log(action, "action", body);
         if (action == "ADD") {
-            domain.Cart.update(
-                { UserId: body.userId },
-                { $push: { productDetails: body.productData } },
-                {
-                    upsert: true
-                }, function (err, result) {
-                    if (err) {
-                        callback(err, null)
+
+            async.auto({
+                matchWithUserId: function (cb) {
+                    domain.Cart.find(
+                        {
+                            UserId: body.userId,
+                            productDetails: { $elemMatch: { productId: body.productData.productId } },
+                        },
+                        function (err, result) {
+                            console.log(err, result);
+                            cb(null, result)
+                        });
+
+                },
+                updateProduct: ['matchWithUserId', function (results, cb) {
+                    console.log("results.matchWithUserId",results.matchWithUserId,"------)")
+                    if (results.matchWithUserId.length == 0) {
+                        console.log("inside empty")
+                        self.pushTocart(body, cb)
+                    } else {
+                        let obj = results.matchWithUserId[0].toObject();
+                        console.log(obj._id,"------------------------ -id")
+                        if (obj.hasOwnProperty('productDetails')) {
+                            if (obj.productDetails.length == 0) {
+                                console.log("inside []")
+                                domain.Cart.remove({
+                                    _id: obj._id
+                                },
+                                    function (err, result) {
+                                        console.log(result,"remove-----------------------")
+                                        domain.Cart.update(
+                                            {
+                                                UserId: body.userId,
+                                                productDetails: { $elemMatch: { productId: body.productData.productId } },
+                                            },
+                                            {
+                                                $push: { productDetails: body.productData }
+                                            },
+                                            function (err, result) {
+                                                console.log(err, result);
+                                                cb(null, result)
+                                            });
+                                    });
+
+
+                            } else {
+                                console.log("inside inc")
+                                domain.Cart.update(
+                                    {
+                                        UserId: body.userId,
+                                        productDetails: { $elemMatch: { productId: body.productData.productId } },
+                                    },
+                                    {
+                                        $inc: { "productDetails.$.productCount": 1 },
+                                    },
+                                    function (err, result) {
+                                        cb(null, result)
+                                    });
+                            }
+                        } else {
+                            pushTocart(body, cb);
+                        }
                     }
-                    else {
-                        callback(null, {
-                            data: result
-                        })
-                    }
-                });
+
+                }],
+
+            }, function (err, results) {
+                console.log('err = ', err);
+                console.log('results = ', results);
+                if (!err) {
+                    callback(null, results)
+                } else {
+                    callback(err, null)
+                }
+
+            });
+
         } else if (action == "REMOVE") {
             domain.Cart.update(
-                { UserId: body.userId },
                 {
-                    $pull: { productDetails: { productId: body.productId } }
+                    UserId: body.userId,
+                    productDetails: {
+                        "$elemMatch": {
+                            productId: body.productId,
+                            productCount: { $gt: 0 }
+                        }
+                    },
                 },
+                { $inc: { "productDetails.$.productCount": -1 } },
                 function (err, result) {
-                    if (err) {
-                        callback(err, null)
-                    }
-                    else {
-                        callback(null, {
-                            data: result
-                        })
-                    }
+                    domain.Cart.update(
+                        {
+                            UserId: body.userId,
+                            productDetails: {
+                                "$elemMatch": {
+                                    productId: body.productId,
+                                    productCount: 0
+                                }
+                            },
+                        },
+                        {
+                            $pull: { productDetails: { productId: body.productId } }
+                        },
+                        function (error, _result) {
+                            if (err) {
+                                callback(err, null)
+                            }
+                            else {
+                                callback(null, {
+                                    data: result
+                                })
+                            }
+                        });
                 });
+
         }
 
+    }
+
+    pushTocart(body, cb) {
+        console.log("inside new")
+        domain.Cart.remove({
+            UserId: body.userId
+        },
+            function (err, result) {
+
+                domain.Cart.update(
+                    {
+                        UserId: body.userId,
+                        productDetails: { $elemMatch: { productId: body.productData.productId } },
+                    },
+                    {
+                        $push: { productDetails: body.productData }
+                    },
+                    {
+                        upsert:true
+                    },
+                    function (err, result) {
+                        console.log(err, result);
+                        cb(null, result)
+                    });
+            });
     }
 
 
@@ -217,6 +327,123 @@ class ProductService extends BaseService {
         }
 
     }
+
+    // async Wish_List(action, body, callback) {
+    //     var self = this;
+    //     console.log(action, "action", body);
+    //     if (action == "ADD") {
+
+    //         async.auto({
+    //             matchWithUserId: function (cb) {
+    //                 domain.WishList.find(
+    //                     {
+    //                         UserId: body.userId,
+    //                         productDetails: { $elemMatch: { productId: body.productData.productId } },
+    //                     },
+    //                     function (err, result) {
+    //                         console.log(err, result);
+    //                         cb(null, result)
+    //                     });
+
+    //             },
+    //             updateProduct: ['matchWithUserId', function (results, cb) {
+    //                 console.log("results.matchWithUserId",results.matchWithUserId,"------)")
+    //                 if (results.matchWithUserId.length == 0) {
+    //                     console.log("inside empty")
+    //                     self.pushToWishList(body, cb)
+    //                 } else {
+    //                     let obj = results.matchWithUserId[0].toObject();
+    //                     console.log(obj._id,"------------------------ -id")
+    //                     if (obj.hasOwnProperty('productDetails')) {
+                           
+    //                             console.log("inside inc")
+    //                             domain.WishList.update(
+    //                                 {
+    //                                     UserId: body.userId,
+    //                                     productDetails: { $elemMatch: { productId: body.productData.productId } },
+    //                                 },
+    //                                 {
+    //                                     $push: { productDetails: body.productData }
+    //                                 },
+    //                                 function (err, result) {
+    //                                     cb(null, result)
+    //                                 });
+                            
+    //                     } else {
+    //                         pushToWishList(body, cb);
+    //                     }
+    //                 }
+
+    //             }],
+
+    //         }, function (err, results) {
+    //             console.log('err = ', err);
+    //             console.log('results = ', results);
+    //             if (!err) {
+    //                 callback(null, results)
+    //             } else {
+    //                 callback(err, null)
+    //             }
+
+    //         });
+
+    //     } else if (action == "REMOVE") {
+           
+    //                 domain.WishList.update(
+    //                     {
+    //                         UserId: body.userId,
+    //                         productDetails: {
+    //                             "$elemMatch": {
+    //                                 productId: body.productId,
+    //                             }
+    //                         },
+    //                     },
+    //                     {
+    //                         $pull: { productDetails: { productId: body.productId } }
+    //                     },
+    //                     function (err, _result) {
+    //                         console.log(err,_result)
+    //                         if (err) {
+    //                             callback(err, null)
+    //                         }
+    //                         else {
+    //                             callback(null, {
+    //                                 data: _result
+    //                             })
+    //                         }
+    //                     });
+
+    //     }
+
+    // }
+
+    pushToWishList(body,cb){
+        console.log("inside new")
+        domain.WishList.remove({
+            UserId: body.userId
+        },
+            function (err, result) {
+
+                domain.WishList.update(
+                    {
+                        UserId: body.userId,
+                        productDetails: { $elemMatch: { productId: body.productData.productId } },
+                    },
+                    {
+                        $push: { productDetails: body.productData }
+                    },
+                    {
+                        upsert:true
+                    },
+                    function (err, result) {
+                        console.log(err, result);
+                        cb(null, result)
+                    });
+            });
+    }
+
+
+    
 
     async Cart_List(userId, callback) {
         try {
