@@ -18,10 +18,11 @@ class cartComponent extends Component {
         super(props)
         this.state = {
             customerDetails: customerDetails,
-            cartItems: [],
+            cartItems: [{}],
             totalSum: 0,
             defaultImage: "https://www.mnn.com/static/img/not_available.png",
         }
+        this.redirectToCheckOut = this.redirectToCheckOut.bind(this)
     }
 
     componentDidMount() {
@@ -29,39 +30,107 @@ class cartComponent extends Component {
 
     }
 
+    redirectToCheckOut() {
+        let prevUrl = localStorage.getItem('prevUrl');
+        if (this.state.customerDetails && prevUrl !== undefined) {
+            this.props.history.push(`${process.env.PUBLIC_URL}/checkout/${JSON.stringify(this.state.cartItems)}`);
+        } else {
+            localStorage.setItem('prevUrl', 'cart');
+            this.props.history.push(`${process.env.PUBLIC_URL}/login`);
+        }
+    }
+
     getCartList() {
-        axios.get(`${Baseurl}/api/v1/customer/CartList/${this.state.customerDetails._id}`)
-            .then(response => {
-                var sum = 0
-                response.data.object.object[0].productDetails.forEach(function (data) {
-                    sum = sum + data.price
+        let prevUrl = localStorage.getItem('prevUrl');
+        if (this.state.customerDetails && prevUrl ) {
+            axios.get(`${Baseurl}/api/v1/customer/CartList/${this.state.customerDetails._id}`)
+                .then(response => {
+                    var sum = 0
+                    response.data.object.object.cartList.forEach(function (data) {
+                        sum = sum + data.price
+                    });
+                    this.setState({
+                        cartItems: response.data.object.object.cartList,
+                        totalSum: sum
+                    })
                 })
+                .catch(error => {
+                    console.log(error);
+                });
+        } else {
 
+            let data = JSON.parse(localStorage.getItem('GuestCart'));
 
-                this.setState({
-                    cartItems: response.data.object.object[0].productDetails,
-                    totalSum: sum
-                })
+            console.log(data, "data cartItem");
+            let total = 0;
+            if (data) {
+                data.forEach(function (val) {
+                    total = total + val.price
+                });
+            }
+            this.setState({
+                cartItems: data,
+                totalSum: total
             })
-            .catch(error => {
-                console.log(error);
-            });
+        }
     }
 
     removeFromCart(productData) {
-        console.log(productData, "add to cart")
-        axios.put(`${Baseurl}/api/v1/customer/Cart/REMOVE`, {
-            "productId": productData.productId,
-            "userId": this.state.customerDetails._id
-        })
-            .then(response => {
-                toast.success("Product Removed to Cart");
-                this.getCartList();
-                console.log(response, "data")
+        let prevUrl = localStorage.getItem('prevUrl');
+        if (this.state.customerDetails && prevUrl ) {
+            axios.put(`${Baseurl}/api/v1/customer/Cart/REMOVE`, {
+                "productId": productData.productId,
+                "userId": this.state.customerDetails._id
             })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    // toast.success("Product Removed to Cart");
+                    this.getCartList();
+                    console.log(response, "data")
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        } else {
+            let guestCart = [];
+            let payload = {
+                "productId": productData.productId,
+                "userId": 'Guest'
+            }
+
+
+            let loadCart = (localStorage.getItem('GuestCart')) ? JSON.parse(localStorage.getItem('GuestCart')) : []
+
+            var isCartUpdated = false;
+            var isCartRemoved = false;
+            if (loadCart.length > 0) {
+                loadCart.forEach(function (product) {
+                    if (product.productId == payload.productId) {
+                        if (product.productCount == 1 || product.productCount == null) {
+                            // let indexof = loadCart.indexOf(product);
+                            // loadCart.splice(indexof, 1);
+                            isCartRemoved = true;
+                            isCartUpdated = true;
+                            localStorage.removeItem('GuestCart')
+                        } else {
+                            product.productCount = product.productCount - 1
+                            isCartUpdated = true
+                        }
+
+                    }
+                })
+            }
+
+            if (!isCartUpdated) {
+                loadCart.push(payload);
+            }
+
+            if (!isCartRemoved) {
+                localStorage.setItem('GuestCart', JSON.stringify(loadCart));
+            }
+
+            // toast.success("Product REMOVE to Cart");
+            this.getCartList();
+        }
     }
 
     incrementQty(item, number) {
@@ -76,7 +145,9 @@ class cartComponent extends Component {
 
         const { symbol, total } = this.props;
         const { cartItems } = this.state;
-        console.log(cartItems,"cartItems")
+        console.log(cartItems, "cartItems");
+
+
 
 
         return (
@@ -84,13 +155,13 @@ class cartComponent extends Component {
                 {/*SEO Support*/}
                 <Helmet>
                     <title>WeShop | Cart List Page</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="cart" />
                 </Helmet>
                 {/*SEO Support End */}
 
                 <Breadcrumb title={'Cart Page'} />
 
-                {cartItems.length > 0 ?
+                {cartItems ?
                     <section className="cart-section section-b-space">
                         <div className="container">
                             <div className="row">
@@ -182,7 +253,8 @@ class cartComponent extends Component {
                                     <Link to={`${process.env.PUBLIC_URL}/products`} className="btn btn-solid">continue shopping</Link>
                                 </div>
                                 <div className="col-6">
-                                    <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">check out</Link>
+                                    <button type="button" onClick={this.redirectToCheckOut} className="btn btn-solid" >Check Out</button>
+                                    {/* <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">check out</Link> */}
                                 </div>
                             </div>
                         </div>

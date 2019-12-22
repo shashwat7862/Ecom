@@ -7,6 +7,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="multikart">
     <meta name="author" content="multikart">
+    <style>
+    .rating input {
+    display: none;
+}
+.rating label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content:"\f005";
+}
+li {
+    list-style:none;
+}
+
+.ratingSelector input + label {
+    color: #FFD700;
+}
+.ratingSelector input:checked ~ input:not(:checked) ~ label {
+    color: #ddd;
+}
+.ratingSelector input:checked ~ input:not(:checked) + label:hover ~ label {
+    color: #ddd;
+}
+.ratingSelector:hover input + label,
+.ratingSelector:hover input:checked + label {
+    color: #FFED85;
+}
+.ratingSelector:hover input:checked ~ input:not(:checked) ~ label:hover,
+.ratingSelector:hover input:checked ~ input:not(:checked) + label {
+    color: #FFD700;
+}
+.ratingSelector:hover input:checked ~ input:not(:checked) ~ label:hover ~ label {
+    color: #ddd !important;
+}
+.ratingSelector input + label:hover ~ label {
+    color: #ddd !important;
+}
+</style>
     <link rel="shortcut icon" href="%PUBLIC_URL%/assets/images/landing-page/1.png" type="image/x-icon"/>
     <title>Weshop</title>
 

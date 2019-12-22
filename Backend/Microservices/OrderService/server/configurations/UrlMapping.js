@@ -5,40 +5,63 @@
 	    return {
 	      
 
-	        "/registerVendor": [{
+	        "/create_Order": [{
 	            method: "POST",
-	            action: controllers.authController.registerVendor,
+	            action: controllers.orderController.create_Order,
 	            views: {
 	                json: views.jsonView
 	            }
 			}],
-			
-			"/login_Vendor": [{
+			"/get_OrderList/:userId/:fetch/:limit/:skip": [{
+	            method: "GET",
+	            action: controllers.orderController.get_OrderList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/get_OrderDetails/:orderId": [{
+	            method: "GET",
+	            action: controllers.orderController.get_OrderDetails,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/search_Orders": [{
+	            method: "GET",
+	            action: controllers.orderController.search_Orders,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/save_Address": [{
 	            method: "POST",
-	            action: controllers.authController.login_Vendor,
+	            action: controllers.orderController.save_Address,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/get_Address/:userId": [{
+	            method: "GET",
+	            action: controllers.orderController.get_Address,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/edit_Address/:userId/:addressId": [{
+	            method: "PUT",
+	            action: controllers.orderController.edit_Address,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/delete_Address/:userId/:addressId": [{
+	            method: "DELETE",
+	            action: controllers.orderController.delete_Address,
 	            views: {
 	                json: views.jsonView
 	            }
 			}],
 
-			"/Send_OTP": [{
-	            method: "POST",
-	            action: controllers.authController.Send_OTP,
-	            views: {
-	                json: views.jsonView
-	            }
-			}],
-
-			"/Verify_OTP": [{
-	            method: "POST",
-	            action: controllers.authController.Verify_OTP,
-	            views: {
-	                json: views.jsonView
-	            }
-			}],
-			
-			
-			
 			
 	    };
 	};

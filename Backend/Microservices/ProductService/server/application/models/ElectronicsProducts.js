@@ -69,6 +69,10 @@ var ElectronicProductSchema = new mongooseSchema({
         required: true,
         trim: true
     },
+    inStockCount:{
+        type: Number,
+        required: true,
+    },
     
     isAvailable: {
         type: Boolean,

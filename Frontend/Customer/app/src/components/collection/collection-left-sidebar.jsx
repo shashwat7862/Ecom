@@ -6,32 +6,19 @@ import NewProduct from "../common/new-product";
 import Filter from "./common/filter";
 import FilterBar from "./common/filter-bar";
 import ProductListing from "./common/product-listing";
-
+import Baseurl from '../../api/url';
+import axios from 'axios';
 import Caurosel from '../common/carousel';
 
-const imgData = [
-  {
-    title: 'img1',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/3302d289479263.5df64624e47db.jpg"
-  },
-  {
-    title: 'img2',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/8791f289479263.5df64624e5594.jpg"
-  },
-  {
-    title: 'img3',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/918f0289479263.5df64624e4ecf.jpg"
-  },
-  {
-    title: 'img4',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/01a16289479263.5df64624e5c7c.jpg"
-  },
-]
-
+ 
 class CollectionLeftSidebar extends Component {
 
 	state = {
-		layoutColumns: 3
+		layoutColumns: 3,
+		products: [],
+		scrollData: [{
+			src: ''
+		}]
 	}
 
 	LayoutViewClicked(colums) {
@@ -44,12 +31,34 @@ class CollectionLeftSidebar extends Component {
 		document.querySelector(".collection-filter").style = "left: -15px";
 	}
 
+	componentDidMount() {
+		axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/10/0`)
+			.then(response => {
+				let scrollData = []
+
+				response.data.object.object.forEach(function (val) {
+					let obj = {}
+					obj.src = Baseurl + '/' + val.productImage
+					scrollData.push(obj)
+				});
+				this.setState({
+					scrollData: scrollData
+				});
+
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	}
+
 	render() {
 		const setting = {
 			dots: true,
 			infinite: true,
 			speed: 500,
 		}
+
+		console.log("this.state", this.state)
 		return (
 			<div>
 				{/*SEO Support*/}
@@ -123,7 +132,7 @@ class CollectionLeftSidebar extends Component {
 									</div>
 								</div>
 								<div className="col-12 pt-lg-5">
-									<Caurosel data={imgData} settings={setting} />
+									<Caurosel data={this.state.scrollData} settings={setting} />
 								</div>
 							</div>
 						</div>

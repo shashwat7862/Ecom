@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import Baseurl from '../../api/url'
 import Breadcrumb from "../common/breadcrumb";
@@ -23,12 +23,19 @@ class Login extends Component {
             "loginFrom": "email"
         })
             .then(response => {
-                localStorage.clear();
+                localStorage.removeItem('customerDetails');
+                localStorage.removeItem('authToken');
                 console.log(response, "data")
                 console.log(response.data.object.object.authToken);
                 localStorage.setItem('authToken', response.data.object.object.authToken);
                 localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
-                this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+                let prevUrl = localStorage.getItem('prevUrl');
+                localStorage.removeItem('prevUrl')
+                if (prevUrl) {
+                    this.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
+                } else {
+                    this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -43,14 +50,14 @@ class Login extends Component {
         })
     }
 
-    render (){
+    render() {
 
 
         return (
             <div>
-                <Breadcrumb title={'Login'}/>
-                
-                
+                <Breadcrumb title={'Login'} />
+
+
                 {/*Login section*/}
                 <section className="login-page section-b-space">
                     <div className="container">
@@ -62,12 +69,12 @@ class Login extends Component {
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
                                             <input type="text" name="email" onChange={this.onUpdateFormValue} className="form-control" id="email" placeholder="Email"
-                                                   required="" />
+                                                required="" />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="review">Password</label>
                                             <input type="password" name="password" onChange={this.onUpdateFormValue} className="form-control" id="review"
-                                                   placeholder="Enter your password" required="" />
+                                                placeholder="Enter your password" required="" />
                                         </div>
                                         <a onClick={this.loginCustomer} className="btn btn-solid">Login</a>
                                     </form>

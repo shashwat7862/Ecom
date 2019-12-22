@@ -1,41 +1,68 @@
 
+Saturday:-
+----------
 
-# Basic Features of Ecommerse
+header size reduce - arhient //
+checkout api intrigration & flow //
+add new address //
+get address //
+guest login   //
+add to cart bug fix   //
+wishlist bug fix  : 8pm //
+verticle scrool : arhient //
+till 11 : merge code //
+zoom features : assign to arhient //
+verticle scrool : assign to arhient //
 
-customer login : Done
-customer register : Done
-Customer can see all vendors products : Done
-can add to card  : done
-remove add to cart : done
-can add to wish list : done
-remove to wish list : done
-
-can order without payment
-show  order list
-
-
-show add to card list : done
-show wishlist : done
-
-search products
---------------------
+Sunday:-
+---------
 
 
-vendor login : Done
-vendor register : Done
-
-vendor can add products : Done
-vendor list out products : Done
-update product details :Done
-delete products : done
-search products : done
+cutomer addintion features 
+product review
+vendor ->product review
+admin -> product review   : 6:30 pm
+vendor -> order
+admin -> order        : 5pm
 
 
-----------------------
 
-Admin can approve products : done
-Admin can approve vendors : Done
 
+
+
+
+
+Todo
+
+order apis : done//
+header update : assign to arhient : done //
+zoom features : assign to arhient //
+verticle scrool : assign to arhient //
+
+header size reduce : assign to arhient
+
+guest login 
+checkout api intrigration & flow//
+gift vocher
+product review
+vendor ->product review
+admin -> product review
+vendor -> order
+admin -> order
+vendor -> additioanl features
+cutomer addintion features
+stock update->
+add to cart bug fix
+
+add new address
+edit address
+delete address
+get address
+
+scrool issue
+
+
+-----------------------------------------
 
 
 

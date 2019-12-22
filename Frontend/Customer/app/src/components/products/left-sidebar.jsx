@@ -43,9 +43,12 @@ class LeftSideBar extends Component {
       defaultImage: "https://www.mnn.com/static/img/not_available.png",
       currentImage: "https://www.mnn.com/static/img/not_available.png",
       productDetails: {},
-      hoverImage: null
+      hoverImage: null,
+     
     };
   }
+
+
 
   componentDidMount() {
     this.setState({

@@ -7,7 +7,7 @@ function NextArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "red" }}
+      style={{ ...style, display: "block", background: "black"  }}
       onClick={onClick}
     />
   );
@@ -18,7 +18,7 @@ function PrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "green" }}
+      style={{ ...style, display: "block", background: "black" }}
       onClick={onClick}
     />
   );
@@ -41,8 +41,8 @@ export default class Carousel extends Component {
     return (
       <Slider {...sliderProps}>
         {data.map((item, index) => (
-          <div key={index} style={{backgroundColor: '#ffffff', boxSizing: 'border-box', padding: 5}}>
-            <img src={item.src} style={{width: '100%', height: 190}} />
+          <div key={index} style={{backgroundColor: '#ffffff'}}>
+            <img src={item.src} style={{width: '80%', height: 150+'px'}} />
           </div>
         ))}
       </Slider>

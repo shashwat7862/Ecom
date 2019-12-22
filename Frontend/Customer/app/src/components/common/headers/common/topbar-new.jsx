@@ -9,23 +9,15 @@ class TopBar extends Component {
     return (
       <div className="top-header white-bg">
         <div className="row">
-          <div className="col-lg-6" style={{ paddingTop: 10 }}>
-            <form className="col-lg-12" style={{ width: '100%', height: 48, flexWrap: 'nowrap', boxShadow: "0px 3px 4px rgba(0, 0, 0, 0.19)" }} onSubmit={e => e.preventDefault()}>
-              <input
-                type='text'
-                size='45'
-                placeholder='Search a Product'
-                className="col-lg-11"
-                style={{ padding: 10, borderRadius: 10, border: 'none', height: '100%' }}
-              />
-              <button
-                type='submit'
-                className="btn-primary col-lg-1"
-                style={{ padding: 7 }}
-              // onClick={this.handleGoClick.bind(this)}
-              >
-                <i className="fa fa-search" />
-              </button>
+          <div className="col-lg-6" style={{ paddingTop: 26 }}>
+            {/* <form class="form-inline">
+  <i class="fas fa-search" aria-hidden="true"></i>
+  <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+    aria-label="Search"/>
+</form> */}
+            <form className="form-inline">
+              <input className="form-control mr-sm-2" style={{ width: 300 + 'px' }} type="search" placeholder="Search" aria-label="Search" />
+              <button className="btn btn-outline-default my-2 my-sm-0" type="submit">Search</button>
             </form>
           </div>
           <div className="col-lg-6" style={{ padding: 0, display: 'flex', justifyContent: 'center' }}>
@@ -42,25 +34,25 @@ class TopBar extends Component {
                 </ul>
               </li>
               <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{translate('wishlist')}</Link></li>
-              <CartContainer />
-              <li className="onhover-div mobile-setting">
-                <div><img src={`${process.env.PUBLIC_URL}/assets/images/icon/setting.png`} className="img-fluid" alt="" />
-                  <i className="fa fa-cog"></i></div>
-                <div className="show-div setting">
-                  <h6>language</h6>
-                  <ul>
-                    <li><a href={null} onClick={() => this.changeLanguage('en')}>English</a> </li>
-                    <li><a href={null} onClick={() => this.changeLanguage('fn')}>French</a> </li>
-                  </ul>
-                  <h6>currency</h6>
-                  <ul className="list-inline">
-                    <li><a href={null} onClick={() => this.props.changeCurrency('€')}>euro</a> </li>
-                    <li><a href={null} onClick={() => this.props.changeCurrency('₹')}>rupees</a> </li>
-                    <li><a href={null} onClick={() => this.props.changeCurrency('£')}>pound</a> </li>
-                    <li><a href={null} onClick={() => this.props.changeCurrency('$')}>doller</a> </li>
-                  </ul>
-                </div>
-              </li>
+              <li><CartContainer /></li>
+              {/* <li className="onhover-div mobile-setting">
+                  <div><img src={`${process.env.PUBLIC_URL}/assets/images/icon/setting.png`} className="img-fluid" alt="" />
+                    <i className="fa fa-cog"></i></div>
+                  <div className="show-div setting">
+                    <h6>language</h6>
+                    <ul>
+                      <li><a href={null} onClick={() => this.changeLanguage('en')}>English</a> </li>
+                      <li><a href={null} onClick={() => this.changeLanguage('fn')}>French</a> </li>
+                    </ul>
+                    <h6>currency</h6>
+                    <ul className="list-inline">
+                      <li><a href={null} onClick={() => this.props.changeCurrency('€')}>euro</a> </li>
+                      <li><a href={null} onClick={() => this.props.changeCurrency('₹')}>rupees</a> </li>
+                      <li><a href={null} onClick={() => this.props.changeCurrency('£')}>pound</a> </li>
+                      <li><a href={null} onClick={() => this.props.changeCurrency('$')}>doller</a> </li>
+                    </ul>
+                  </div>
+                </li> */}
             </ul>
           </div>
         </div>
