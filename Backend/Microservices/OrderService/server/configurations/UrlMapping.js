@@ -12,7 +12,7 @@
 	                json: views.jsonView
 	            }
 			}],
-			"/get_OrderList/:userId/:fetch/:limit/:skip": [{
+			"/get_OrderList/:userId/:vendorId/:fetch/:limit/:skip": [{
 	            method: "GET",
 	            action: controllers.orderController.get_OrderList,
 	            views: {

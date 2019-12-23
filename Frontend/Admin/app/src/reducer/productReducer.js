@@ -1,4 +1,4 @@
-import { ProductList, ProvideApproval } from '../Action/ProductAction'
+import { ProductList, ProvideApproval,OrderList,ReviewList } from '../Action/ProductAction'
 
 export default function ProductReducer(State = '', { type, payload }) {
     switch (type) {
@@ -6,6 +6,10 @@ export default function ProductReducer(State = '', { type, payload }) {
         case ProductList:
             return payload
         case ProvideApproval:
+            return payload
+        case OrderList:
+            return payload
+        case ReviewList:
             return payload
         
 

@@ -2,12 +2,34 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslate } from 'react-redux-multilingual';
 import CartContainer from "../../../../containers/CartContainer";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class TopBar extends Component {
+
+  constructor(props) {
+    const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
+    super(props)
+    this.state = {
+      customerDetails: customerDetails,
+      defaultImage: "https://www.mnn.com/static/img/not_available.png",
+    }
+  }
+
+  logOut=()=>{
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('customerDetails');
+    localStorage.removeItem('GuestCart');
+    localStorage.removeItem('prevUrl');
+    // this.props.history.push(`${process.env.PUBLIC_URL}/login`);
+    toast.success("logout Successfully ");
+    window.location.reload()
+  }
   render() {
     const { translate } = this.props;
     return (
       <div className="top-header white-bg">
+      <ToastContainer />
         <div className="row">
           <div className="col-lg-6" style={{ paddingTop: 26 }}>
             {/* <form class="form-inline">
@@ -24,14 +46,24 @@ class TopBar extends Component {
             <ul className="header-dropdown">
               <li className="onhover-dropdown mobile-account">
                 <i className="fa fa-user" aria-hidden="true"></i> {translate('my_account')}
-                <ul className="onhover-show-div">
-                  <li>
-                    <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
-                  </li>
-                  <li>
-                    <Link to={`${process.env.PUBLIC_URL}/register`} data-lng="en">Register</Link>
-                  </li>
-                </ul>
+                {(this.state.customerDetails) ?
+                  <ul className="onhover-show-div">
+                    <li onClick={this.logOut}>logout
+                 </li>
+
+                  </ul> :
+                  <ul className="onhover-show-div">
+                    <li>
+                      <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
+                    </li>
+                    <li>
+                      <Link to={`${process.env.PUBLIC_URL}/register`} data-lng="en">Register</Link>
+                    </li>
+                  </ul>
+                }
+
+
+
               </li>
               <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{translate('wishlist')}</Link></li>
               <li><CartContainer /></li>

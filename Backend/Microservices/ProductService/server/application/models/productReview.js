@@ -13,17 +13,27 @@ var ProductReviewSchema = new mongooseSchema({
     },
     startRating:
     {
-        type: String
+        type: String,
+        default:'5'
     },
     productId: {
         type: String
     },
-     productName: {
+    productName: {
+        type: String
+    },
+    productImage: {
+        type: String
+    },
+    vendorName: {
+        type: String
+    },
+    vendorId: {
         type: String
     }
 });
 
- 
+
 
 
 var productReview = mongoose.model('productReview', ProductReviewSchema);

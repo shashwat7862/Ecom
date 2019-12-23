@@ -146,7 +146,7 @@ class ProductService extends BaseService {
             function (err, result) {
                 console.log(result, "-------------555");
 
-                domain.Cart.remove({})
+                // domain.Cart.remove({})
                 let arr = result;
 
                 let finalResponse = []
@@ -262,7 +262,7 @@ class ProductService extends BaseService {
 
     }
 
-    save_ProductReview( data, callback) {
+    save_ProductReview(data, callback) {
         data.save((err, saveReviews) => {
             console.log("saveReviews", saveReviews, err)
 
@@ -279,159 +279,15 @@ class ProductService extends BaseService {
     }
 
     get_ProductReview(callback) {
-        callback(null, null)
+        console.log("get_ProductReview 3")
+        domain.ProductReview.find({}, function (err,result) {
+            console.log(err,result,"----------")
+            callback(null,{
+                reviewList:result
+            })
+        })
     }
 
-
-
-
-
-    // async __Cart(action, body, callback) {
-    //     var self = this;
-    //     console.log(action, "action", body);
-    //     if (action == "ADD") {
-
-    //         async.auto({
-    //             matchWithUserId: function (cb) {
-    //                 domain.Cart.find(
-    //                     {
-    //                         UserId: body.userId,
-    //                         // productDetails: { $elemMatch: { productId: body.productData.productId } },
-    //                     },
-    //                     function (err, result) {
-    //                         console.log(err, result);
-    //                         cb(null, result)
-    //                     });
-
-    //             },
-    //             updateProduct: ['matchWithUserId', function (results, cb) {
-    //                 console.log("results.matchWithUserId", results.matchWithUserId, "------)")
-    //                 if (results.matchWithUserId.length == 0) {
-    //                     console.log("inside empty")
-    //                     self.pushTocart(body, cb)
-    //                 } else {
-    //                     let obj = results.matchWithUserId[0].toObject();
-    //                     console.log(obj._id, "------------------------ -id")
-    //                     if (obj.hasOwnProperty('productDetails')) {
-    //                         if (obj.productDetails.length > 0) {
-    //                             console.log("inside []");
-    //                             domain.Cart.find(
-    //                                 {
-    //                                     UserId: body.userId,
-    //                                     productDetails: { $elemMatch: { productId: body.productData.productId } },
-    //                                 },
-    //                                 function (err, result) {
-    //                                     console.log(err, result, "999999999999999999999");
-
-    //                                     if (result.length == 0) {
-    //                                         console.log("push here", body, "body", body.productData)
-    //                                         domain.Cart.update(
-    //                                             {
-    //                                                 UserId: body.userId,
-    //                                                 productDetails: { $elemMatch: { productId: body.productData.productId } },
-    //                                             },
-    //                                             { "$push": { productDetails: body.productData } },
-    //                                             {
-    //                                                 upsert: true
-    //                                             },
-    //                                             function (err, result) {
-    //                                                 console.log(err, result);
-    //                                                 cb(null, result)
-    //                                             });
-    //                                     } else {
-    //                                         console.log("inside inc")
-    //                                         domain.Cart.update(
-    //                                             {
-    //                                                 UserId: body.userId,
-    //                                                 productDetails: { $elemMatch: { productId: body.productData.productId } },
-    //                                             },
-    //                                             {
-    //                                                 $inc: { "productDetails.$.productCount": 1 },
-    //                                             },
-    //                                             function (err, result) {
-    //                                                 cb(null, result)
-    //                                             });
-    //                                     }
-
-    //                                 });
-
-
-
-
-    //                         } else {
-    //                             console.log("inside inc 2")
-    //                             domain.Cart.update(
-    //                                 {
-    //                                     UserId: body.userId,
-    //                                     productDetails: { $elemMatch: { productId: body.productData.productId } },
-    //                                 },
-    //                                 {
-    //                                     $inc: { "productDetails.$.productCount": 1 },
-    //                                 },
-
-    //                                 function (err, result) {
-    //                                     cb(null, result)
-    //                                 });
-    //                         }
-    //                     } else {
-    //                         pushTocart(body, cb);
-    //                     }
-    //                 }
-
-    //             }],
-
-    //         }, function (err, results) {
-    //             console.log('err = ', err);
-    //             console.log('results = ', results);
-    //             if (!err) {
-    //                 callback(null, results)
-    //             } else {
-    //                 callback(err, null)
-    //             }
-
-    //         });
-
-    //     } else if (action == "REMOVE") {
-    //         domain.Cart.update(
-    //             {
-    //                 UserId: body.userId,
-    //                 productDetails: {
-    //                     "$elemMatch": {
-    //                         productId: body.productId,
-    //                         productCount: { $gt: 0 }
-    //                     }
-    //                 },
-    //             },
-    //             { $inc: { "productDetails.$.productCount": -1 } },
-    //             function (err, result) {
-    //                 domain.Cart.update(
-    //                     {
-    //                         UserId: body.userId,
-    //                         productDetails: {
-    //                             "$elemMatch": {
-    //                                 productId: body.productId,
-    //                                 productCount: 0
-    //                             }
-    //                         },
-    //                     },
-    //                     {
-    //                         $pull: { productDetails: { productId: body.productId } }
-    //                     },
-    //                     function (error, _result) {
-    //                         if (err) {
-    //                             callback(err, null)
-    //                         }
-    //                         else {
-    //                             callback(null, {
-    //                                 data: result
-    //                             })
-    //                         }
-    //                     });
-    //             });
-
-    //     }
-
-    // }
 
     pushTocart(body, cb) {
         console.log("inside new")
@@ -486,6 +342,9 @@ class ProductService extends BaseService {
                 { UserId: body.userId },
                 {
                     $pull: { productDetails: { productId: body.productId } }
+                },
+                {
+                    multi:true
                 },
                 function (err, result) {
                     if (err) {

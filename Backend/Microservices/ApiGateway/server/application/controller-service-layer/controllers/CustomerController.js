@@ -72,6 +72,7 @@ module.exports = function () {
 	}
 
 	var getProductReview = function (req, res, callback) {
+		console.log("called")
 		this.services.customerService.getProductReview(req, callback);
 	}
  

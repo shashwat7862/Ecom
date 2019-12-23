@@ -41,7 +41,17 @@ class OrderService extends BaseService {
                     });
                 }],
                 stockUpdateInProductTable: ['saveDataInPaymentTable', function (results, cb) {
-                    cb()
+                    domain.Cart.remove({
+                        UserId: payload.UserId
+                    },{
+                        multi:true
+                    },function(err,data){
+                        cb(null,{
+                            data:data,
+                            userId:payload.UserId
+                        })
+                    })
+                    
                 }],
             }, function (err, results) {
                 console.log('err = ', err);
@@ -107,12 +117,19 @@ class OrderService extends BaseService {
         }
     }
 
-    async get_OrderList(userId, page, callback) {
+    async get_OrderList(userId,VendorId, page, callback) {
 
         var query;
         if (page.fetch == 'All') {
             query = {
                 where: {},
+                offset: page.skip, limit: page.limit
+            }
+        }else if (page.fetch == 'Vendor') {
+            query = {
+                where: {
+                    VendorId:VendorId
+                },
                 offset: page.skip, limit: page.limit
             }
         } else {

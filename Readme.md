@@ -13,18 +13,22 @@ verticle scrool : arhient //
 till 11 : merge code //
 zoom features : assign to arhient //
 verticle scrool : assign to arhient //
+product review //
+vendor ->product review // 
+admin -> product review  //
+vendor -> order //
+admin -> order    //
+
 
 Sunday:-
 ---------
 
 
-cutomer addintion features 
-product review
-vendor ->product review
-admin -> product review   : 6:30 pm
-vendor -> order
-admin -> order        : 5pm
 
+cutomer addintion features 
+
+
+remove from cart after checkout    1
 
 
 

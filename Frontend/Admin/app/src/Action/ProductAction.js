@@ -2,6 +2,8 @@ import axios from 'axios';
 import Baseurl from '../assets/data/url'
 export const ProductList = 'product:ProductList';
 export const ProvideApproval = 'product:ProvideApproval';
+export const OrderList = 'product:OrderList';
+export const ReviewList = 'product:ReviewList';
 
 function Product_List(data) {
   return {
@@ -10,9 +12,24 @@ function Product_List(data) {
   };
 }
 
+function Order_List(data) {
+  return {
+    type: OrderList,
+    payload: data
+  };
+}
+
+
 function provide_Approval(data) {
   return {
     type: ProvideApproval,
+    payload: data
+  };
+}
+
+function Review_List(data){
+  return {
+    type: ReviewList,
     payload: data
   };
 }
@@ -28,6 +45,27 @@ export function productList(isApprove) {
       });
   };
 }
+
+export function orderList() {
+  return function (dispatch) {
+    return axios.get(`${Baseurl}/api/v1/common/getOrderList/null/null/All/10/0`)
+      .then(({ data }) => {
+        console.log(data)
+        dispatch(Order_List(data));
+      });
+  };
+}
+
+export function reviewList() {
+  return function (dispatch) {
+    return axios.get(`${Baseurl}/api/v1/common/getProductReview`)
+      .then(({ data }) => {
+        console.log(data)
+        dispatch(Review_List(data));
+      });
+  };
+}
+
 
 export function provideApproval(payload) {
   return function (dispatch) {

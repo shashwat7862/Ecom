@@ -17,6 +17,7 @@ global.url = require('url');
 global.validate = require('express-validation');
 global.Joi = require('joi');
 
+
 // Database dependencies and Connection setting 
 global.knex = require('knex');
 global.dbConnection = require('./Datasource.js');

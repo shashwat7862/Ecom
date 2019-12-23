@@ -1,19 +1,20 @@
 import React, { Component, Fragment } from 'react'
-import Breadcrumb from '../common/breadcrumb';
+import Breadcrumb from '../../common/breadcrumb';
 import ReactTable from 'react-table';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Baseurl from '../../assets/data/urls'
-import { orderList } from '../../Action/ProductAction';
+import Baseurl from '../../../assets/data/urls'
+import { reviewList, searchProducts } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import Switch from "react-switch";
 
-export class Orders extends Component {
+export class Digital_pro_review extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            orderList: [{}],
+            reviewList: [{}],
             cols: ["productName", "Age"],
             isLoading: false,
             checked: true,
@@ -25,11 +26,11 @@ export class Orders extends Component {
     }
 
     handleChange(checked) {
-        console.log(checked)
+    console.log(checked)
         this.setState({
             checked
         });
-        this.props.getOrderList(this.state.vendorData._id)
+        this.props.getReviewList()
 
     }
 
@@ -44,7 +45,20 @@ export class Orders extends Component {
         this.props.productSearch(searchQuery, this.state.vendorData._id)
     }
 
-
+    deleteProduct(data) {
+        axios.delete(`${Baseurl}/api/v1/vendor/DeleteProduct/electronics/${data.original._id}`)
+            .then(response => {
+                toast.success("Successfully Deleted !");
+                this.props.getReviewList();
+                setTimeout(function () {
+                    window.location.reload()
+                }, 500)
+            })
+            .catch(error => {
+                console.error(error);
+                toast.error("Error Occurs !")
+            });
+    }
 
     editProductData(data) {
         console.log(JSON.stringify(data.original), "JSON.stringify(data.original)")
@@ -53,7 +67,7 @@ export class Orders extends Component {
 
 
     componentDidMount() {
-        this.props.getOrderList(this.state.vendorData._id)
+        this.props.getReviewList()
     }
 
 
@@ -64,19 +78,12 @@ export class Orders extends Component {
         console.log(this.props, "this.props-------------------------------render");
 
         const columns = [{
-            Header: 'Order ID',
-            accessor: 'orderId',
-            style: {
-                "textAlign": "center"
-            },
-            minWidth: 100
-        }, {
             Header: 'Product ID',
             accessor: 'productId',
             style: {
                 "textAlign": "center"
             },
-            minWidth: 50
+            minWidth: 100
         },
         {
             Header: 'Image',
@@ -87,30 +94,30 @@ export class Orders extends Component {
             ),
             minWidth: 55
         }, {
-            Header: 'Status',
-            accessor: 'orderStatus',
+            Header: 'Rating',
+            accessor: 'startRating',
             style: {
                 "textAlign": "center"
             },
-            minWidth: 50
+            minWidth: 55
         }, {
-            Header: 'Product Price',
-            accessor: 'productPrice',
+            Header: 'Review',
+            accessor: 'review',
             style: {
                 "textAlign": "center"
             },
-            minWidth: 40
+            minWidth: 90
         }, {
-            Header: 'Product',
-            accessor: 'productName',
+            Header: 'BY',
+            accessor: 'byUser',
             sortable: false,
             style: {
                 "textAlign": "center"
             },
             minWidth: 50
         }, {
-            Header: "Order Date",
-            accessor: 'createdAt',
+            Header: "Vendor Name",
+            accessor: 'vendorName',
             style: {
                 "textAlign": "center"
             },
@@ -120,7 +127,7 @@ export class Orders extends Component {
         return (
             <Fragment>
                 <ToastContainer />
-                <Breadcrumb title="Manage Orders" parent="Digital" />
+                <Breadcrumb title="Product Reviews" parent="Digital" />
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-sm-12">
@@ -133,7 +140,7 @@ export class Orders extends Component {
                                     <div className="clearfix"></div>
                                     <div id="basicScenario" className="product-physical">
                                         <ReactTable
-                                            data={this.props.orderList}
+                                            data={this.props.reviewList}
                                             columns={columns}
                                             defaultPageSize={7}
                                             noDataText={"Please Add Products to see the Product List"}
@@ -154,16 +161,16 @@ export class Orders extends Component {
 const mapStateToProps = (state) => {
     console.log("state---------mapto", state);
     return {
-        orderList: (state.ProductReducer != "") ? state.ProductReducer.object.object.data : [{}]
+        reviewList: (state.ProductReducer != "" ) ? state.ProductReducer.object.object.reviewList : [{}]
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getOrderList: (vendorId) => { dispatch(orderList(vendorId)) },
+        getReviewList: () => { dispatch(reviewList()) },
         // productSearch: (query, vendor_id) => { dispatch(searchProducts(query, vendor_id)) }
     }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Orders);
+export default connect(mapStateToProps, mapDispatchToProps)(Digital_pro_review);

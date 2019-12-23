@@ -1,4 +1,4 @@
-import { ProductList, AddProduct ,EditProduct ,SearchProducts} from '../Action/ProductAction'
+import { ProductList, AddProduct ,EditProduct ,SearchProducts,ReviewList,OrderList} from '../Action/ProductAction'
 
 export default function ProductReducer(State = '', { type, payload }) {
     switch (type) {
@@ -10,6 +10,10 @@ export default function ProductReducer(State = '', { type, payload }) {
         case EditProduct:
             return payload
         case SearchProducts:
+            return payload
+        case ReviewList:
+             return payload
+        case OrderList:
             return payload
 
         default:

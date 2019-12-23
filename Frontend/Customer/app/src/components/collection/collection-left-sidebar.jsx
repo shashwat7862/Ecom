@@ -39,6 +39,8 @@ class CollectionLeftSidebar extends Component {
 				response.data.object.object.forEach(function (val) {
 					let obj = {}
 					obj.src = Baseurl + '/' + val.productImage
+					obj.price =  val.price
+					obj.name = val.productName
 					scrollData.push(obj)
 				});
 				this.setState({
@@ -78,8 +80,9 @@ class CollectionLeftSidebar extends Component {
 
 									<StickyBox offsetTop={20} offsetBottom={20}>
 										<div>
-											{/* <Filter/> */}
+											<Filter/>
 											<NewProduct />
+											
 											{/* <div className="collection-sidebar-banner">
                                                 <a href="#">
                                                     <img src={`${process.env.PUBLIC_URL}/assets/images/side-banner.png`} className="img-fluid" alt="" />
@@ -87,6 +90,7 @@ class CollectionLeftSidebar extends Component {
                                             </div> */}
 										</div>
 									</StickyBox>
+									
 									{/*side-bar banner end here*/}
 								</div>
 								<div className="collection-content col-sm-9">
@@ -94,14 +98,14 @@ class CollectionLeftSidebar extends Component {
 										<div className="">
 											<div className="row">
 												<div className="col-sm-12">
-													{/* <div className="top-banner-wrapper"> */}
-													{/* <a href="#"><img src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`} className="img-fluid" alt=""/></a>
-                                                        <div className="top-banner-content small-section">
+													<div className="top-banner-wrapper">
+													<a href="#"><img src="http://img5a.flixcart.com/www/promos/new/20150819-154015-slider-1.jpg" className="img-fluid" alt=""/></a>
+                                                        {/* <div className="top-banner-content small-section">
                                                             <h4>fashion</h4>
                                                             <h5>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h5>
                                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
                                                         </div> */}
-													{/* </div> */}
+													</div>
 													<div className="collection-product-wrapper">
 														<div className="product-top-filter">
 															<div className="container-fluid p-0">
@@ -117,13 +121,13 @@ class CollectionLeftSidebar extends Component {
 																</div>
 																<div className="row">
 																	<div className="col-12">
-																		{/* <FilterBar onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)}/> */}
+																		<FilterBar onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)}/>
 																	</div>
 																</div>
 															</div>
 														</div>
 
-														{/*Products Listing Component*/}
+														{/* Products Listing Component */}
 														<ProductListing colSize={this.state.layoutColumns} />
 													</div>
 												</div>

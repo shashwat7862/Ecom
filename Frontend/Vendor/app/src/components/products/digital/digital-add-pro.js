@@ -7,8 +7,9 @@ import Baseurl from '../../../assets/data/urls';
 import { addProduct } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import _ from 'underscore';
 
- 
+
 
 export class Digital_add_pro extends Component {
     constructor(props) {
@@ -25,7 +26,10 @@ export class Digital_add_pro extends Component {
             isAvailable: true,
             model: '',
             size: '',
-            productImage:'',
+            customField: '',
+            customValue: '',
+            AdditionalFeatures: {},
+            productImage: '',
             vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
         }
 
@@ -38,7 +42,12 @@ export class Digital_add_pro extends Component {
     }
 
     onUpdateChange(e) {
-        console.log(e.target.name, e.target.value, "change")
+        console.log(e.target.name, e.target.value, "change");
+
+        // if(e.target.name == 'customeField' || e.target.value == 'customeValue' ){
+        //     let obj = this.state.AdditionalFeatures;
+
+        // }
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -91,7 +100,8 @@ export class Digital_add_pro extends Component {
             isAvailable: (this.state.isAvailable == 'on') ? true : false,
             title: this.state.title,
             vendorId: this.state.vendorData._id,
-            productImage: this.state.productImage
+            productImage: this.state.productImage,
+            addCustomeFeatures:this.state.AdditionalFeatures
         })
     }
 
@@ -100,12 +110,12 @@ export class Digital_add_pro extends Component {
         if (this.props !== nextProps) {
             toast.success("Product Saved Successfully");
 
-            let history =this.props.history
+            let history = this.props.history
 
-            setTimeout(function(){
+            setTimeout(function () {
                 history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
-            },1000)
-            
+            }, 1000)
+
             this.setState({
                 category: '',
                 productName: '',
@@ -130,6 +140,20 @@ export class Digital_add_pro extends Component {
         else
             str = str.toString();
         return str.replace(/<[^>]*>/g, '');
+    }
+
+    addCustomeFeatures = () => {
+        console.log(this.state.customField);
+        console.log(this.state.customValue);
+        let obj = this.state.AdditionalFeatures;
+        obj[this.state.customField] =  this.state.customValue
+        console.log("add feta",obj);
+
+        this.setState({
+            AdditionalFeatures: obj,
+            customField:'',
+            customValue:''
+        })
     }
 
 
@@ -192,6 +216,30 @@ export class Digital_add_pro extends Component {
                                         </div>
                                         <label className="col-form-label pt-0"> Product Upload</label><br></br>
                                         <input type="file" onChange={this.uploadProductImage} ></input>
+                                        <div className="form-group">
+                                            <br />
+                                            <label className="col-form-label pt-0"> <b>Additional Features</b></label><br></br>
+                                            <label className="col-form-label">Custome Field</label>
+                                            <input className="form-control" name="customField" value={this.state.customField} onChange={this.onUpdateChange} id="validationCustom02" type="text" required="" />
+
+                                            <label className="col-form-label"><span></span> Custome Value</label>
+                                            <input className="form-control" name="customValue" value={this.state.customValue} onChange={this.onUpdateChange} id="validationCustom02" type="text" required="" />
+                                            <br></br>
+                                            <input type="button" className="btn" value="Add" onClick={this.addCustomeFeatures}></input>
+                                        </div>
+
+                                        <div>
+                                                            {(() => {
+                                                                let container = []; _.each(this.state.AdditionalFeatures, function(value, key) {
+                                                                    console.log(key, value);
+                                                                
+                                                                    container.push(
+                                                                        <div   key={key} >
+                                                                                <span>{key}- {value}</span>
+                                                                        </div>)
+                                                                }); return container;
+                                                            })()}
+                                                        </div>
                                     </div>
                                 </div>
                             </div>

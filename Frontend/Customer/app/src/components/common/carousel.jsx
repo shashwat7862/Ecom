@@ -7,7 +7,7 @@ function NextArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "black"  }}
+      style={{ ...style, display: "block", background: "black" }}
       onClick={onClick}
     />
   );
@@ -30,7 +30,7 @@ export default class Carousel extends Component {
       dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 3,
+      slidesToShow: 10,
       slidesToScroll: 1,
       initialSlide: 0,
       nextArrow: <NextArrow />,
@@ -41,8 +41,9 @@ export default class Carousel extends Component {
     return (
       <Slider {...sliderProps}>
         {data.map((item, index) => (
-          <div key={index} style={{backgroundColor: '#ffffff'}}>
-            <img src={item.src} style={{width: '80%', height: 150+'px'}} />
+          <div key={index} style={{ backgroundColor: '#ffffff' }}>
+            <img src={item.src} style={{ width: '80%', height: 150 + 'px' }} />
+            <span style={{ fontWeight: 'bolder', marginLeft: 20 + 'px' }}>{item.name} : {item.price}</span>
           </div>
         ))}
       </Slider>

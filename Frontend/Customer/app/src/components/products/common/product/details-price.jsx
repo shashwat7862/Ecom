@@ -60,7 +60,13 @@ class DetailsWithPrice extends Component {
         this.setState({ quantity: parseInt(e.target.value) })
     }
 
-    addToWishList(productData) {
+    buyNow = (product) => {
+        // alert("buyNow");
+        console.log("prodyct buy now",product)
+        this.props.history.push(`${process.env.PUBLIC_URL}/checkout/${JSON.stringify(product)}`);
+    }
+
+    addToWishList = (productData) => {
         console.log(productData, "add to cart")
         if (this.state.customerDetails) {
             axios.put(`${Baseurl}/api/v1/customer/WishList/ADD`, {
@@ -100,7 +106,7 @@ class DetailsWithPrice extends Component {
             localStorage.setItem('GuestCart', JSON.stringify(guestCart))
         }
     }
-    addToCart(productData) {
+    addToCart = (productData) => {
         console.log(productData, "add to cart")
 
         if (this.state.customerDetails) {
@@ -137,24 +143,24 @@ class DetailsWithPrice extends Component {
                 "VendorName": productData.vendorId.fullName,
                 "userId": 'Guest'
             }
-          
+
 
             let loadCart = (localStorage.getItem('GuestCart')) ? JSON.parse(localStorage.getItem('GuestCart')) : []
-            
+
             var isCartUpdated = false;
             if (loadCart.length > 0) {
                 loadCart.forEach(function (product) {
                     if (product.productId == payload.productId) {
                         product.productCount = product.productCount + payload.productCount;
                         isCartUpdated = true
-                    } 
+                    }
                 })
             }
 
-            if(!isCartUpdated){
+            if (!isCartUpdated) {
                 loadCart.push(payload);
             }
-            
+
             localStorage.setItem('GuestCart', JSON.stringify(loadCart));
             toast.success("Product Add to Cart")
         }
@@ -244,10 +250,10 @@ class DetailsWithPrice extends Component {
                     </div>
                     <div className="product-buttons" >
                         <a className="btn btn-solid" onClick={() => this.addToCart(item)}>add to cart</a>
-                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => this.addToCart(item, this.state.quantity)} >buy now</Link>
+                        {/* <a className="btn btn-solid" onClick={() => this.buyNow(item)}>add to cart</a> */}
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">product details</h6>
+                        <h6 className="product-title">Product Details</h6>
                         <p>{item.shortDetails}</p>
                     </div>
                     <div className="border-product">
@@ -259,10 +265,13 @@ class DetailsWithPrice extends Component {
                                 <li><a href="https://twitter.com/" target="_blank"><i className="fa fa-twitter"></i></a></li>
                                 <li><a href="https://www.instagram.com/" target="_blank"><i className="fa fa-instagram"></i></a></li>
                             </ul>
-                            <button className="wishlist-btn" onClick={() => this.addToWishList(item)}><i
-                                className="fa fa-heart"></i><span
-                                    className="title-font">Add To WishList</span>
-                            </button>
+                            {(this.state.customerDetails)?
+                             <button className="wishlist-btn" onClick={() => this.addToWishList(item)}><i
+                             className="fa fa-heart"></i><span
+                                 className="title-font">Add To WishList</span>
+                         </button> : null
+                        }
+                           
                         </div>
                     </div>
                     <div className="border-product">

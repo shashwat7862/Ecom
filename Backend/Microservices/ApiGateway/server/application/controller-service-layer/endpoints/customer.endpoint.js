@@ -31,7 +31,7 @@ exports.module = create_Order = async (body) => (
 )
 
 exports.module = get_OrderList = async (qs) => (
-  Orderwrapper.proxyJsonRequest(`get_OrderList/${qs.userId}/${qs.fetch}/${qs.limit}/${qs.skip}`, 'GET')
+  Orderwrapper.proxyJsonRequest(`get_OrderList/${qs.userId}/${qs.vendorId}/${qs.fetch}/${qs.limit}/${qs.skip}`, 'GET')
 )
 
 exports.module = get_OrderDetails = async (qs) => (

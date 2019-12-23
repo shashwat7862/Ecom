@@ -14,12 +14,13 @@ class DetailsTopTabs extends Component {
         const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
         super(props)
         this.state = {
-            customerDetails: (customerDetails)?customerDetails:{
-                email:''
+            customerDetails: (customerDetails) ? customerDetails : {
+                email: ''
             },
             defaultImage: "https://www.mnn.com/static/img/not_available.png",
             review: '',
-            reviewTitle: ''
+            reviewTitle: '',
+            startRating: ''
         }
         this.onUpdateChange = this.onUpdateChange.bind(this);
     }
@@ -29,16 +30,19 @@ class DetailsTopTabs extends Component {
         axios.post(`${Baseurl}/api/v1/customer/saveProductReview/${this.state.customerDetails._id}`, {
             "title": this.state.reviewTitle,
             "review": this.state.review,
-            "byUser": this.state.customerDetails._id,
-            "startRating": "3",
+            "byUser": (this.state.customerDetails._id) ? this.state.customerDetails._id : 'Guest123',
+            "startRating": (this.state.startRating)?this.state.startRating : "5",
             "productId": this.props.item._id,
-            "productName": this.props.item.productName
+            "productName": this.props.item.productName,
+            "productImage": this.props.item.productImage,
+            "vendorId": this.props.item.vendorId._id,
+            "vendorName": this.props.item.vendorId.fullName
         })
             .then(response => {
                 toast.success("Thanks For Review");
                 this.setState({
-                    reviewTitle:'',
-                    review:''
+                    reviewTitle: '',
+                    review: ''
                 })
                 console.log(response, "data")
             })
@@ -51,6 +55,14 @@ class DetailsTopTabs extends Component {
         console.log(e.target.name, e.target.value, "change")
         this.setState({
             [e.target.name]: e.target.value
+        })
+    }
+
+
+    setStatus = (e) => {
+        console.log(e.target.value, "setStatus val")
+        this.setState({
+            startRating: e.target.value
         })
     }
 
@@ -158,16 +170,16 @@ class DetailsTopTabs extends Component {
                                                     </div> */}
                                                 <ul className="rating">
                                                     <li> <span className="ratingSelector">
-                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-1-5" value="1" className="radio" />
-                                                        <label className="full" for="Degelijkheid-1-5"></label>
-                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-2-5" value="2" className="radio" />
-                                                        <label className="full" for="Degelijkheid-2-5"></label>
-                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-3-5" value="3" className="radio" />
-                                                        <label className="full" for="Degelijkheid-3-5"></label>
-                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-4-5" value="4" className="radio" />
-                                                        <label className="full" for="Degelijkheid-4-5"></label>
-                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-5-5" value="5" className="radio" />
-                                                        <label className="full" for="Degelijkheid-5-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-1-5" onClick={this.setStatus} value="1" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-1-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-2-5" onClick={this.setStatus} value="2" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-2-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-3-5" onClick={this.setStatus} value="3" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-3-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-4-5" onClick={this.setStatus} value="4" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-4-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-5-5" onClick={this.setStatus} value="5" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-5-5"></label>
                                                     </span>
                                                     </li>
                                                 </ul>

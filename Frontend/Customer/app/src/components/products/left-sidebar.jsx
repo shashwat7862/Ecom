@@ -16,22 +16,7 @@ import ImageZoom from './common/product/image-zoom'
 import SmallImages from './common/product/small-image'
 import Baseurl from '../../api/url';
 const ImgData = [
-  {
-    title: 'img1',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/3302d289479263.5df64624e47db.jpg"
-  },
-  {
-    title: 'img2',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/8791f289479263.5df64624e5594.jpg"
-  },
-  {
-    title: 'img3',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/918f0289479263.5df64624e4ecf.jpg"
-  },
-  {
-    title: 'img4',
-    src: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/01a16289479263.5df64624e5c7c.jpg"
-  }
+  
 ]
 class LeftSideBar extends Component {
   constructor() {
@@ -179,6 +164,7 @@ class LeftSideBar extends Component {
                       </div>
                     </div>
                     <DetailsTopTabs item={productDetails} />
+                    
                   </div>
                 </div>
               </div>

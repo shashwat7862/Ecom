@@ -186,7 +186,7 @@
 	                json: views.jsonView
 	            }
 			}],
-			"/api/v1/common/getOrderList/:userId/:fetch/:limit/:skip": [{
+			"/api/v1/common/getOrderList/:userId/:vendorId/:fetch/:limit/:skip": [{
 				method: "GET",
 	            action: controllers.customerController.getOrderList,
 	            views: {

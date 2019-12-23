@@ -6,7 +6,7 @@ module.exports = function () {
 	}
 
 	var get_OrderList = function (req, res, callback) {
-		this.services.orderService.get_OrderList(req.params.userId, {
+		this.services.orderService.get_OrderList(req.params.userId,req.params.vendorId, {
 			fetch: req.params.fetch,
 			limit: parseInt(req.params.limit),
 			skip: parseInt(req.params.skip)

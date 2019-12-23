@@ -43,6 +43,7 @@ class cartComponent extends Component {
     getCartList() {
         let prevUrl = localStorage.getItem('prevUrl');
         if (this.state.customerDetails && prevUrl ) {
+            // alert("inside loggedin user");
             axios.get(`${Baseurl}/api/v1/customer/CartList/${this.state.customerDetails._id}`)
                 .then(response => {
                     var sum = 0
@@ -58,7 +59,7 @@ class cartComponent extends Component {
                     console.log(error);
                 });
         } else {
-
+            // alert("inside guest");
             let data = JSON.parse(localStorage.getItem('GuestCart'));
 
             console.log(data, "data cartItem");
