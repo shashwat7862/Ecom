@@ -78,7 +78,7 @@ class HeaderSix extends Component {
     
     renderLeftSide = () => (
       <div className="menu-left">
-        <div className="navbar">
+        <div className="navbar" style={{padding: '20px 45px 20px 0'}}>
           <a href="javascript:void(0)" onClick={this.openNav}>
             <div className="bar-style"> <i className="fa fa-bars sidebar-bar" aria-hidden="true"></i></div>
           </a>
@@ -92,32 +92,35 @@ class HeaderSix extends Component {
     );
 
   renderRightSide = () => (
-    <div className="menu-right pull-right col-lg-12" style={{padding: 0}}>
+    <div className="menu-right pull-right col-lg-12" style={{padding: 0, justifyContent: 'flex-end'}}>
       <NavBar />
     </div>
   );
 	
 	render() {
 		return (
-			<div>
+      <div>
 				<header id="sticky" className="sticky">
 					{this.state.isLoading ? <Pace color="#27ae60"/> : null}
 					<div className="mobile-fix-option"></div>
 					<div className="container">
 						<div className="row">
-							<div className="col-lg-12">
+
+              <div className="col-lg-12" style={{ maxWidth: '100%', padding: 0 }}>
+                <TopBar/>
+              </div>
+
+							<div className="col-lg-12" style={{ display: 'flex', flexDirection: 'column'}}>
 								<div className="main-menu">
-                  <div className="col-lg-2">{this.renderLeftSide()}</div>
-                  <div className="col-lg-10" style={{ display: 'flex', flexDirection: 'column'}}>
-                    <div className="col-lg-6" style={{ maxWidth: '100%', padding: 0 }}>
-                      <TopBar/>
-                    </div>
-                    <div className="col-lg-6" style={{ maxWidth: '100%', padding: 0 }}>
+                  <div className="col-lg-12" style={{ padding: 0, display: 'flex' }}>
+                    <div className="col-lg-2">{this.renderLeftSide()}</div>
+                    <div className="col-lg-10" style={{ maxWidth: '100%', padding: 0, display: 'flex', alignItems: 'center' }}>
                       {this.renderRightSide()}
                     </div>
                   </div>
 								</div>
 							</div>
+    
 						</div>
 					</div>
 				</header>

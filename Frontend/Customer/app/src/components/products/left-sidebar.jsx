@@ -15,6 +15,7 @@ import DetailsTopTabs from "./common/details-top-tabs";
 import ImageZoom from './common/product/image-zoom'
 import SmallImages from './common/product/small-image'
 import Baseurl from '../../api/url';
+import GalleryModal from './GalleryModal';
 const ImgData = [
   {
     title: 'img1',
@@ -43,8 +44,10 @@ class LeftSideBar extends Component {
       defaultImage: "https://www.mnn.com/static/img/not_available.png",
       currentImage: "https://www.mnn.com/static/img/not_available.png",
       productDetails: {},
-      hoverImage: null
+      hoverImage: null,
+      galleryModal: false
     };
+    this.handleModal = this.handleModal.bind(this);
   }
 
   componentDidMount() {
@@ -87,7 +90,7 @@ class LeftSideBar extends Component {
     return (
       <ul style={{ display: 'flex', flexDirection: 'column'}}>
         {productImage instanceof Array ?
-          (ImgData.map((img) => (
+          (productImage.map((img) => (
             <li>
               <img 
                 src={img.src} 
@@ -114,9 +117,26 @@ class LeftSideBar extends Component {
     );
   }
 
+  handleModal(status) {
+    this.setState({ galleryModal: status })
+  }
+
+  checkImageType(url) {
+    let extension = url.split('.').pop();
+    console.log('extension &&&&&&&&&', extension)
+    if (extension.match('(jpg|jpeg|png|gif)')) {
+      return 'image'
+    } else if(extension.match('(mp4|3gp|mp3|mov)')) {
+      return 'video'
+    } else {
+      return ""
+    }
+  }
+
   render() {
     const { symbol, addToCart, addToCartUnsafe, addToWishlist } = this.props;
-    const { currentImage, productDetails, hoverImage } = this.state;
+    const { currentImage, productDetails, hoverImage, galleryModal } = this.state;
+    this.checkImageType(currentImage)
     return (
       <div>
         {/*SEO Support*/}
@@ -163,7 +183,7 @@ class LeftSideBar extends Component {
                       <div className="row">
                         <div className="col-lg-6 product-thumbnail">
                           {/* <ImageZoom image={(item.productImage != "")? Baseurl+'/'+item.productImage : this.state.defaultImage} /> */}
-                          <ImageZoom image={(hoverImage) ? hoverImage: currentImage} />
+                          <div onClick={() => this.handleModal(true)}><ImageZoom image={(hoverImage) ? hoverImage: currentImage} /></div>
                         </div>
                         <DetailsWithPrice
                           symbol="₹"
@@ -176,6 +196,7 @@ class LeftSideBar extends Component {
                       </div>
                     </div>
                     <DetailsTopTabs item={productDetails} />
+                    <GalleryModal open={galleryModal} handleModal={this.handleModal} currentImage={currentImage} defaultIndex={this.checkImageType(currentImage) === 'image' ? 1 : 0} imgData={ImgData} />
                   </div>
                 </div>
               </div>

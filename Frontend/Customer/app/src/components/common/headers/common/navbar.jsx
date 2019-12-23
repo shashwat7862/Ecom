@@ -80,7 +80,7 @@ class NavBar extends Component {
                                 </div>
                             </li>
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
                                     {translate('home')}
                                     <span className="sub-arrow"></span>
                                 </Link>
@@ -96,7 +96,7 @@ class NavBar extends Component {
                                 </ul>
                             </li>
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
                                     {translate('shop')}
                                     <span className="sub-arrow"></span>
                                 </Link>
@@ -109,7 +109,7 @@ class NavBar extends Component {
                                 </ul>
                             </li>
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
                                     {translate('products')}
                                     <span className="sub-arrow"></span>
                                 </Link>
@@ -125,7 +125,7 @@ class NavBar extends Component {
                                 </ul>
                             </li>
                             <li className="mega-menu">
-                                <Link to="#" className="dropdown" onClick={(e) => this.handleSubmenu(e)}>
+                                <Link to="#" className="dropdown" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
                                     {translate('features')}
                                     <span className="sub-arrow"></span>
                                 </Link>
@@ -234,7 +234,7 @@ class NavBar extends Component {
                                 </div>
                             </li>
                             <li>
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
                                     {translate('pages')}
                                     <span className="sub-arrow"></span>
                                 </Link>
@@ -253,7 +253,7 @@ class NavBar extends Component {
                                 </ul>
                             </li>
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
                                     {translate('blog')}
                                     <span className="sub-arrow"></span>
                                 </Link>

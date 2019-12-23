@@ -26,7 +26,8 @@ export default class ImageZoom extends Component {
           isActivatedOnTouch: true
         }}
         {...{
-          enlargedImagePosition: 'beside'
+          enlargedImagePosition: 'beside',
+          isEnlargedImagePortalEnabledForTouch: true
         }}
       />
     );

@@ -18,7 +18,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<HeaderSix logoName={'logo.png'} />
+				<HeaderSix logoName={'weshop.jpg'} />
 					{this.props.children}
 				<FooterOne logoName={'logo.png'} />
 				<ThemeSettings />
