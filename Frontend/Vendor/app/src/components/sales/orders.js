@@ -136,7 +136,7 @@ export class Orders extends Component {
                                             data={this.props.orderList}
                                             columns={columns}
                                             defaultPageSize={7}
-                                            noDataText={"Please Add Products to see the Product List"}
+                                            noDataText={"No Orders Found"}
                                         />
 
                                     </div>
