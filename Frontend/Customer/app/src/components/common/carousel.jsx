@@ -30,7 +30,7 @@ export default class Carousel extends Component {
       dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 10,
+      slidesToShow: 3,
       slidesToScroll: 1,
       initialSlide: 0,
       nextArrow: <NextArrow />,

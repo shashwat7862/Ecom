@@ -19,7 +19,6 @@ class Kids extends Component {
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/color10.css` );
     }
     render(){
-
         return (
             <div>
                 <Helmet>
@@ -27,7 +26,7 @@ class Kids extends Component {
                 </Helmet>
                 <HeaderOne logoName={'logo/6.png'}/>
 
-                {/* <section className="p-0">
+                <section className="p-0">
                     <Slider className="slide-1 home-slider">
                         <div>
                             <div className="home home21 text-center p-right">
@@ -60,7 +59,7 @@ class Kids extends Component {
                             </div>
                         </div>
                     </Slider>
-                </section> */}
+                </section>
 
                 {/*collection banner layout*/}
                 <section className="banner-padding absolute-banner pb-0 ratio2_1">

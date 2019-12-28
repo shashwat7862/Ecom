@@ -215,13 +215,13 @@ vendor profile Tab // done
 
 
 ------------------------------
+Home Page
+Searching
 
 Customer list / vendor 
 customer searching
 delete customer
 Vendor list -> admin with approval action
-Home Page
-Searching
 <!-- address list
 order list
 myaccount UI

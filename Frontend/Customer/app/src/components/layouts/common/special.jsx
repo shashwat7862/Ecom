@@ -37,29 +37,21 @@ class Special extends Component {
                                             <div className="sec-1">
                                                 <div className="product-box2">
                                                     <div className="media">
-                                                        <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[0].id}`} >
                                                             <img
                                                                 className="img-fluid blur-up lazyload"
-                                                                src={product[0].pictures[0]} alt="" />
-                                                        </Link>
+                                                                src={''} alt="" />
                                                         <div className="media-body align-self-center">
                                                             <div className="rating"><i className="fa fa-star"></i> <i
                                                                 className="fa fa-star"></i> <i
                                                                 className="fa fa-star"></i> <i
                                                                 className="fa fa-star"></i> <i
                                                                 className="fa fa-star"></i></div>
-                                                            <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[0].id}`} >
-                                                                <h6>{product[0].name}</h6>
-                                                            </Link>
-                                                            <h4>{symbol}{product[0].price-(product[0].price*product[0].discount/100)}
-                                                                <del><span className="money">{symbol}{product[0].price}</span></del>
-                                                            </h4>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="product-box2">
                                                     <div className="media">
-                                                        <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[1].id}`} >
+                                                        {/* <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[1].id}`} >
                                                             <img
                                                                 className="img-fluid blur-up lazyload"
                                                                 src={product[1].pictures[0]} alt="" />
@@ -76,7 +68,7 @@ class Special extends Component {
                                                             <h4>{symbol}{product[1].price-(product[1].price*product[1].discount/100)}
                                                                 <del><span className="money">{symbol}{product[1].price}</span></del>
                                                             </h4>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </div>

@@ -16,7 +16,7 @@ class BlogSection extends Component {
                                     <div className="col-md-12">
                                         <Link to={`${process.env.PUBLIC_URL}/blog/details`} >
                                             <div className="classic-effect">
-                                                <img src={`${process.env.PUBLIC_URL}/assets/images/blog/1.jpg`} className="img-fluid" alt="" />
+                                                <img style={{marginLeft:103+'px'}} src={`https://rukminim1.flixcart.com/image/150/150/k070zgw0/smartwatch/x/h/v/gsw1-gionee-original-imafjz5dygcynnu2.jpeg?q=70`} className="img-fluid" alt="" />
                                                     <span></span>
                                             </div>
                                         </Link>
@@ -33,7 +33,7 @@ class BlogSection extends Component {
                                     <div className="col-md-12">
                                         <Link to={`${process.env.PUBLIC_URL}/blog/details`} >
                                             <div className="classic-effect">
-                                                <img src={`${process.env.PUBLIC_URL}/assets/images/blog/2.jpg`} className="img-fluid" alt="" />
+                                                <img style={{marginLeft:103+'px'}} src={`https://rukminim1.flixcart.com/image/150/150/ji3g70w0/smart-monitoring-system/h/h/2/d706-hd-360-original-imaf5ytyumn77nyg.jpeg?q=70`} className="img-fluid" alt="" />
                                                     <span></span>
                                             </div>
                                         </Link>
@@ -50,7 +50,7 @@ class BlogSection extends Component {
                                     <div className="col-md-12">
                                         <Link to={`${process.env.PUBLIC_URL}/blog/details`} >
                                             <div className="classic-effect">
-                                                <img src={`${process.env.PUBLIC_URL}/assets/images/blog/3.jpg`} className="img-fluid" alt="" />
+                                                <img style={{marginLeft:103+'px'}} src={`https://rukminim1.flixcart.com/image/150/150/jzfvma80/smartwatch/y/r/b/ghj-dz09-shopping-mart-original-imaev59gpe7efuhn.jpeg?q=70`} className="img-fluid" alt="" />
                                                     <span></span>
                                             </div>
                                         </Link>
@@ -66,7 +66,7 @@ class BlogSection extends Component {
                                     <div className="col-md-12">
                                     <Link to={`${process.env.PUBLIC_URL}/blog/details`} >
                                         <div className="classic-effect">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/blog/4.jpg`} className="img-fluid" alt="" />
+                                            <img style={{marginLeft:103+'px'}} src={`https://rukminim1.flixcart.com/image/150/150/headphone/stero-dynamic/j/e/5/boat-rockerz-400-original-imaern54feugsgen.jpeg?q=70`} className="img-fluid" alt="" />
                                                 <span></span>
                                         </div>
                                     </Link>
@@ -82,7 +82,7 @@ class BlogSection extends Component {
                                     <div className="col-md-12">
                                         <Link to={`${process.env.PUBLIC_URL}/blog/details`} >
                                             <div className="classic-effect">
-                                                <img src={`${process.env.PUBLIC_URL}/assets/images/blog/5.jpg`} className="img-fluid" alt="" />
+                                                <img style={{marginLeft:103+'px'}} src={`https://images-eu.ssl-images-amazon.com/images/I/61+zSvZxJ5L._AC_SY200_.jpg`} className="img-fluid" alt="" />
                                                     <span></span>
                                             </div>
                                         </Link>
