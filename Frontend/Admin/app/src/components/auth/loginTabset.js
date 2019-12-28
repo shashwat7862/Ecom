@@ -11,8 +11,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
 export class LoginTabset extends Component {
     constructor(props) {
         super(props);

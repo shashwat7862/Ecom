@@ -21,7 +21,7 @@ class ProductListing extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/10/0`)
+        axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/100/0`)
             .then(response => {
                 console.log(response, "product--------------- Data");
                 this.setState({
@@ -75,7 +75,7 @@ class ProductListing extends Component {
                                     {products.slice(0, 10).map((product, index) =>
                                         <div className={`${this.props.colSize === 3 ? 'col-xl-3 col-md-6 col-grid-box' : 'col-lg-' + this.props.colSize}`} key={index}>
                                             <ProductListItem product={product} symbol={symbol}
-                                                onAddToCompareClicked={() => addToCompare(product)}
+                                                // onAddToCompareClicked={() => addToCompare(product)}
                                                 onAddToWishlistClicked={() => addToWishlist(product)}
                                                 onAddToCartClicked={addToCart} key={index} />
                                         </div>)

@@ -1,15 +1,15 @@
 {
-  "main.css": "/multikart/static/css/main.a7b5b726.chunk.css",
-  "main.js": "/multikart/static/js/main.b2cc4cff.chunk.js",
-  "main.js.map": "/multikart/static/js/main.b2cc4cff.chunk.js.map",
-  "static/css/1.746009c2.chunk.css": "/multikart/static/css/1.746009c2.chunk.css",
-  "static/js/1.c1aa6c49.chunk.js": "/multikart/static/js/1.c1aa6c49.chunk.js",
-  "static/js/1.c1aa6c49.chunk.js.map": "/multikart/static/js/1.c1aa6c49.chunk.js.map",
-  "runtime~main.js": "/multikart/static/js/runtime~main.99331a76.js",
-  "runtime~main.js.map": "/multikart/static/js/runtime~main.99331a76.js.map",
-  "static/css/1.746009c2.chunk.css.map": "/multikart/static/css/1.746009c2.chunk.css.map",
-  "static/css/main.a7b5b726.chunk.css.map": "/multikart/static/css/main.a7b5b726.chunk.css.map",
-  "index.html": "/multikart/index.html",
-  "precache-manifest.e459e0666eb7e642150376c0f01ac072.js": "/multikart/precache-manifest.e459e0666eb7e642150376c0f01ac072.js",
-  "service-worker.js": "/multikart/service-worker.js"
+  "main.css": "/static/css/main.89b4fa5e.chunk.css",
+  "main.js": "/static/js/main.d24e42f8.chunk.js",
+  "main.js.map": "/static/js/main.d24e42f8.chunk.js.map",
+  "static/css/1.f9ecb51d.chunk.css": "/static/css/1.f9ecb51d.chunk.css",
+  "static/js/1.bcb9153e.chunk.js": "/static/js/1.bcb9153e.chunk.js",
+  "static/js/1.bcb9153e.chunk.js.map": "/static/js/1.bcb9153e.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
+  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
+  "static/css/1.f9ecb51d.chunk.css.map": "/static/css/1.f9ecb51d.chunk.css.map",
+  "static/css/main.89b4fa5e.chunk.css.map": "/static/css/main.89b4fa5e.chunk.css.map",
+  "index.html": "/index.html",
+  "precache-manifest.a13f017f4269bcd4f54dd056cfaf6078.js": "/precache-manifest.a13f017f4269bcd4f54dd056cfaf6078.js",
+  "service-worker.js": "/service-worker.js"
 }

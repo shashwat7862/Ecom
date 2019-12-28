@@ -110,6 +110,25 @@
 	            }
 			}],
 
+			"/save_ProductReview/:userId": [{
+	            method: "POST",
+	            action: controllers.productController.save_ProductReview,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/get_ProductReview": [{
+	            method: "GET",
+	            action: controllers.productController.get_ProductReview,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+ 
+  
+ 
 			
 			
 

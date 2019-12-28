@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import AnchorLink from 'react-anchor-link-smooth-scroll'
+import AnchorLink from 'react-anchor-link-smooth-scroll';
+import { IsLoggeIn } from './../actions';
 
 import './landing.scss';
 
@@ -14,8 +16,10 @@ class Landing extends Component {
         }
     }
 
-    componentDidMount() {
-
+    async componentDidMount() {
+        const customerDetails = await JSON.parse(localStorage.getItem('customerDetails'));
+        const isLogin = (customerDetails) ? true: false;
+        this.props.IsLoggeIn(isLogin)
         setTimeout(function () {
             document.querySelector(".loader-wrapper").style = "display: none";
         }, 2000);
@@ -1044,4 +1048,18 @@ class Landing extends Component {
     }
 }
 
-export default Landing;
+const mapStateToProps = (state) => {
+    return {
+      isLogin: state.LoginReducer.isLogin
+    }
+  };
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      IsLoggeIn: (status) => { dispatch(IsLoggeIn(status)) },
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Landing);
+
+// export default Landing;

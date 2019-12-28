@@ -37,3 +37,5 @@ export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST'
 export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS'
 export const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE'
 
+// Login Action
+export const IS_LOGIN = 'IS_LOGIN';

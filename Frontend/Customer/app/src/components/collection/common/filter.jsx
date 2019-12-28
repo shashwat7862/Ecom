@@ -103,7 +103,7 @@ class Filter extends Component {
                                                 maxValue={this.props.prices.max}
                                                 minValue={this.props.prices.min}
                                                 value={this.props.filters.value}
-                                                onChange={value => this.props.filterPrice({ value })} />
+                                                onChange={value => this.props.filterPrice({ value })}  />
                                         </div>
                                     </div>
                                 </div>

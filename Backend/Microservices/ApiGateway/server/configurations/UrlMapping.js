@@ -178,6 +178,78 @@
 	                json: views.jsonView
 	            }
 			}],
+
+			"/api/v1/customer/createOrder": [{
+				method: "POST",
+	            action: controllers.customerController.createOrder,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/getOrderList/:userId/:vendorId/:fetch/:limit/:skip": [{
+				method: "GET",
+	            action: controllers.customerController.getOrderList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/getOrderDetails/:orderId": [{
+				method: "GET",
+	            action: controllers.customerController.getOrderDetails,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/searchOrders": [{
+				method: "GET",
+	            action: controllers.customerController.searchOrders,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/saveAddress": [{
+				method: "POST",
+	            action: controllers.customerController.saveAddress,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/getAddress/:userId": [{
+				method: "GET",
+	            action: controllers.customerController.getAddress,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/editAddress/:userId/:addressId": [{
+				method: "PUT",
+	            action: controllers.customerController.editAddress,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/deleteAddress/:userId/:addressId": [{
+				method: "DELETE",
+	            action: controllers.customerController.deleteAddress,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/api/v1/customer/saveProductReview/:userId": [{
+				method: "POST",
+	            action: controllers.customerController.saveProductReview,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/getProductReview": [{
+				method: "GET",
+	            action: controllers.customerController.getProductReview,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
 	    };
 	};
 

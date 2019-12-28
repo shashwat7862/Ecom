@@ -29,13 +29,20 @@ class Register extends Component {
             "loginFrom": "email"
         })
             .then(response => {
-                localStorage.clear();
+                localStorage.removeItem('customerDetails');
+                localStorage.removeItem('authToken');
                 toast.success("Registered Successfully..!!")
                 console.log(response, "data")
                 console.log(response.data.object.object.authToken);
                 localStorage.setItem('authToken', response.data.object.object.authToken);
                 localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
-                this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+                let prevUrl = localStorage.getItem('prevUrl');
+                localStorage.removeItem('prevUrl')
+                if (prevUrl) {
+                    this.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
+                } else {
+                    this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+                }
             })
             .catch(error => {
                 console.log(error);

@@ -11,7 +11,7 @@ class ProductListItem extends Component {
     constructor(props) {
         super(props);
         const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
-
+        console.log('customerDetails ****8', customerDetails)
         this.state = {
             open: false,
             stock: 'InStock',
@@ -43,6 +43,8 @@ class ProductListItem extends Component {
                 "price": productData.price,
                 "category": productData.category,
                 "productImage":productData.productImage,
+                "VendorId": productData.vendorId._id,
+                "VendorName": productData.vendorId.fullName,
             },
             "userId": this.state.customerDetails._id
         })
@@ -54,26 +56,88 @@ class ProductListItem extends Component {
                 console.log(error);
             });
     }
-    addToCart(productData) {
-        console.log(productData,"add to cart")
-        axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
-            "productData": {
+    // addToCart(productData) {
+    //     console.log(productData,"add to cart")
+    //     axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
+    //         "productData": {
+    //             "productId": productData._id,
+    //             "productName": productData.productName,
+    //             "price": productData.price,
+    //             "productCount": this.state.quantity,
+    //             "category": productData.category,
+    //             "productImage":productData.productImage,
+    //             "VendorId": productData.vendorId._id,
+    //             "VendorName": productData.vendorId.fullName,
+    //         },
+    //         "userId": this.state.customerDetails._id
+    //     })
+    //         .then(response => {
+    //             toast.success("Product Add to Cart")
+    //             console.log(response, "data")
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // }
+
+    addToCart = (productData) => {
+        console.log(productData, "add to cart")
+
+        if (this.state.customerDetails) {
+            axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
+                "productData": {
+                    "productId": productData._id,
+                    "productName": productData.productName,
+                    "price": productData.price,
+                    "productCount": this.state.quantity,
+                    "category": productData.category,
+                    "productImage": productData.productImage,
+                    "VendorId": productData.vendorId._id,
+                    "VendorName": productData.vendorId.fullName,
+                },
+                "userId": this.state.customerDetails._id
+            })
+                .then(response => {
+                    toast.success("Product Add to Cart")
+                    console.log(response, "data")
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        } else {
+            let guestCart = [];
+            let payload = {
                 "productId": productData._id,
                 "productName": productData.productName,
                 "price": productData.price,
                 "productCount": this.state.quantity,
                 "category": productData.category,
-                "productImage":productData.productImage,
-            },
-            "userId": this.state.customerDetails._id
-        })
-            .then(response => {
-                toast.success("Product Add to Cart")
-                console.log(response, "data")
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                "productImage": productData.productImage,
+                "VendorId": productData.vendorId._id,
+                "VendorName": productData.vendorId.fullName,
+                "userId": 'Guest'
+            }
+
+
+            let loadCart = (localStorage.getItem('GuestCart')) ? JSON.parse(localStorage.getItem('GuestCart')) : []
+
+            var isCartUpdated = false;
+            if (loadCart.length > 0) {
+                loadCart.forEach(function (product) {
+                    if (product.productId == payload.productId) {
+                        product.productCount = product.productCount + payload.productCount;
+                        isCartUpdated = true
+                    }
+                })
+            }
+
+            if (!isCartUpdated) {
+                loadCart.push(payload);
+            }
+
+            localStorage.setItem('GuestCart', JSON.stringify(loadCart));
+            toast.success("Product Add to Cart")
+        }
     }
 
     
@@ -122,12 +186,12 @@ class ProductListItem extends Component {
                             alt="" /></Link>
                     </div>
                     <div className="cart-info cart-wrap">
-                        <button title="Add to cart" onClick={() => this.addToCart(product)}>
+                        {/* <button title="Add to cart" onClick={() => this.addToCart(product)}>
                             <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </button>
-                        <a href="javascript:void(0)" title="Add to Wishlist" onClick={() => this.addToWishList(product)}>
+                        </button> */}
+                        {/* <a href="javascript:void(0)" title="Add to Wishlist" onClick={() => this.addToWishList(product)}>
                             <i className="fa fa-heart" aria-hidden="true"></i>
-                        </a>
+                        </a> */}
                         <a href="javascript:void(0)" data-toggle="modal"
                             data-target="#quick-view"
                             title="Quick View"
@@ -220,8 +284,8 @@ class ProductListItem extends Component {
                                                 </div>
                                             </div>
                                             <div className="product-buttons">
-                                                <button className="btn btn-solid" onClick={() => onAddToCartClicked(product, this.state.quantity)} >add to cart</button>
-                                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`} className="btn btn-solid">view detail</Link>
+                                                {/* <button className="btn btn-solid" onClick={() => this.addToCart(product)} >add to cart</button> */}
+                                                {/* <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`} className="btn btn-solid">view detail</Link> */}
                                             </div>
                                         </div>
                                     </div>

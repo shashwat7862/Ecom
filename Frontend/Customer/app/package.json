@@ -2,7 +2,6 @@
   "name": "react-multikart",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://react.pixelstrap.com/multikart/",
   "basename": "/",
   "dependencies": {
     "@babel/core": "7.1.0",
@@ -30,6 +29,7 @@
     "file-loader": "2.0.0",
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-extra": "7.0.0",
+    "history": "^4.10.1",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "identity-obj-proxy": "3.0.0",
     "instagram-api": "^1.0.3",
@@ -64,6 +64,7 @@
     "react-redux-multilingual": "^2.0.2",
     "react-responsive-modal": "^3.5.1",
     "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
     "react-router-scroll-4": "^1.0.0-beta.2",
     "react-scripts": "^2.1.1",
     "react-slick": "^0.21.0",

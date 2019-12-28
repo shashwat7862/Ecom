@@ -1,7 +1,9 @@
-import axios from 'axios';
-import Baseurl from '../assets/data/url'
+import { REQUEST_PATH } from '../utils/paths-config';
+import { getRequest, putRequest } from '../utils/request';
 export const ProductList = 'product:ProductList';
 export const ProvideApproval = 'product:ProvideApproval';
+export const OrderList = 'product:OrderList';
+export const ReviewList = 'product:ReviewList';
 
 function Product_List(data) {
   return {
@@ -10,6 +12,14 @@ function Product_List(data) {
   };
 }
 
+function Order_List(data) {
+  return {
+    type: OrderList,
+    payload: data
+  };
+}
+
+
 function provide_Approval(data) {
   return {
     type: ProvideApproval,
@@ -17,24 +27,38 @@ function provide_Approval(data) {
   };
 }
 
-
-
-export function productList(isApprove) {
-  return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/${isApprove}/100/0`)
-      .then(({ data }) => {
-        console.log(data)
-        dispatch(Product_List(data));
-      });
+function Review_List(data){
+  return {
+    type: ReviewList,
+    payload: data
   };
 }
 
-export function provideApproval(payload) {
+export function productList(isApprove) {
   return function (dispatch) {
-    return axios.put(`${Baseurl}/api/v1/vendor/ProductApprovalRequest/electronics`, payload)
+    getRequest(REQUEST_PATH.productList(isApprove))
       .then(({ data }) => {
-        console.log(data)
-        dispatch(provide_Approval(data));
-      });
+        const resp = data.object;
+        dispatch(Product_List(resp.object));
+      })
+      .catch(error => {
+        console.log('productList error *****', error.response)
+      })
+  };
+}
+
+export function provideApproval(payload, callback) {
+  return function (dispatch) {
+    putRequest(REQUEST_PATH.provideApproval, payload)
+      .then(({ data }) => {
+        const resp = data.object;
+        if (callback) {
+          callback();
+        }
+        dispatch(provide_Approval(resp.object));
+      })
+      .catch(error => {
+        console.log('provideApproval error *****', error.response)
+      })
   };
 } 

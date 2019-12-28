@@ -7,7 +7,8 @@ function NextArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "red" }}
+      // style={{ ...style, display: "block", background: "red" }}
+      style={{ background: "black", zIndex:1, right: 0,borderRadius: '0 3px 3px 0', clip:'rect(-10px,55px,110px,0)', paddingRight: 5, height: 100, lineHeight: 100, width: 45, textAlign: 'center',boxShadow: '0 1px 3px #888', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}
       onClick={onClick}
     />
   );
@@ -15,10 +16,11 @@ function NextArrow(props) {
 
 function PrevArrow(props) {
   const { className, style, onClick } = props;
+  console.log(className, style)
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "green" }}
+      style={{ background: "black", zIndex:1, left: 0,borderRadius: '0 3px 3px 0', clip:'rect(-10px,55px,110px,0)', paddingRight: 5, height: 100, lineHeight: 100, width: 45, textAlign: 'center',boxShadow: '0 1px 3px #888', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}
       onClick={onClick}
     />
   );
@@ -30,7 +32,7 @@ export default class Carousel extends Component {
       dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 3,
+      slidesToShow: 10,
       slidesToScroll: 1,
       initialSlide: 0,
       nextArrow: <NextArrow />,
@@ -41,8 +43,9 @@ export default class Carousel extends Component {
     return (
       <Slider {...sliderProps}>
         {data.map((item, index) => (
-          <div key={index} style={{backgroundColor: '#ffffff', boxSizing: 'border-box', padding: 5}}>
-            <img src={item.src} style={{width: '100%', height: 190}} />
+          <div key={index} style={{ backgroundColor: '#ffffff' }}>
+            <img src={item.src} style={{ width: '80%', height: 150 + 'px' }} />
+            <span style={{ fontWeight: 'bolder', marginLeft: 20 + 'px' }}>{item.name} : {item.price}</span>
           </div>
         ))}
       </Slider>

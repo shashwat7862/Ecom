@@ -35,12 +35,13 @@ class NavBar extends Component {
     }
 
     handleSubmenu = (event) => {
+        
         if (event.target.classList.contains('sub-arrow'))
             return;
 
-        if(event.target.nextElementSibling.classList.contains('opensubmenu'))
+        if (event.target.nextElementSibling.classList.contains('opensubmenu'))
             event.target.nextElementSibling.classList.remove('opensubmenu')
-        else{
+        else {
             document.querySelectorAll('.nav-submenu').forEach(function (value) {
                 value.classList.remove('opensubmenu');
             });
@@ -52,15 +53,19 @@ class NavBar extends Component {
     handleMegaSubmenu = (event) => {
         if (event.target.classList.contains('sub-arrow'))
             return;
-            
-        if(event.target.parentNode.nextElementSibling.classList.contains('opensubmegamenu'))
+
+        if (event.target.parentNode.nextElementSibling.classList.contains('opensubmegamenu'))
             event.target.parentNode.nextElementSibling.classList.remove('opensubmegamenu')
-        else{
+        else {
             document.querySelectorAll('.menu-content').forEach(function (value) {
                 value.classList.remove('opensubmegamenu');
             });
             event.target.parentNode.nextElementSibling.classList.add('opensubmegamenu')
         }
+    }
+
+    openSellerTab = () => {
+        window.open('http://13.232.88.106/')
     }
 
     render() {
@@ -80,8 +85,8 @@ class NavBar extends Component {
                                 </div>
                             </li>
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
-                                    {translate('home')}
+                                <Link to="/products" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                    New
                                     <span className="sub-arrow"></span>
                                 </Link>
                                 <ul className="nav-submenu" >
@@ -96,8 +101,8 @@ class NavBar extends Component {
                                 </ul>
                             </li>
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
-                                    {translate('shop')}
+                                <Link to="/products" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                    Products
                                     <span className="sub-arrow"></span>
                                 </Link>
                                 <ul className="nav-submenu">
@@ -109,8 +114,8 @@ class NavBar extends Component {
                                 </ul>
                             </li>
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
-                                    {translate('products')}
+                                <Link to="/products" className="nav-link sell" onClick={(e) => this.handleSubmenu(e)}>
+                                    <span onClick={this.openSellerTab}>Sell</span>
                                     <span className="sub-arrow"></span>
                                 </Link>
                                 <ul className="nav-submenu">
@@ -125,8 +130,8 @@ class NavBar extends Component {
                                 </ul>
                             </li>
                             <li className="mega-menu">
-                                <Link to="#" className="dropdown" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
-                                    {translate('features')}
+                                <Link to="/pages/contact" className="dropdown" onClick={(e) => this.handleSubmenu(e)}>
+                                    Help
                                     <span className="sub-arrow"></span>
                                 </Link>
                                 <div className="mega-menu-container" >
@@ -233,9 +238,9 @@ class NavBar extends Component {
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
-                                    {translate('pages')}
+                            {/* <li>
+                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                    Help
                                     <span className="sub-arrow"></span>
                                 </Link>
                                 <ul className="nav-submenu">
@@ -251,10 +256,10 @@ class NavBar extends Component {
                                     <li><Link to={`${process.env.PUBLIC_URL}/pages/dashboard`} >{translate('dashboard')}</Link></li>
                                     <li><Link to={`${process.env.PUBLIC_URL}/pages/faq`} >{translate('FAQ')}</Link></li>
                                 </ul>
-                            </li>
+                            </li> */}
                             <li >
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)} style={{paddingTop: 10, paddingBottom: 10}}>
-                                    {translate('blog')}
+                                <Link to="/pages/contact" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>
+                                    About Us
                                     <span className="sub-arrow"></span>
                                 </Link>
                                 <ul className="nav-submenu">

@@ -60,7 +60,7 @@ class ProductService extends BaseService {
 
     }
 
-    
+
 
     async Product_ApprovalRequest(body, dynamicDomain, callback) {
         console.log(body, dynamicDomain)
@@ -135,44 +135,183 @@ class ProductService extends BaseService {
                 }]
             };
         }
+    };
+
+    calculateResult(body, callback) {
+        domain.Cart.find(
+            {
+                UserId: body.userId,
+                // productDetails: { $elemMatch: { productId: body.productData.productId } },
+            },
+            function (err, result) {
+                console.log(result, "-------------555");
+
+                // domain.Cart.remove({})
+                let arr = result;
+
+                let finalResponse = []
+
+                arr.forEach(function (val) {
+                    if (val.productDetails.length == 0) {
+                        domain.Cart.remove({
+                            _id: val._id
+                        }, function () {
+
+                        })
+                    } else {
+                        (finalResponse.includes(val) ? '' : finalResponse.push(val))
+                    }
+
+                });
+                console.log("final response", finalResponse);
+                let cartList = [];
+                finalResponse.forEach(function (product) {
+                    (cartList.includes(product.productDetails[0])) ? '' : cartList.push(product.productDetails[0])
+
+                })
+
+                callback(null, {
+                    cartList: cartList
+                })
+            });
     }
 
     async Cart(action, body, callback) {
+        var self = this;
         console.log(action, "action", body);
         if (action == "ADD") {
-            domain.Cart.update(
-                { UserId: body.userId },
-                { $push: { productDetails: body.productData } },
+
+            domain.Cart.find(
                 {
-                    upsert: true
-                }, function (err, result) {
-                    if (err) {
-                        callback(err, null)
-                    }
-                    else {
-                        callback(null, {
-                            data: result
-                        })
-                    }
-                });
-        } else if (action == "REMOVE") {
-            domain.Cart.update(
-                { UserId: body.userId },
-                {
-                    $pull: { productDetails: { productId: body.productId } }
+                    UserId: body.userId,
+                    productDetails: { $elemMatch: { productId: body.productData.productId } },
                 },
                 function (err, result) {
-                    if (err) {
-                        callback(err, null)
+                    console.log(err, result, "999999999999999999999");
+
+                    if (result.length == 0) {
+                        console.log("push here", body, "body", body.productData)
+                        domain.Cart.update(
+                            {
+                                UserId: body.userId,
+                                productDetails: { $elemMatch: { productId: body.productData.productId } },
+                            },
+                            { "$push": { productDetails: body.productData } },
+                            {
+                                upsert: true
+                            },
+                            function (err, result) {
+                                console.log(err, result);
+
+                                self.calculateResult(body, callback)
+                            });
+                    } else {
+                        console.log("inside inc")
+                        domain.Cart.update(
+                            {
+                                UserId: body.userId,
+                                productDetails: { $elemMatch: { productId: body.productData.productId } },
+                            },
+                            {
+                                $inc: { "productDetails.$.productCount": 1 },
+                            },
+                            function (err, result) {
+                                self.calculateResult(body, callback)
+                            });
                     }
-                    else {
-                        callback(null, {
-                            data: result
-                        })
-                    }
+                })
+        } else if (action == "REMOVE") {
+            domain.Cart.update(
+                {
+                    UserId: body.userId,
+                    productDetails: {
+                        "$elemMatch": {
+                            productId: body.productId,
+                            productCount: { $gt: 0 }
+                        }
+                    },
+                },
+                { $inc: { "productDetails.$.productCount": -1 } },
+                function (err, result) {
+                    domain.Cart.update(
+                        {
+                            UserId: body.userId,
+                            productDetails: {
+                                "$elemMatch": {
+                                    productId: body.productId,
+                                    productCount: 0
+                                }
+                            },
+                        },
+                        {
+                            $pull: { productDetails: { productId: body.productId } }
+                        },
+                        function (error, _result) {
+                            if (err) {
+                                callback(err, null)
+                            }
+                            else {
+                                callback(null, {
+                                    data: result
+                                })
+                            }
+                        });
                 });
+
         }
 
+    }
+
+    save_ProductReview(data, callback) {
+        data.save((err, saveReviews) => {
+            console.log("saveReviews", saveReviews, err)
+
+            if (err || !saveReviews) {
+                callback(err, null);
+
+            } else {
+                callback(err, {
+                    Details: saveReviews,
+                    Message: "Product Review Saved Successfully"
+                });
+            }
+        });
+    }
+
+    get_ProductReview(callback) {
+        console.log("get_ProductReview 3")
+        domain.ProductReview.find({}, function (err,result) {
+            console.log(err,result,"----------")
+            callback(null,{
+                reviewList:result
+            })
+        })
+    }
+
+
+    pushTocart(body, cb) {
+        console.log("inside new")
+        domain.Cart.remove({
+            UserId: body.userId
+        },
+            function (err, result) {
+
+                domain.Cart.update(
+                    {
+                        UserId: body.userId,
+                        productDetails: { $elemMatch: { productId: body.productData.productId } },
+                    },
+                    {
+                        $push: { productDetails: body.productData }
+                    },
+                    {
+                        upsert: true
+                    },
+                    function (err, result) {
+                        console.log(err, result);
+                        cb(null, result)
+                    });
+            });
     }
 
 
@@ -204,6 +343,9 @@ class ProductService extends BaseService {
                 {
                     $pull: { productDetails: { productId: body.productId } }
                 },
+                {
+                    multi:true
+                },
                 function (err, result) {
                     if (err) {
                         callback(err, null)
@@ -218,16 +360,18 @@ class ProductService extends BaseService {
 
     }
 
+
+
+
     async Cart_List(userId, callback) {
+        var self = this;
         try {
             domain.Cart.find({
                 UserId: userId
             }).exec(function (error, cartList) {
-                if (error) {
-                    callback(error, null)
-                } else {
-                    callback(null, cartList)
-                }
+                self.calculateResult({
+                    userId: userId
+                }, callback)
             });
         } catch (e) {
             callback({

@@ -1,19 +1,77 @@
 import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Baseurl from '../../../api/url';
 
 class DetailsTopTabs extends Component {
 
     constructor(props) {
         super(props);
+        const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
+        super(props)
+        this.state = {
+            customerDetails: (customerDetails) ? customerDetails : {
+                email: ''
+            },
+            defaultImage: "https://www.mnn.com/static/img/not_available.png",
+            review: '',
+            reviewTitle: '',
+            startRating: ''
+        }
+        this.onUpdateChange = this.onUpdateChange.bind(this);
+    }
+
+    submitReview = () => {
+        console.log(this.state);
+        axios.post(`${Baseurl}/api/v1/customer/saveProductReview/${this.state.customerDetails._id}`, {
+            "title": this.state.reviewTitle,
+            "review": this.state.review,
+            "byUser": (this.state.customerDetails._id) ? this.state.customerDetails._id : 'Guest123',
+            "startRating": (this.state.startRating)?this.state.startRating : "5",
+            "productId": this.props.item._id,
+            "productName": this.props.item.productName,
+            "productImage": this.props.item.productImage,
+            "vendorId": this.props.item.vendorId._id,
+            "vendorName": this.props.item.vendorId.fullName
+        })
+            .then(response => {
+                toast.success("Thanks For Review");
+                this.setState({
+                    reviewTitle: '',
+                    review: ''
+                })
+                console.log(response, "data")
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    onUpdateChange(e) {
+        console.log(e.target.name, e.target.value, "change")
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+    setStatus = (e) => {
+        console.log(e.target.value, "setStatus val")
+        this.setState({
+            startRating: e.target.value
+        })
     }
 
 
     render() {
         const { item } = this.props
         console.log(item, "item-------------------details")
-        console.log(item.price,"attributes")
+        console.log(item.price, "attributes")
+        console.log(this.state, "this state")
 
         return (
             <section className="tab-product m-0">
@@ -96,43 +154,58 @@ class DetailsTopTabs extends Component {
                                 </table>
                             </TabPanel>
                             <TabPanel>
-                                <form className="theme-form mt-4">
-                                    <div className="form-row">
-                                        <div className="col-md-12 ">
-                                            <div className="media m-0">
-                                                <label>Rating</label>
-                                                <div className="media-body ml-3">
-                                                    <div className="rating three-star">
+                                {/* <form className="theme-form mt-4"> */}
+                                <div className="form-row">
+                                    <div className="col-md-12 ">
+                                        <div className="media m-0">
+                                            <label>Rating</label>
+
+                                            <div className="media-body ml-3">
+                                                {/* <div className="rating three-star">
                                                         <i className="fa fa-star"></i>
                                                         <i className="fa fa-star"></i>
                                                         <i className="fa fa-star"></i>
                                                         <i className="fa fa-star"></i>
                                                         <i className="fa fa-star"></i>
-                                                    </div>
-                                                </div>
+                                                    </div> */}
+                                                <ul className="rating">
+                                                    <li> <span className="ratingSelector">
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-1-5" onClick={this.setStatus} value="1" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-1-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-2-5" onClick={this.setStatus} value="2" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-2-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-3-5" onClick={this.setStatus} value="3" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-3-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-4-5" onClick={this.setStatus} value="4" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-4-5"></label>
+                                                        <input type="radio" name="ratings[1]" id="Degelijkheid-5-5" onClick={this.setStatus} value="5" className="radio" />
+                                                        <label className="full" htmlFor="Degelijkheid-5-5"></label>
+                                                    </span>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
-                                        <div className="col-md-6">
+                                    </div>
+                                    {/* <div className="col-md-6">
                                             <label htmlFor="name">Name</label>
                                             <input type="text" className="form-control" id="name" placeholder="Enter Your name" required />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label htmlFor="email">Email</label>
-                                            <input type="text" className="form-control" id="email" placeholder="Email" required />
-                                        </div>
-                                        <div className="col-md-12">
-                                            <label htmlFor="review">Review Title</label>
-                                            <input type="text" className="form-control" id="review" placeholder="Enter your Review Subjects" required />
-                                        </div>
-                                        <div className="col-md-12">
-                                            <label htmlFor="review">Review Title</label>
-                                            <textarea className="form-control" placeholder="Wrire Your Testimonial Here" id="exampleFormControlTextarea1" rows="6"></textarea>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <button className="btn btn-solid" type="submit">Submit YOur Review</button>
-                                        </div>
+                                        </div> */}
+                                    <div className="col-md-6">
+                                        <label htmlFor="email">Email</label>
+                                        <input type="text" className="form-control" defaultValue={this.state.customerDetails.email} id="email" placeholder="Email" required />
                                     </div>
-                                </form>
+                                    <div className="col-md-12">
+                                        <label htmlFor="review">Review Title</label>
+                                        <input type="text" className="form-control" onChange={this.onUpdateChange} name="reviewTitle" value={this.state.reviewTitle} placeholder="Enter your Review Subjects" required />
+                                    </div>
+                                    <div className="col-md-12">
+                                        <label htmlFor="review">Review Content </label>
+                                        <textarea className="form-control" name="review" value={this.state.review} onChange={this.onUpdateChange} placeholder="Wrire Your Review Here" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                    </div>
+
+                                </div>
+                                <button className="btn" onClick={this.submitReview} type="submit">Submit YOur Review</button>
+
                             </TabPanel>
                         </Tabs>
                     </div>

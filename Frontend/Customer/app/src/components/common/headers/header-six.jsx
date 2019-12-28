@@ -93,6 +93,7 @@ class HeaderSix extends Component {
 
   renderRightSide = () => (
     <div className="menu-right pull-right col-lg-12" style={{padding: 0, justifyContent: 'flex-end'}}>
+    {/* <div className="menu-right pull-right col-lg-12" style={{marginTop:-41+'px'}}> */}
       <NavBar />
     </div>
   );

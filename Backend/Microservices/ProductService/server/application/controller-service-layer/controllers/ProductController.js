@@ -170,6 +170,17 @@ module.exports = function () {
 		}
 	}
 
+	var save_ProductReview = function (req, res, callback) {
+		var productReview = new domain.ProductReview(req.body);
+		this.services.productService.save_ProductReview(productReview, callback);
+	}
+
+	var get_ProductReview = function (req, res, callback) {
+		this.services.productService.get_ProductReview(callback);
+	}
+
+
+
 
 	return {
 		Save_Products,
@@ -184,7 +195,9 @@ module.exports = function () {
 		Cart_List,
 		GetAll_WishLists,
 		productSearchForCustomers,
-		All_Products_List
+		All_Products_List,
+		save_ProductReview,
+		get_ProductReview
 	}
 
 

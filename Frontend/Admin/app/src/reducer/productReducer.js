@@ -1,16 +1,28 @@
-import { ProductList, ProvideApproval } from '../Action/ProductAction'
+import { ProductList, ProvideApproval, OrderList, ReviewList } from '../Action/ProductAction';
 
-export default function ProductReducer(State = '', { type, payload }) {
-    switch (type) {
+const initialState = {
+	productList: [],
+	provideApproval: {}
+}
 
-        case ProductList:
-            return payload
-        case ProvideApproval:
-            return payload
-        
-
-        default:
-            return State
-    }
+export default function ProductReducer(state = initialState, { type, payload }) {
+	switch (type) {
+		case ProductList:
+			return {
+				...state,
+				productList: payload
+			}
+		case ProvideApproval:
+			return {
+				...state,
+				provideApproval: payload
+			}
+		case OrderList:
+			return payload
+		case ReviewList:
+			return payload
+		default:
+			return state
+	}
 };
 

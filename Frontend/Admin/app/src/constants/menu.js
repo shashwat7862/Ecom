@@ -21,17 +21,17 @@ export const MENUITEMS = [
             // { path: '/products/digital/digital-category', title: 'Category', type: 'link' },
             // { path: '/products/digital/digital-sub-category', title: 'Sub Category', type: 'link' },
             { path: '/products/digital/digital-product-list', title: 'All Product List', type: 'link' },
-            // { path: '/products/digital/digital-add-product', title: 'Add Product', type: 'link' },
+            { path: '/products/digital/digital-pro-review', title: 'Product Review', type: 'link' },
         ]
             
         
     },
-    // {
-    //     title: 'Sales', icon: DollarSign, type: 'sub', active: false, children: [
-    //         { path: '/sales/orders', title: 'Orders', type: 'link' },
-    //         { path: '/sales/transactions', title: 'Transactions', type: 'link' },
-    //     ]
-    // },
+    {
+        title: 'Order', icon: DollarSign, type: 'sub', active: false, children: [
+            { path: '/sales/orders', title: 'Orders', type: 'link' },
+            // { path: '/sales/transactions', title: 'Orders', type: 'link' },
+        ]
+    },
     // {
     //     title: 'Coupons', icon: Tag, type: 'sub', active: false, children: [
     //         { path: '/coupons/list-coupons', title: 'List Coupons', type: 'link' },

@@ -1,13 +1,33 @@
-import { createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import logger from 'redux-logger'
-import thunk from 'redux-thunk'
+import { createStore, applyMiddleware, compose } from 'redux';
+import { routerMiddleware } from 'react-router-redux';
+import thunk from 'redux-thunk';
+import createReducer from './rootReducer';
 
-import rootReducer from './rootReducer'
+export default function configureStore(initialState = {}, history) {
+  const middlewares = [thunk, routerMiddleware(history)];
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(logger, thunk))
-)
+  const enhancers = [applyMiddleware(...middlewares)];
 
-export default store
+  const composeEnhancers =
+    process.env.NODE_ENV !== 'production' && typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      : compose;
+  /* eslint-enable */
+
+  const store = createStore(createReducer({}), initialState, composeEnhancers(...enhancers));
+
+  // Make reducers hot reloadable, see http://mxs.is/googmo
+  /* istanbul ignore next */
+  if (module.hot) {
+    module.hot.accept('./rootReducer', () => {
+      import('./rootReducer').then(reducerModule => {
+        const createReducers = reducerModule.default;
+        const nextReducers = createReducers(store.asyncReducers);
+
+        store.replaceReducer(nextReducers);
+      });
+    });
+  }
+
+  return store;
+}

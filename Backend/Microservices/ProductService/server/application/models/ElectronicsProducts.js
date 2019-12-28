@@ -44,7 +44,7 @@ var ElectronicProductSchema = new mongooseSchema({
     vendorId: {
         type: mongoose.Schema.ObjectId,
         required: true,
-        ref:'Vendor'
+        ref: 'Vendor'
     },
     productDescription: {
         type: String,
@@ -61,7 +61,7 @@ var ElectronicProductSchema = new mongooseSchema({
         waist: String,
         color: String,
         size: String,
-        Material_type:String
+        Material_type: String
     },
     price: {
         type: Number,
@@ -69,7 +69,11 @@ var ElectronicProductSchema = new mongooseSchema({
         required: true,
         trim: true
     },
-    
+    inStockCount: {
+        type: Number,
+        required: false,
+    },
+
     isAvailable: {
         type: Boolean,
         default: true,
@@ -82,6 +86,9 @@ var ElectronicProductSchema = new mongooseSchema({
     isDeleted: {
         type: Boolean,
         default: false
+    },
+    addCustomeFeatures: {
+        type: Object
     }
 
 });

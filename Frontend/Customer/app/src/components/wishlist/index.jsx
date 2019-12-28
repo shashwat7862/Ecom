@@ -33,6 +33,15 @@ class wishList extends Component {
     getWishList() {
         axios.get(`${Baseurl}/api/v1/customer/GetAllWishLists/${this.state.customerDetails._id}`)
             .then(response => {
+                
+                // let finalList = [];
+
+                // response.data.object.object[0].productDetails.forEach(function (product) {
+                //     if(finalList.includes(product.productId)){
+                //         finalList.push(product.productId)
+                //     }
+                // })
+
                 this.setState({
                     Items: response.data.object.object[0].productDetails,
                 })

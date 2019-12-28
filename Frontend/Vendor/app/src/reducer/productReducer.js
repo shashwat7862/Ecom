@@ -1,19 +1,32 @@
-import { ProductList, AddProduct ,EditProduct ,SearchProducts} from '../Action/ProductAction'
+import { ProductList, AddProduct ,EditProduct ,SearchProducts,ReviewList,OrderList} from '../Action/ProductAction'
 
-export default function ProductReducer(State = '', { type, payload }) {
-    switch (type) {
+const initialState = {
+	productList: [],
+	addProduct: []
+}
 
-        case ProductList:
-            return payload
-        case AddProduct:
-            return payload
-        case EditProduct:
-            return payload
-        case SearchProducts:
-            return payload
-
-        default:
-            return State
-    }
+export default function ProductReducer(state = initialState, { type, payload }) {
+	switch (type) {
+		case ProductList:
+			return {
+				...state,
+				productList: payload
+			}
+		case AddProduct:
+			return {
+				...state,
+				addProduct: payload
+			}
+		case EditProduct:
+			return payload
+		case SearchProducts:
+			return payload
+		case ReviewList:
+			return payload
+		case OrderList:
+			return payload
+		default:
+			return state
+	}
 };
 

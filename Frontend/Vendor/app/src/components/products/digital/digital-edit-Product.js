@@ -113,8 +113,6 @@ export class Digital_edit_product extends Component {
             productImage: this.state.productImage,
             vendorId: this.state.vendorData._id
         })
-
-
     }
 
     componentWillReceiveProps(nextProps, ) {
