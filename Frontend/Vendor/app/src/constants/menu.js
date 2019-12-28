@@ -76,11 +76,11 @@ export const MENUITEMS = [
     // {
     //     title: 'Reports',path:'/reports/report', icon: BarChart, type: 'link', active: false
     // },
-    // {
-    //     title: 'Settings', icon: Settings, type: 'sub', children: [
-    //         { path: '/settings/profile', title: 'Profile', type: 'link' },
-    //     ]
-    // },
+    {
+        title: 'Settings', icon: Settings, type: 'sub', children: [
+            { path: '/settings/profile', title: 'Profile', type: 'link' },
+        ]
+    },
     // {
     //     title: 'Invoice',path:'/invoice', icon: Archive, type: 'link', active: false
     // },

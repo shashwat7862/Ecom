@@ -250,6 +250,13 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/api/v1/common/getUserList/:skip/:limit/:FetchFor": [{
+				method: "GET",
+	            action: controllers.customerController.getCustomerList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}]
 	    };
 	};
 

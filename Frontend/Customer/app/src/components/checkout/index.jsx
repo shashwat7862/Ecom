@@ -75,7 +75,7 @@ class checkOut extends Component {
         let data;
         console.log(dec, "dec")
         for (let val of dec) {
-            if (val.length > 50) {
+            if (val.length > 100) {
                 product = val
             }
         }

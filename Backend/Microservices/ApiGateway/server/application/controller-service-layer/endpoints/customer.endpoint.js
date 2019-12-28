@@ -24,6 +24,11 @@ exports.module = Customer_Login = async (body) => (
   })
 )
 
+exports.module = get_CustomerList = async (qs) => (
+  Userwrapper.proxyJsonRequest(`get_CustomerList/${qs.skip}/${qs.limit}/${qs.FetchFor}`, 'GET')
+);
+
+
 exports.module = create_Order = async (body) => (
   Orderwrapper.proxyJsonRequest('create_Order', 'POST', {
     body,
@@ -101,9 +106,12 @@ exports.module = save_ProductReview = async (userId, body) => (
   })
 );
 
-exports.module = get_ProductReview = async () => (
+exports.module = get_ProductReview = async (qs) => (
   Productwrapper.proxyJsonRequest(`get_ProductReview`, 'GET')
 );
+
+
+
 
 
 module.exports = {
@@ -120,5 +128,6 @@ module.exports = {
   get_Address,
   edit_Address,
   save_ProductReview,
-  get_ProductReview
+  get_ProductReview,
+  get_CustomerList
 }

@@ -16,7 +16,7 @@ class TopBar extends Component {
     }
   }
 
-  logOut=()=>{
+  logOut = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('customerDetails');
     localStorage.removeItem('GuestCart');
@@ -29,7 +29,7 @@ class TopBar extends Component {
     const { translate } = this.props;
     return (
       <div className="top-header white-bg">
-      <ToastContainer />
+        <ToastContainer />
         <div className="row">
           <div className="col-lg-6" style={{ paddingTop: 26 }}>
             {/* <form class="form-inline">
@@ -37,36 +37,38 @@ class TopBar extends Component {
   <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
     aria-label="Search"/>
 </form> */}
-            <form className="form-inline">
+            {/* <form className="form-inline">
               <input className="form-control mr-sm-2" style={{ width: 300 + 'px' }} type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-default my-2 my-sm-0" type="submit">Search</button>
-            </form>
+              <button className="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+            </form> */}
+            <div>
+              <form className="form_search" role="form" style={{ marginTop: -30 + 'px', marginRight: 170 + 'px' }}>
+                <input id="query search-autocomplete" type="search"
+                  placeholder="        Search Anything"
+                  className="nav-search nav-search-field" aria-expanded="true" />
+                <button type="submit" name="nav-submit-button" className="btn-search">
+                  <i className="fa fa-search"></i>
+                </button>
+              </form>
+            </div>
           </div>
           <div className="col-lg-6" style={{ padding: 0, display: 'flex', justifyContent: 'center' }}>
             <ul className="header-dropdown">
               <li className="onhover-dropdown mobile-account">
-                <i className="fa fa-user" aria-hidden="true"></i> {translate('my_account')}
-                {(this.state.customerDetails) ?
+                More
                   <ul className="onhover-show-div">
-                    <li onClick={this.logOut}>logout
-                 </li>
-
-                  </ul> :
-                  <ul className="onhover-show-div">
-                    <li>
-                      <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
-                    </li>
-                    <li>
-                      <Link to={`${process.env.PUBLIC_URL}/register`} data-lng="en">Register</Link>
+                   
+                   <li><CartContainer /></li>
+                   <li>
+                      <Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link>
                     </li>
                   </ul>
-                }
 
 
 
               </li>
-              <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{translate('wishlist')}</Link></li>
-              <li><CartContainer /></li>
+              {/* <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{translate('wishlist')}</Link></li> */}
+              {/* <li><CartContainer /></li> */}
               {/* <li className="onhover-div mobile-setting">
                   <div><img src={`${process.env.PUBLIC_URL}/assets/images/icon/setting.png`} className="img-fluid" alt="" />
                     <i className="fa fa-cog"></i></div>
@@ -86,11 +88,31 @@ class TopBar extends Component {
                   </div>
                 </li> */}
             </ul>
+            <ul className="header-dropdown">
+              <li className="onhover-dropdown mobile-account">
+                {/* <i className="fa fa-user" aria-hidden="true"></i>  */}
+                Login & Register
+                {/* {(this.state.customerDetails) ?
+                  <ul className="onhover-show-div">
+                    <li onClick={this.logOut}>logout  </li>
+
+                  </ul> :
+                  <ul className="onhover-show-div">
+                    <li>
+                      <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
+                    </li>
+                    <li>
+                      <Link to={`${process.env.PUBLIC_URL}/register`} data-lng="en">Register</Link>
+                    </li>
+                  </ul> */}
+                  </li>
+                  </ul>
+            
+          </div>
           </div>
         </div>
-      </div>
-    )
-  }
-}
-
+        )
+      }
+    }
+    
 export default withTranslate(TopBar);

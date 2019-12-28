@@ -41,10 +41,11 @@ class LeftSideBar extends Component {
       nav2: this.slider2
     });
     const enc = window.location.href;
+    // const enc = "http://weshopcustomer.s3-website.ap-south-1.amazonaws.com/left-sidebar/product/%7B%22_id%22:%225df7d14a16dc81d866a180af%22,%22deletedAt%22:null,%22deleted%22:false,%22createdAt%22:%222019-12-16T18:47:38.879Z%22,%22updatedAt%22:%222019-12-16T18:47:38.879Z%22,%22productDescription%22:%22360&deg;%20Degree%20Vision%20Means%20Full%20Home%20Protection/n/nThe%20dual%20motor-head%20design%20enables%20the%20camera%20to%20rotate%20and%20capture%20a%20full%20360&deg;%20horizontal%20view%20and%2096&deg;%20vertical%20view.%20The%20camera&rsquo;s%20shockproof%20design%20and%20quiet%20motor%20allow%20the%20rotation%20to%20remain%20smooth%20and%20silent./n%22,%22title%22:%22Mi%20MJSXJ02CM%20360%C2%B0%201080P%20WiFi%20Home%20Security%20Camera%20(White)%22,%22vendorId%22:%7B%22_id%22:%225df614414ef84b4c2926139e%22,%22deletedAt%22:null,%22deleted%22:false,%22createdAt%22:%222019-12-15T11:08:49.647Z%22,%22updatedAt%22:%222019-12-15T11:08:49.647Z%22,%22email%22:%22shashwat.company@gmail.com%22,%22mobile%22:8920832260,%22isApproved%22:false,%22role%22:%22ROLE_VENDOR%22,%22loginFrom%22:%22email%22,%22Pan_number%22:%22%22,%22GST_number%22:%22%22,%22account_no%22:null,%22pincode%22:null,%22DOB%22:%22%22,%22Gender%22:%22%22,%22fullName%22:%22shashwat%22,%22__v%22:0,%22isAccountActive%22:true,%22isAccountLocked%22:false,%22IFSC%22:%22%22,%22address%22:%22%22,%22business_category%22:%22%22,%22business_name%22:%22%22,%22salt%22:%226ec494d4-19f2-4204-bcc2-b4d1a54ce119%22,%22password%22:%22e8b798665198898ab223215dc9d8687b1d7f0eea%22,%22city%22:%22%22,%22country%22:%22%22,%22state%22:%22%22,%22VendorImage%22:%22%22%7D,%22isDeleted%22:false,%22isApproved%22:true,%22isAvailable%22:true,%22price%22:2699,%22attributes%22:%7B%22Material_type%22:%22Plastic%22,%22size%22:%22360*%22,%22color%22:%22white%22%7D,%22brandName%22:%22MI%22,%22modelNo%22:%22MJSXJ02CL%22,%22productImage%22:%221576521986868.jpg%22,%22productName%22:%22Camera%22,%22subCategory%22:%22electronics%22,%22category%22:%22electronics%22%7D"
     const dec = decodeURI(enc).split('/{');
     let productDetails = {};
     for (let val of dec) {
-      if (val.length > 50) {
+      if (val.length > 100) {
         productDetails = JSON.parse("{" + val);
       }
     }

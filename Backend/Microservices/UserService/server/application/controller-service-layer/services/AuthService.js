@@ -299,8 +299,22 @@ class AuthService extends BaseService {
         return configHolder.EmailUtil.sendMail(email, subject, emailBody);
     }
 
+    get_CustomerList(params, callback) {
+
+        if (params.FetchFor = "admin") {
+            domain.Customer.find({}).exec(function(err,customerlist){
+                callback(null, {
+                    customerlist: customerlist
+                })
+            })
+        } else {
+            
+        }
+       
+    }
 
 }
+
 
 
 

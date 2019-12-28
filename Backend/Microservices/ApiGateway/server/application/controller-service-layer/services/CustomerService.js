@@ -93,6 +93,12 @@ class CustomerService extends BaseService {
         callback(null, listReview)
     }
 
+    async getCustomerList(req,callback){
+        let list = await get_CustomerList(req.params);
+        callback(null, list)
+    }
+
+
 }
 
 module.exports = function (app) {
