@@ -3,8 +3,9 @@ var mongoose = require('mongoose');
 
 // Option 1: Passing parameters separately
 const sequelize = new Sequelize('Emart', 'root', 'root', {
-  host: 'localhost',
+  host: '127.0.0.1',
   dialect: 'mariadb',
+  socketPath: '/var/run/mysqld/mysqld.sock'
   // logging: (...msg) => console.log(msg)
 });
 

@@ -75,6 +75,11 @@ module.exports = function () {
 		console.log("called")
 		this.services.customerService.getProductReview(req, callback);
 	}
+
+	var getCustomerList = function (req, res, callback) {
+		this.services.customerService.getCustomerList(req, callback);
+	}
+
  
 
 
@@ -95,7 +100,8 @@ module.exports = function () {
 		editAddress,
 		deleteAddress,
 		saveProductReview,
-		getProductReview
+		getProductReview,
+		getCustomerList
 
 	}
 };

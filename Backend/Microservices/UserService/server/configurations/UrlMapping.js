@@ -76,6 +76,17 @@ module.exports = function (app) {
 				json: views.jsonView
 			}
 		}],
+
+		"/get_CustomerList/:skip/:limit/:FetchFor": [{
+			method: "GET",
+			action: controllers.authController.get_CustomerList,
+			views: {
+				json: views.jsonView
+			}
+		}],
+
+		
+		
 		
 		
 		

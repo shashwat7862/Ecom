@@ -49,6 +49,9 @@ module.exports = function () {
 		this.services.authService.Reset_Password(req.body, callback);
 	}
 	
+	var get_CustomerList = function (req, res, callback) {
+		this.services.authService.get_CustomerList(req.params, callback);
+	}
 
 	return {
 		registerVendor,
@@ -58,7 +61,8 @@ module.exports = function () {
 		Send_OTP,
 		Verify_OTP,
 		Forgot_Password,
-		Reset_Password
+		Reset_Password,
+		get_CustomerList
 
 	}
 };
