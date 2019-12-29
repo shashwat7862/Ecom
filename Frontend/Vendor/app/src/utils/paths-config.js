@@ -4,5 +4,7 @@ export const REQUEST_PATH = {
   deleteProduct: (id) => `/api/v1/vendor/DeleteProduct/electronics/${id}`,
   addProduct: '/api/v1/vendor/SaveProducts/electronics',
   editProduct: '/api/v1/vendor/EditProductsDetails/electronics',
-  search: (vendorId, searchQuery) => `/api/v1/vendor/${vendorId}/searchProducts/electronics?search=${searchQuery}`
+  search: (vendorId, searchQuery) => `/api/v1/vendor/${vendorId}/searchProducts/electronics?search=${searchQuery}`,
+  orderList: (vendorId) => `/api/v1/common/getOrderList/null/${vendorId}/Vendor/10/0`,
+  reviewList: '/api/v1/common/getProductReview'
 }

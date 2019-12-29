@@ -7,6 +7,7 @@ import loginReducer from './login/loginReducer';
 import LoginReducer from '../reducer/LoginReducer';
 import ProductReducer from '../reducer/productReducer';
 import ProfileReducer from '../reducer/profileReducer';
+import CustomerReducer from '../reducer/customerReducer';
 
 /*
  * routeReducer
@@ -43,6 +44,7 @@ export default function createReducer(asyncReducers) {
     route: routeReducer,
     LoginReducer: LoginReducer,
     product: ProductReducer,
+    customer: CustomerReducer,
     ProfileReducer: ProfileReducer,
     cake: cakeReducer,
     iceCream: iceCreamReducer,

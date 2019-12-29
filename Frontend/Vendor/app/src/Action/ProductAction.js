@@ -53,11 +53,20 @@ function Order_List(data) {
 
 export function orderList(vendorId) {
   return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/common/getOrderList/null/${vendorId}/Vendor/10/0`)
-      .then(({ data }) => {
-        console.log(data)
-        dispatch(Order_List(data));
-      });
+    // return axios.get(`${Baseurl}/api/v1/common/getOrderList/null/${vendorId}/Vendor/10/0`)
+    //   .then(({ data }) => {
+    //     console.log(data)
+    //     dispatch(Order_List(data));
+    //   });
+    getRequest(REQUEST_PATH.orderList(vendorId))
+    .then(({ data }) => {
+      const resp = data.object;
+      console.log('orderList *****', data)
+      dispatch(Order_List(resp.object));
+    })
+    .catch(error => {
+      console.log('orderList error *****', error.response)
+    })
   };
 }
 
@@ -101,11 +110,20 @@ export function deleteProduct(id, callback) {
 
 export function reviewList() {
   return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/common/getProductReview`)
-      .then(({ data }) => {
-        console.log(data)
-        dispatch(Review_List(data));
-      });
+    // return axios.get(`${Baseurl}/api/v1/common/getProductReview`)
+    //   .then(({ data }) => {
+    //     console.log(data)
+    //     dispatch(Review_List(data));
+    //   });
+    getRequest(REQUEST_PATH.reviewList)
+    .then(({ data }) => {
+      console.log('product Reviews ***', data)
+      const resp = data.object;
+      dispatch(Review_List(resp.object));
+    })
+    .catch(error => {
+      console.log('reviewList error *****', error.response)
+    })
   };
 }
 
@@ -115,6 +133,7 @@ export function addProduct(payload) {
   return function (dispatch) {
     postRequest(REQUEST_PATH.addProduct, payload)
     .then(({ data }) => {
+      console.log('addProduct ******', data)
       const resp = data.object;
       toast.success(resp.object.Message);
       dispatch(Add_Product(resp.object.Details));

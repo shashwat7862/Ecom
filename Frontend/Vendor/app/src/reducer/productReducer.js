@@ -2,7 +2,9 @@ import { ProductList, AddProduct ,EditProduct ,SearchProducts,ReviewList,OrderLi
 
 const initialState = {
 	productList: [],
-	addProduct: []
+	addProduct: [],
+	reviewList: [],
+	orderList: []
 }
 
 export default function ProductReducer(state = initialState, { type, payload }) {
@@ -22,9 +24,15 @@ export default function ProductReducer(state = initialState, { type, payload }) 
 		case SearchProducts:
 			return payload
 		case ReviewList:
-			return payload
+			return {
+				...state,
+				reviewList: payload
+			}
 		case OrderList:
-			return payload
+			return {
+				...state,
+				orderList: payload
+			}
 		default:
 			return state
 	}

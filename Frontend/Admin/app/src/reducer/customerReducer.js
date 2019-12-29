@@ -1,13 +1,18 @@
-import { CustomerList } from '../Action/CustomerAction'
+import { CustomerList } from '../Action/CustomerAction';
 
-export default function CustomerReducer(State = '', { type, payload }) {
-    switch (type) {
+const initialState = {
+	customerList: [],
+}
 
-        case CustomerList:
-            return payload
-
-        default:
-            return State
-    }
+export default function CustomerReducer(state = initialState, { type, payload }) {
+	switch (type) {
+		case CustomerList:
+			return {
+				...state,
+				customerList: payload
+			}
+		default:
+			return state
+	}
 };
 

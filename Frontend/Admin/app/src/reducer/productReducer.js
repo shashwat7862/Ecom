@@ -2,7 +2,9 @@ import { ProductList, ProvideApproval, OrderList, ReviewList } from '../Action/P
 
 const initialState = {
 	productList: [],
-	provideApproval: {}
+	provideApproval: {},
+	reviewList: [],
+	orderList: []
 }
 
 export default function ProductReducer(state = initialState, { type, payload }) {
@@ -17,10 +19,16 @@ export default function ProductReducer(state = initialState, { type, payload }) 
 				...state,
 				provideApproval: payload
 			}
-		case OrderList:
-			return payload
 		case ReviewList:
-			return payload
+			return {
+				...state,
+				reviewList: payload
+			}
+		case OrderList:
+			return {
+				...state,
+				orderList: payload
+			}
 		default:
 			return state
 	}

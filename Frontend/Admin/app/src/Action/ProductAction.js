@@ -61,4 +61,30 @@ export function provideApproval(payload, callback) {
         console.log('provideApproval error *****', error.response)
       })
   };
-} 
+}
+
+export function orderList(vendorId) {
+  return function (dispatch) {
+    getRequest(REQUEST_PATH.orderList(vendorId))
+    .then(({ data }) => {
+      const resp = data.object;
+      dispatch(Order_List(resp.object));
+    })
+    .catch(error => {
+      console.log('orderList error *****', error.response)
+    })
+  };
+}
+
+export function reviewList() {
+  return function (dispatch) {
+    getRequest(REQUEST_PATH.reviewList)
+    .then(({ data }) => {
+      const resp = data.object;
+      dispatch(Review_List(resp.object));
+    })
+    .catch(error => {
+      console.log('reviewList error *****', error.response)
+    })
+  };
+}
