@@ -47,4 +47,20 @@ app.use(function(req, res, next) {
 require("./application/controller-service-layer/endpoints/index")
 
 
+
 configHolder.Bootstrap.initApp();
+
+ 
+
+var stream = domain.ElectronicsProduct.synchronize()
+  , count = 0;
+
+stream.on('data', function(err, doc){
+  count++;
+});
+stream.on('close', function(){
+  console.log('indexed ' + count + ' documents!');
+});
+stream.on('error', function(err){
+  console.log(err);
+});

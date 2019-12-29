@@ -4,6 +4,7 @@ import { withTranslate } from 'react-redux-multilingual';
 import CartContainer from "../../../../containers/CartContainer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactSearchBox from 'react-search-box'
 
 class TopBar extends Component {
 
@@ -16,6 +17,8 @@ class TopBar extends Component {
     }
   }
 
+
+
   logOut = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('customerDetails');
@@ -27,11 +30,47 @@ class TopBar extends Component {
   }
   render() {
     const { translate } = this.props;
+    let data = [
+      {
+        key: 'john',
+        value: 'John Doe',
+      },
+      {
+        key: 'jane',
+        value: 'Jane Doe',
+      },
+      {
+        key: 'mary',
+        value: 'Mary Phillips',
+      },
+      {
+        key: 'robert',
+        value: 'Robert',
+      },
+      {
+        key: 'karius',
+        value: 'Karius',
+      },
+    ]
+
+
     return (
       <div className="top-header white-bg">
         <ToastContainer />
         <div className="row">
           <div className="col-lg-6" style={{ paddingTop: 26 }}>
+            <ReactSearchBox
+              placeholder="Search for John, Jane or Mary"
+              data={data}
+              onSelect={record => console.log(record)}
+              onFocus={() => {
+                console.log('This function is called when is focussed')
+              }}
+              onChange={value => console.log(value)}
+              fuseConfigs={{
+                threshold: 0.05,
+              }}
+            />
             {/* <form class="form-inline">
   <i class="fas fa-search" aria-hidden="true"></i>
   <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
@@ -41,7 +80,7 @@ class TopBar extends Component {
               <input className="form-control mr-sm-2" style={{ width: 300 + 'px' }} type="search" placeholder="Search" aria-label="Search" />
               <button className="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
             </form> */}
-            <div>
+            {/* <div>
               <form className="form_search" role="form" style={{ marginTop: -30 + 'px', marginRight: 170 + 'px' }}>
                 <input id="query search-autocomplete" type="search"
                   placeholder="        Search Anything"
@@ -50,19 +89,19 @@ class TopBar extends Component {
                   <i className="fa fa-search"></i>
                 </button>
               </form>
-            </div>
+            </div> */}
           </div>
           <div className="col-lg-6" style={{ padding: 0, display: 'flex', justifyContent: 'center' }}>
             <ul className="header-dropdown">
               <li className="onhover-dropdown mobile-account">
                 More
                   <ul className="onhover-show-div">
-                   
-                   <li><CartContainer /></li>
-                   <li>
-                      <Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link>
-                    </li>
-                  </ul>
+
+                  <li><CartContainer /></li>
+                  <li>
+                    <Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link>
+                  </li>
+                </ul>
 
 
 
@@ -105,14 +144,14 @@ class TopBar extends Component {
                       <Link to={`${process.env.PUBLIC_URL}/register`} data-lng="en">Register</Link>
                     </li>
                   </ul> */}
-                  </li>
-                  </ul>
-            
-          </div>
+              </li>
+            </ul>
+
           </div>
         </div>
-        )
-      }
-    }
-    
+      </div>
+    )
+  }
+}
+
 export default withTranslate(TopBar);

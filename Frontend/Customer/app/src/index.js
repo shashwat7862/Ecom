@@ -42,6 +42,7 @@ import ColumnLeft from "./components/products/column-left";
 import ColumnRight from "./components/products/column-right";
 import Column from "./components/products/column";
 import Vertical from "./components/products/vertical";
+import SearchProduct from "./components/products/common/product/searchProduct"
 
 // Features
 import Layout from './components/app'
@@ -112,6 +113,8 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/products`} component={CollectionLeftSidebar}/>
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
+                                <Route path={`${process.env.PUBLIC_URL}/search/:q`} component={SearchProduct}/>
+                                
 
 								<Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
 								<Route path={`${process.env.PUBLIC_URL}/no-sidebar/collection`} component={CollectionNoSidebar}/>

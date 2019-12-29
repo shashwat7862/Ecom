@@ -11,7 +11,7 @@ module.exports = function () {
 				isApprove: req.params.isApprove,
 				vendor_id: req.params.vendor_id
 			}
-			console.log("paginations", pagination)
+			console.log("paginations list 1", pagination)
 			this.services.productService.Products_List(dynamicDomain, pagination, callback);
 		} else {
 			callback(null, {
@@ -152,16 +152,16 @@ module.exports = function () {
 	}
 
 	var All_Products_List = function (req, res, callback) {
-		console.log("1")
+		console.log("a")
 		let dynamicDomain = getDynamicDomain(req.params.category)
 		if (dynamicDomain) {
-			console.log("2")
+			console.log("b")
 			let pagination = {
-				limit: req.params.limit,
-				skip: req.params.skip,
+				limit: parseInt(req.params.limit),
+				skip: parseInt(req.params.skip),
 				isApprove: req.params.isApprove,
 			}
-			console.log("paginations", pagination)
+			console.log("pagination lis 2s", pagination)
 			this.services.productService.All_Products_List(dynamicDomain, pagination, callback);
 		} else {
 			callback(null, {

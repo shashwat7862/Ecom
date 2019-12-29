@@ -1,3 +1,6 @@
+var mongoosastic = require('mongoosastic');
+global.mongoosastic = mongoosastic;
+
 var ElectronicProductSchema = new mongooseSchema({
     category: {
         type: String,
@@ -98,7 +101,11 @@ var ElectronicProductSchema = new mongooseSchema({
 ElectronicProductSchema.plugin(mongoose_timestamps);
 ElectronicProductSchema.plugin(mongoose_softDelete);
 
-
+ElectronicProductSchema.plugin(mongoosastic, {
+    hosts: [
+      'localhost:9200',
+    ]
+  })
 
 
 var ElectronicProduct = mongoose.model('ElectronicProduct', ElectronicProductSchema);

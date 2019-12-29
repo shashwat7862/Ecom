@@ -27,6 +27,7 @@ class ProductService extends BaseService {
                 isApproved: pagination.isApprove,
                 vendorId: pagination.vendor_id
             }).skip(pagination.skip).limit(pagination.limit).exec(function (error, productList) {
+          console.log("-----------------------in")      
                 if (error) {
                     callback(error, null)
                 } else {
@@ -35,7 +36,7 @@ class ProductService extends BaseService {
             });
         } catch (e) {
             callback({
-                "error": "error while saving"
+                "error": "error while listing"
             }, null)
         }
 
