@@ -99,65 +99,97 @@ class HeaderSix extends Component {
 	
 	render() {
 		return (
-			<div>
-				<header id="sticky" className="sticky">
-					{this.state.isLoading ? <Pace color="#27ae60"/> : null}
-					<div className="mobile-fix-option"></div>
-					<div className="container-fluid" style={{height:79+'px'}}>
-						<div className="row">
-							<div className="col-lg-12">
-								<div className="main-menu">
-                  <div className="col-lg-2">{this.renderLeftSide()}</div>
-                  <div className="col-lg-10" style={{ display: 'flex', flexDirection: 'column'}}>
-                    {/* <div className="col-lg-6" style={{ maxWidth: '100%', padding: 0 }}> */}
-                      <TopBar/>
-                    {/* </div> */}
-                    {/* <div className="col-lg-6" style={{ maxWidth: '100%', padding: 0 }}> */}
-                      {/* {this.renderRightSide()} */}
-                    {/* </div> */}
-                  </div>
-								</div>
-							</div>
-						</div>
-					</div>
-                    <div className="container-fluid">
 
+      <React.Fragment>
+      <header id="sticky" className="sticky">
+        <div className="container-fluid clearfix">
+             <div className="logo-cover pull-left">
+               <LogoImage logo={this.props.logoName} />
+             </div>
 
-                        <div className="col p-0">
-                            <div className="top-header">
-                                
-                                <div className="main-menu mx-auto" id="nav">
-                                    <nav id="navbar-example2" className="navbar navbar-expand-lg navbar-light" style={{marginRight:310+'px'}}>
-                                      
-                                        <div className={`collapse navbar-collapse ${this.state.toggle ? 'show' : ''}`} id="scroll-spy">
-                                            <ul className="navbar-nav mx-auto nav">
-                                                <li className="nav-item">
-                                                    <a className="nav-link" href='/products'>New</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <AnchorLink className="nav-link" href='#img-bg'>Products</AnchorLink>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <AnchorLink className="nav-link" href='#feature'>Sell</AnchorLink>
-                                                </li>
-                                               
-                                                <li className="nav-item">
-                                                    <AnchorLink className="nav-link" href='#admin'>Help</AnchorLink>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <AnchorLink className="nav-link" href='#email'>About Us</AnchorLink>
-                                                </li>
+             <div className="user-search pull-left">
+               <TopBar/>
+             </div>
+        </div>
+      </header>
+
+    <div className="nav-strip">
+       <ul className="nav-strip-list clearfix">
+         <li><a href="/products">New</a></li>
+         <li><a href='#img-bg'>Products</a></li>
+         <li><a href="#feature">Sell</a></li>
+         <li><a href="#admin">Help</a></li>
+         <li><a href="#email">About Us</a></li>
+       </ul>
+    </div>    
+
+                      
                                                 
-                                            </ul>
-                                        </div>
-                                    </nav>
-                                </div>
+   
+
+    </React.Fragment>
+
+			// <div>
+			// 	<header id="sticky" className="sticky">
+			// 		{this.state.isLoading ? <Pace color="#27ae60"/> : null}
+			// 		<div className="mobile-fix-option"></div>
+			// 		<div className="container-fluid" style={{height:79+'px'}}>
+			// 			<div className="row">
+			// 				<div className="col-lg-12">
+			// 					<div className="main-menu">
+      //             <div className="col-lg-2">{this.renderLeftSide()}</div>
+      //             <div className="col-lg-10" style={{ display: 'flex', flexDirection: 'column'}}>
+      //               {/* <div className="col-lg-6" style={{ maxWidth: '100%', padding: 0 }}> */}
+      //                 <TopBar/>
+      //               {/* </div> */}
+      //               {/* <div className="col-lg-6" style={{ maxWidth: '100%', padding: 0 }}> */}
+      //                 {/* {this.renderRightSide()} */}
+      //               {/* </div> */}
+      //             </div>
+			// 					</div>
+			// 				</div>
+			// 			</div>
+			// 		</div>
+      //               <div className="container-fluid">
+
+
+      //                   <div className="col p-0">
+      //                       <div className="top-header">
                                 
-                            </div>
-                        </div>
-                    </div>
-                </header>
-			</div>
+      //                           <div className="main-menu mx-auto" id="nav">
+      //                               <nav id="navbar-example2" className="navbar navbar-expand-lg navbar-light" style={{marginRight:310+'px'}}>
+                                      
+      //                                   <div className={`collapse navbar-collapse ${this.state.toggle ? 'show' : ''}`} id="scroll-spy">
+      //                                       <ul className="navbar-nav mx-auto nav">
+      //                                           <li className="nav-item">
+      //                                               <a className="nav-link" href='/products'>New</a>
+      //                                           </li>
+      //                                           <li className="nav-item">
+      //                                               <AnchorLink className="nav-link" href='#img-bg'>Products</AnchorLink>
+      //                                           </li>
+      //                                           <li className="nav-item">
+      //                                               <AnchorLink className="nav-link" href='#feature'>Sell</AnchorLink>
+      //                                           </li>
+                                               
+      //                                           <li className="nav-item">
+      //                                               <AnchorLink className="nav-link" href='#admin'>Help</AnchorLink>
+      //                                           </li>
+      //                                           <li className="nav-item">
+      //                                               <AnchorLink className="nav-link" href='#email'>About Us</AnchorLink>
+      //                                           </li>
+                                                
+      //                                       </ul>
+      //                                   </div>
+      //                               </nav>
+      //                           </div>
+                                
+      //                       </div>
+      //                   </div>
+      //               </div>
+      //           </header>
+      // </div>
+      
+
     )
 	}
 }

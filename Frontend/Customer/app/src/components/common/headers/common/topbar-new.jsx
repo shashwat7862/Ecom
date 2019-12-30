@@ -55,101 +55,130 @@ class TopBar extends Component {
 
 
     return (
-      <div className="top-header white-bg">
-        <ToastContainer />
-        <div className="row">
-          <div className="col-lg-6" style={{ paddingTop: 26 }}>
-            <ReactSearchBox
-              placeholder="Search for John, Jane or Mary"
-              data={data}
-              onSelect={record => console.log(record)}
-              onFocus={() => {
-                console.log('This function is called when is focussed')
-              }}
-              onChange={value => console.log(value)}
-              fuseConfigs={{
-                threshold: 0.05,
-              }}
-            />
-            {/* <form class="form-inline">
-  <i class="fas fa-search" aria-hidden="true"></i>
-  <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-    aria-label="Search"/>
-</form> */}
-            {/* <form className="form-inline">
-              <input className="form-control mr-sm-2" style={{ width: 300 + 'px' }} type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
-            </form> */}
-            {/* <div>
-              <form className="form_search" role="form" style={{ marginTop: -30 + 'px', marginRight: 170 + 'px' }}>
-                <input id="query search-autocomplete" type="search"
-                  placeholder="        Search Anything"
-                  className="nav-search nav-search-field" aria-expanded="true" />
-                <button type="submit" name="nav-submit-button" className="btn-search">
-                  <i className="fa fa-search"></i>
-                </button>
-              </form>
-            </div> */}
-          </div>
-          <div className="col-lg-6" style={{ padding: 0, display: 'flex', justifyContent: 'center' }}>
-            <ul className="header-dropdown">
-              <li className="onhover-dropdown mobile-account">
-                More
-                  <ul className="onhover-show-div">
+       
+             <div className="clearfix">
+               <div className="search-box pull-left">
+                 <ReactSearchBox
+                    placeholder="Search for John, Jane or Mary"
+                    data={data}
+                    onSelect={record => console.log(record)}
+                    onFocus={() => {
+                      console.log('This function is called when is focussed')
+                    }}
+                    onChange={value => console.log(value)}
+                    fuseConfigs={{
+                      threshold: 0.05,
+                    }}
+                  />
+               </div>
 
-                  <li><CartContainer /></li>
-                  <li>
-                    <Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link>
-                  </li>
-                </ul>
+               <div className="header-nav-list pull-right">
+                 <ul className="header-list">
+                     <li><CartContainer /></li> 
+                     <li><Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link></li> 
+                     <li><Link to={`${process.env.PUBLIC_URL}/login`}>Login</Link></li> 
+                     <li><Link to={`${process.env.PUBLIC_URL}/register`}>Register</Link></li> 
+                 </ul>
+               </div>
+             </div>
+              
 
 
+//       <div className="top-header white-bg">
+//         <ToastContainer />
+//         <div className="row">
+//           <div className="col-lg-6" style={{ paddingTop: 26 }}>
+//             <ReactSearchBox
+//               placeholder="Search for John, Jane or Mary"
+//               data={data}
+//               onSelect={record => console.log(record)}
+//               onFocus={() => {
+//                 console.log('This function is called when is focussed')
+//               }}
+//               onChange={value => console.log(value)}
+//               fuseConfigs={{
+//                 threshold: 0.05,
+//               }}
+//             />
+//             {/* <form class="form-inline">
+//   <i class="fas fa-search" aria-hidden="true"></i>
+//   <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+//     aria-label="Search"/>
+// </form> */}
+//             {/* <form className="form-inline">
+//               <input className="form-control mr-sm-2" style={{ width: 300 + 'px' }} type="search" placeholder="Search" aria-label="Search" />
+//               <button className="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+//             </form> */}
+//             {/* <div>
+//               <form className="form_search" role="form" style={{ marginTop: -30 + 'px', marginRight: 170 + 'px' }}>
+//                 <input id="query search-autocomplete" type="search"
+//                   placeholder="        Search Anything"
+//                   className="nav-search nav-search-field" aria-expanded="true" />
+//                 <button type="submit" name="nav-submit-button" className="btn-search">
+//                   <i className="fa fa-search"></i>
+//                 </button>
+//               </form>
+//             </div> */}
+//           </div>
+//           <div className="col-lg-6" style={{ padding: 0, display: 'flex', justifyContent: 'center' }}>
+//             <ul className="header-dropdown">
+//               <li className="onhover-dropdown mobile-account">
+//                 More
+//                   <ul className="onhover-show-div">
 
-              </li>
-              {/* <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{translate('wishlist')}</Link></li> */}
-              {/* <li><CartContainer /></li> */}
-              {/* <li className="onhover-div mobile-setting">
-                  <div><img src={`${process.env.PUBLIC_URL}/assets/images/icon/setting.png`} className="img-fluid" alt="" />
-                    <i className="fa fa-cog"></i></div>
-                  <div className="show-div setting">
-                    <h6>language</h6>
-                    <ul>
-                      <li><a href={null} onClick={() => this.changeLanguage('en')}>English</a> </li>
-                      <li><a href={null} onClick={() => this.changeLanguage('fn')}>French</a> </li>
-                    </ul>
-                    <h6>currency</h6>
-                    <ul className="list-inline">
-                      <li><a href={null} onClick={() => this.props.changeCurrency('€')}>euro</a> </li>
-                      <li><a href={null} onClick={() => this.props.changeCurrency('₹')}>rupees</a> </li>
-                      <li><a href={null} onClick={() => this.props.changeCurrency('£')}>pound</a> </li>
-                      <li><a href={null} onClick={() => this.props.changeCurrency('$')}>doller</a> </li>
-                    </ul>
-                  </div>
-                </li> */}
-            </ul>
-            <ul className="header-dropdown">
-              <li className="onhover-dropdown mobile-account">
-                {/* <i className="fa fa-user" aria-hidden="true"></i>  */}
-                Login & Register
-                {/* {(this.state.customerDetails) ?
-                  <ul className="onhover-show-div">
-                    <li onClick={this.logOut}>logout  </li>
+//                   <li><CartContainer /></li>
+//                   <li>
+//                     <Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link>
+//                   </li>
+//                 </ul>
 
-                  </ul> :
-                  <ul className="onhover-show-div">
-                    <li>
-                      <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
-                    </li>
-                    <li>
-                      <Link to={`${process.env.PUBLIC_URL}/register`} data-lng="en">Register</Link>
-                    </li>
-                  </ul> */}
-              </li>
-            </ul>
 
-          </div>
-        </div>
-      </div>
+
+//               </li>
+//               {/* <li className="mobile-wishlist"><Link to={`${process.env.PUBLIC_URL}/wishlist`}><i className="fa fa-heart" aria-hidden="true"></i>{translate('wishlist')}</Link></li> */}
+//               {/* <li><CartContainer /></li> */}
+//               {/* <li className="onhover-div mobile-setting">
+//                   <div><img src={`${process.env.PUBLIC_URL}/assets/images/icon/setting.png`} className="img-fluid" alt="" />
+//                     <i className="fa fa-cog"></i></div>
+//                   <div className="show-div setting">
+//                     <h6>language</h6>
+//                     <ul>
+//                       <li><a href={null} onClick={() => this.changeLanguage('en')}>English</a> </li>
+//                       <li><a href={null} onClick={() => this.changeLanguage('fn')}>French</a> </li>
+//                     </ul>
+//                     <h6>currency</h6>
+//                     <ul className="list-inline">
+//                       <li><a href={null} onClick={() => this.props.changeCurrency('€')}>euro</a> </li>
+//                       <li><a href={null} onClick={() => this.props.changeCurrency('₹')}>rupees</a> </li>
+//                       <li><a href={null} onClick={() => this.props.changeCurrency('£')}>pound</a> </li>
+//                       <li><a href={null} onClick={() => this.props.changeCurrency('$')}>doller</a> </li>
+//                     </ul>
+//                   </div>
+//                 </li> */}
+//             </ul>
+//             <ul className="header-dropdown">
+//               <li className="onhover-dropdown mobile-account">
+//                 {/* <i className="fa fa-user" aria-hidden="true"></i>  */}
+//                 Login & Register
+//                 {/* {(this.state.customerDetails) ?
+//                   <ul className="onhover-show-div">
+//                     <li onClick={this.logOut}>logout  </li>
+
+//                   </ul> :
+//                   <ul className="onhover-show-div">
+//                     <li>
+//                       <Link to={`${process.env.PUBLIC_URL}/login`} data-lng="en">Login</Link>
+//                     </li>
+//                     <li>
+//                       <Link to={`${process.env.PUBLIC_URL}/register`} data-lng="en">Register</Link>
+//                     </li>
+//                   </ul> */}
+//               </li>
+//             </ul>
+
+//           </div>
+//         </div>
+//       </div>
     )
   }
 }
