@@ -4,7 +4,14 @@ import { withTranslate } from 'react-redux-multilingual';
 import CartContainer from "../../../../containers/CartContainer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ReactSearchBox from 'react-search-box'
+import ReactSearchBox from 'react-search-box';
+import {withRouter} from 'react-router-dom';
+import elasticsearch from "elasticsearch";
+var client = new elasticsearch.Client({
+  host: 'localhost:9200',
+  log: 'trace',
+  apiVersion: '7.2', // use the same version of your Elasticsearch instance
+});
 
 class TopBar extends Component {
 
@@ -28,61 +35,92 @@ class TopBar extends Component {
     toast.success("logout Successfully ");
     window.location.reload()
   }
+
+  async searchChange(q) {
+    let searchQ = q
+    console.log("params", q)
+
+    try {
+      const response = await client.search({
+        q: q
+      });
+      console.log(response.hits.hits, "elecstic search result");
+
+      let arr = [];
+
+      response.hits.hits.forEach(function (val) {
+        val.value = val.productName
+        arr.push(val._source)
+      })
+      this.setState({
+        products: arr
+      })
+    } catch (error) {
+      console.trace(error.message)
+    }
+  }
+
   render() {
     const { translate } = this.props;
     let data = [
       {
-        key: 'john',
-        value: 'John Doe',
+        key: 'key',
+        value: 'Data',
       },
       {
-        key: 'jane',
-        value: 'Jane Doe',
+        key: 'Data',
+        value: 'Cameras',
+      },
+      {
+        key: 'Data1',
+        value: 'MacBook',
       },
       {
         key: 'mary',
-        value: 'Mary Phillips',
+        value: 'Camera',
       },
       {
         key: 'robert',
-        value: 'Robert',
+        value: 'Apple Mac',
       },
       {
         key: 'karius',
-        value: 'Karius',
+        value: 'Data Device',
       },
     ]
 
 
     return (
-       
-             <div className="clearfix">
-               <div className="search-box pull-left">
-                 <ReactSearchBox
-                    placeholder="Search for John, Jane or Mary"
-                    data={data}
-                    onSelect={record => console.log(record)}
-                    onFocus={() => {
-                      console.log('This function is called when is focussed')
-                    }}
-                    onChange={value => console.log(value)}
-                    fuseConfigs={{
-                      threshold: 0.05,
-                    }}
-                  />
-               </div>
 
-               <div className="header-nav-list pull-right">
-                 <ul className="header-list">
-                     <li><CartContainer /></li> 
-                     <li><Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link></li> 
-                     <li><Link to={`${process.env.PUBLIC_URL}/login`}>Login</Link></li> 
-                     <li><Link to={`${process.env.PUBLIC_URL}/register`}>Register</Link></li> 
-                 </ul>
-               </div>
-             </div>
-              
+      <div className="clearfix">
+      <div className="search-box pull-left">
+      <ReactSearchBox
+              placeholder="Search for John, Jane or Mary"
+              data={data}
+              onSelect={record => {
+                this.props.history.push(`${process.env.PUBLIC_URL}/search/${record.value}`);
+              }}
+              onFocus={() => {
+                console.log('This function is called when is focussed')
+              }}
+              onChange={value => {
+                 this.searchChange(value)
+              }}
+              fuseConfigs={{
+                threshold: 0.05,
+              }}
+            />
+      </div>
 
+      <div className="header-nav-list pull-right">
+        <ul className="header-list">
+            <li><CartContainer /></li> 
+            <li><Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link></li> 
+            <li><Link to={`${process.env.PUBLIC_URL}/login`}>Login</Link></li> 
+            <li><Link to={`${process.env.PUBLIC_URL}/register`}>Register</Link></li> 
+        </ul>
+      </div>
+    </div>
 
 //       <div className="top-header white-bg">
 //         <ToastContainer />
@@ -91,11 +129,15 @@ class TopBar extends Component {
 //             <ReactSearchBox
 //               placeholder="Search for John, Jane or Mary"
 //               data={data}
-//               onSelect={record => console.log(record)}
+//               onSelect={record => {
+//                 this.props.history.push(`${process.env.PUBLIC_URL}/search/${record.value}`);
+//               }}
 //               onFocus={() => {
 //                 console.log('This function is called when is focussed')
 //               }}
-//               onChange={value => console.log(value)}
+//               onChange={value => {
+//                  this.searchChange(value)
+//               }}
 //               fuseConfigs={{
 //                 threshold: 0.05,
 //               }}
@@ -183,4 +225,4 @@ class TopBar extends Component {
   }
 }
 
-export default withTranslate(TopBar);
+export default withRouter(withTranslate(TopBar))
