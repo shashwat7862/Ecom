@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../api/url';
 import Modal from 'react-responsive-modal';
+import {getAddressService,SaveAddressService,placeOrderService} from '../../services/userService';
 
 class checkOut extends Component {
 
@@ -101,20 +102,18 @@ class checkOut extends Component {
        this.getAddress()
     }
 
-    getAddress = () =>{
-        axios.get(`${Baseurl}/api/v1/common/getAddress/${this.state.customerDetails._id}`)
-        .then(response => {
+    async getAddress(){
+        try{
+            const response = await getAddressService();
             // toast.success("Address Fetched")
             console.log(response, "address")
             // let addressList = response.object.object.Data;
             this.setState({
                 addressList: response.data.object.object.Data
             })
-
-        })
-        .catch(error => {
+        }catch(error){
             console.log(error);
-        });
+        }
     }
 
     setStateFromInput = (event) => {
@@ -124,9 +123,10 @@ class checkOut extends Component {
 
     }
 
-    placeOrder() {
+   async placeOrder() {
         localStorage.setItem('prevUrl', 'complete');
-        axios.post(`${Baseurl}/api/v1/customer/createOrder`, {
+        try{
+        const response  = await placeOrderService( {
             productDetails: this.state.productsData,
             paymentDetails: {
                 cardType: '',
@@ -152,19 +152,15 @@ class checkOut extends Component {
                 shiping_Pincode: this.state.shippingAddress.pincode,
             },
             UserId: this.state.customerDetails._id
-        }
+        });
 
-        )
-            .then(response => {
-                // toast.success("Your Order Has been Placed")
                 console.log(response, "address");
                 let orderId = response.data.object.object[0].saveDataInOrderTable.orderId;
                 this.props.history.push(`${process.env.PUBLIC_URL}/order-success/${orderId}`);
                 localStorage.removeItem('GuestCart')
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            };
     }
 
     setStateFromCheckbox = (event) => {
@@ -211,28 +207,30 @@ class checkOut extends Component {
         });
     }
 
-    SaveAddress() {
-        axios.post(`${Baseurl}/api/v1/common/saveAddress`, {
-            address1: this.state.address1,
-            address2: this.state.address2,
-            state: this.state.state,
-            city: this.state.city,
-            location_area: this.state.area,
-            pincode: this.state.pincode,
-            nearBy: this.state.nearBy,
-            userName: this.state.customerDetails.fullName,
-            userId: this.state.customerDetails._id
-        })
-            .then(response => {
+    async SaveAddress() {
+            try{
+                const response  = await SaveAddressService({
+                address1: this.state.address1,
+                address2: this.state.address2,
+                state: this.state.state,
+                city: this.state.city,
+                location_area: this.state.area,
+                pincode: this.state.pincode,
+                nearBy: this.state.nearBy,
+                userName: this.state.customerDetails.fullName,
+                userId: this.state.customerDetails._id
+            })
+
                 toast.success("Address has been Saved")
                 console.log(response, "save address data");
                 this.setState({ open: false });
                 this.getAddress();
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
-    }
+            }
+        }
+
+        
 
     selectBiilingAddress(address) {
         console.log(address, "select biiling address");

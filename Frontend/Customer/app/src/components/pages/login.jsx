@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Baseurl from '../../api/url'
 import Breadcrumb from "../common/breadcrumb";
+import {loginCustomerService} from '../../services/userService';
 
 class Login extends Component {
 
@@ -16,13 +17,13 @@ class Login extends Component {
 
     }
 
-    loginCustomer() {
-        axios.post(`${Baseurl}/api/v1/customer/Login`, {
-            "email": this.state.email,
-            "password": this.state.password,
-            "loginFrom": "email"
-        })
-            .then(response => {
+    async loginCustomer() {
+             try{
+                const response = await loginCustomerService({
+                    "email": this.state.email,
+                    "password": this.state.password,
+                    "loginFrom": "email"
+                })
                 localStorage.removeItem('customerDetails');
                 localStorage.removeItem('authToken');
                 console.log(response, "data")
@@ -36,11 +37,9 @@ class Login extends Component {
                 } else {
                     this.props.history.push(`${process.env.PUBLIC_URL}/products`);
                 }
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
-
+            };
     }
 
     onUpdateFormValue = (e) => {

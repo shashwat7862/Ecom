@@ -4,7 +4,9 @@ import store from "../store";
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
-import Baseurl from '../api/url'
+import Baseurl from '../api/url';
+import {getAllProductsService} from '../services/userService';
+
 export const fetchProductsBegin = () => ({
     type: types.FETCH_PRODUCTS_BEGIN
 });

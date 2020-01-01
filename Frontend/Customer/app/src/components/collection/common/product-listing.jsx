@@ -8,6 +8,7 @@ import { addToCart, addToWishlist, addToCompare } from '../../../actions'
 import { getVisibleproducts } from '../../../services';
 import ProductListItem from "./product-list-item";
 import Baseurl from '../../../api/url';
+import {ProductsListElectronics_2Service} from '../../../services/userService';
 
 class ProductListing extends Component {
 
@@ -20,18 +21,17 @@ class ProductListing extends Component {
 
     }
 
-    componentDidMount() {
-        axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/100/0`)
-            .then(response => {
+    async componentDidMount() {
+        try{
+               const response = await ProductsListElectronics_2Service();
                 console.log(response, "product--------------- Data");
                 this.setState({
                     products: response.data.object.object
                 })
 
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            };
     }
 
     // componentWillMount() {

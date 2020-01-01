@@ -4,6 +4,7 @@ import Baseurl from '../../api/url'
 import Breadcrumb from "../common/breadcrumb";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {registerCustomerService} from '../../services/userService';
 
 class Register extends Component {
 
@@ -20,20 +21,18 @@ class Register extends Component {
 
     }
 
-    registerCustomer() {
-        axios.post(`${Baseurl}/api/v1/customer/Register`, {
+    async registerCustomer() {
+        try{
+        const response = await registerCustomerService({
             "email": this.state.email,
             "mobile": this.state.mobile,
             "password": this.state.password,
             "fullName": this.state.fullName,
             "loginFrom": "email"
-        })
-            .then(response => {
+        });
                 localStorage.removeItem('customerDetails');
                 localStorage.removeItem('authToken');
                 toast.success("Registered Successfully..!!")
-                console.log(response, "data")
-                console.log(response.data.object.object.authToken);
                 localStorage.setItem('authToken', response.data.object.object.authToken);
                 localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
                 let prevUrl = localStorage.getItem('prevUrl');
@@ -43,11 +42,9 @@ class Register extends Component {
                 } else {
                     this.props.history.push(`${process.env.PUBLIC_URL}/products`);
                 }
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
-
+            }
     }
 
     onUpdateFormValue = (e) => {

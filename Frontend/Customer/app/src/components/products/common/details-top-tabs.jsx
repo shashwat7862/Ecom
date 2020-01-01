@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../../api/url';
+import {submitReviewService} from '../../../services/userService';
 
 class DetailsTopTabs extends Component {
 
@@ -25,9 +26,9 @@ class DetailsTopTabs extends Component {
         this.onUpdateChange = this.onUpdateChange.bind(this);
     }
 
-    submitReview = () => {
-        console.log(this.state);
-        axios.post(`${Baseurl}/api/v1/customer/saveProductReview/${this.state.customerDetails._id}`, {
+    async submitReview(){
+      try{
+        const response = await submitReviewService(this.state.customerDetails._id,{
             "title": this.state.reviewTitle,
             "review": this.state.review,
             "byUser": (this.state.customerDetails._id) ? this.state.customerDetails._id : 'Guest123',
@@ -37,22 +38,18 @@ class DetailsTopTabs extends Component {
             "productImage": this.props.item.productImage,
             "vendorId": this.props.item.vendorId._id,
             "vendorName": this.props.item.vendorId.fullName
-        })
-            .then(response => {
+        });
                 toast.success("Thanks For Review");
                 this.setState({
                     reviewTitle: '',
                     review: ''
                 })
-                console.log(response, "data")
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            };
     }
 
     onUpdateChange(e) {
-        console.log(e.target.name, e.target.value, "change")
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -60,7 +57,6 @@ class DetailsTopTabs extends Component {
 
 
     setStatus = (e) => {
-        console.log(e.target.value, "setStatus val")
         this.setState({
             startRating: e.target.value
         })
@@ -69,10 +65,6 @@ class DetailsTopTabs extends Component {
 
     render() {
         const { item } = this.props
-        console.log(item, "item-------------------details")
-        console.log(item.price, "attributes")
-        console.log(this.state, "this state")
-
         return (
             <section className="tab-product m-0">
                 <div className="row">

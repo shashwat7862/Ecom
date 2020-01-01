@@ -9,6 +9,7 @@ import { removeFromCart, incrementQty, decrementQty } from '../../actions'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../api/url'
+import {getCartListService, removeFromCartService} from '../../services/userService';
 
 class cartComponent extends Component {
 
@@ -27,7 +28,6 @@ class cartComponent extends Component {
 
     componentDidMount() {
         this.getCartList();
-
     }
 
     redirectToCheckOut() {
@@ -40,28 +40,25 @@ class cartComponent extends Component {
         }
     }
 
-    getCartList() {
+   async getCartList() {
         let prevUrl = localStorage.getItem('prevUrl');
         if (this.state.customerDetails && prevUrl ) {
-            // alert("inside loggedin user");
-            axios.get(`${Baseurl}/api/v1/customer/CartList/${this.state.customerDetails._id}`)
-                .then(response => {
-                    var sum = 0
-                    response.data.object.object.cartList.forEach(function (data) {
-                        sum = sum + data.price
-                    });
-                    this.setState({
-                        cartItems: response.data.object.object.cartList,
-                        totalSum: sum
-                    })
-                })
-                .catch(error => {
-                    console.log(error);
+              try {
+                const response = await getCartListService(this.state.customerDetails._id);
+                console.log("response", response);
+                var sum = 0
+                response.data.object.object.cartList.forEach(function (data) {
+                sum = sum + data.price
                 });
+                this.setState({
+                    cartItems: response.data.object.object.cartList,
+                    totalSum: sum
+                })
+              } catch (error) {
+                console.error(error);
+              }
         } else {
-            // alert("inside guest");
             let data = JSON.parse(localStorage.getItem('GuestCart'));
-
             console.log(data, "data cartItem");
             let total = 0;
             if (data) {
@@ -76,21 +73,20 @@ class cartComponent extends Component {
         }
     }
 
-    removeFromCart(productData) {
+    async removeFromCart(productData) {
         let prevUrl = localStorage.getItem('prevUrl');
         if (this.state.customerDetails && prevUrl ) {
-            axios.put(`${Baseurl}/api/v1/customer/Cart/REMOVE`, {
-                "productId": productData.productId,
-                "userId": this.state.customerDetails._id
-            })
-                .then(response => {
-                    // toast.success("Product Removed to Cart");
-                    this.getCartList();
-                    console.log(response, "data")
+            try {
+                const response = await removeFromCartService({
+                    "productId": productData.productId,
+                    "userId": this.state.customerDetails._id
                 })
-                .catch(error => {
-                    console.log(error);
-                });
+                this.getCartList();
+                console.log(response, "data")
+            }
+            catch(error){
+                console.log(error);
+            }
         } else {
             let guestCart = [];
             let payload = {

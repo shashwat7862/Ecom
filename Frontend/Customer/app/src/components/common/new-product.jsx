@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { getBestSeller } from "../../services";
 import Baseurl from '../../api/url'
+import {ProductsListElectronicsService} from '../../services/userService';
 
 class NewProduct extends Component {
 
@@ -18,18 +19,17 @@ class NewProduct extends Component {
 
     }
 
-    componentDidMount() {
-        axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/10/0`)
-            .then(response => {
+  async componentDidMount() {
+       try{
+            const response = await ProductsListElectronicsService();
                 console.log(response, "product--------------- Data");
                 this.setState({
                     products: response.data.object.object
                 })
 
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            }
     }
 
     render() {

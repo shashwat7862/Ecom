@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../../../api/url';
+import {addToWishListService,addToCartService} from '../../../../services/userService';
 class DetailsWithPrice extends Component {
     constructor(props) {
         const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
@@ -61,33 +62,28 @@ class DetailsWithPrice extends Component {
     }
 
     buyNow = (product) => {
-        // alert("buyNow");
-        console.log("prodyct buy now",product)
         this.props.history.push(`${process.env.PUBLIC_URL}/checkout/${JSON.stringify(product)}`);
     }
 
-    addToWishList = (productData) => {
-        console.log(productData, "add to cart")
+    addToWishList = async (productData) => {
         if (this.state.customerDetails) {
-            axios.put(`${Baseurl}/api/v1/customer/WishList/ADD`, {
-                "productData": {
-                    "productId": productData._id,
-                    "productName": productData.productName,
-                    "price": productData.price,
-                    "category": productData.category,
-                    "productImage": productData.productImage,
-                    "VendorId": productData.vendorId._id,
-                    "VendorName": productData.vendorId.fullName,
-                },
-                "userId": this.state.customerDetails._id
-            })
-                .then(response => {
-                    toast.success("Product Added to WishList")
-                    console.log(response, "data")
-                })
-                .catch(error => {
-                    console.log(error);
+            try{
+                const response = await addToWishListService({
+                    "productData": {
+                        "productId": productData._id,
+                        "productName": productData.productName,
+                        "price": productData.price,
+                        "category": productData.category,
+                        "productImage": productData.productImage,
+                        "VendorId": productData.vendorId._id,
+                        "VendorName": productData.vendorId.fullName,
+                    },
+                    "userId": this.state.customerDetails._id
                 });
+                    toast.success("Product Added to WishList")
+                }catch(error){
+                    console.log(error);
+                }
         } else {
             let guestCart = [];
             let payload = {
@@ -106,11 +102,13 @@ class DetailsWithPrice extends Component {
             localStorage.setItem('GuestCart', JSON.stringify(guestCart))
         }
     }
-    addToCart = (productData) => {
-        console.log(productData, "add to cart")
 
+    addToCart = async (productData) => {
+        
         if (this.state.customerDetails) {
-            axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
+        
+            try{
+             const response =  await addToCartService({
                 "productData": {
                     "productId": productData._id,
                     "productName": productData.productName,
@@ -122,14 +120,12 @@ class DetailsWithPrice extends Component {
                     "VendorName": productData.vendorId.fullName,
                 },
                 "userId": this.state.customerDetails._id
-            })
-                .then(response => {
+            });   
                     toast.success("Product Add to Cart")
                     console.log(response, "data")
-                })
-                .catch(error => {
+                   }catch(error){
                     console.log(error);
-                });
+                }
         } else {
             let guestCart = [];
             let payload = {

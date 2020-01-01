@@ -5,6 +5,7 @@ import Baseurl from '../../../api/url';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {addToWishListService,addToCartService} from '../../../services/userService';
 
 class ProductListItem extends Component {
 
@@ -34,9 +35,9 @@ class ProductListItem extends Component {
         this.setState({ image: img });
     }
 
-    addToWishList(productData){
-        console.log(productData,"add to cart")
-        axios.put(`${Baseurl}/api/v1/customer/WishList/ADD`, {
+   async addToWishList(productData){
+       try{
+         const response = await addToWishListService({
             "productData": {
                 "productId": productData._id,
                 "productName": productData.productName,
@@ -47,14 +48,12 @@ class ProductListItem extends Component {
                 "VendorName": productData.vendorId.fullName,
             },
             "userId": this.state.customerDetails._id
-        })
-            .then(response => {
+        });  
                 toast.success("Product Added to WishList")
                 console.log(response, "data")
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            };
     }
     // addToCart(productData) {
     //     console.log(productData,"add to cart")
@@ -80,11 +79,11 @@ class ProductListItem extends Component {
     //         });
     // }
 
-    addToCart = (productData) => {
-        console.log(productData, "add to cart")
-
+    addToCart = async(productData) => {
+       
         if (this.state.customerDetails) {
-            axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
+            try{
+            const response = await addToCartService({
                 "productData": {
                     "productId": productData._id,
                     "productName": productData.productName,
@@ -96,14 +95,12 @@ class ProductListItem extends Component {
                     "VendorName": productData.vendorId.fullName,
                 },
                 "userId": this.state.customerDetails._id
-            })
-                .then(response => {
+            });
                     toast.success("Product Add to Cart")
                     console.log(response, "data")
-                })
-                .catch(error => {
+                }catch(error){
                     console.log(error);
-                });
+                }
         } else {
             let guestCart = [];
             let payload = {

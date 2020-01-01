@@ -7,7 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../api/url'
 import Breadcrumb from '../common/breadcrumb';
-import { addToCartAndRemoveWishlist, removeFromWishlist } from '../../actions'
+import { addToCartAndRemoveWishlist, removeFromWishlist } from '../../actions';
+import {getWishListService,removeFromWishListService, removeFromCartService} from '../../services/userService';
 
 class wishList extends Component {
 
@@ -30,10 +31,10 @@ class wishList extends Component {
 
     }
 
-    getWishList() {
-        axios.get(`${Baseurl}/api/v1/customer/GetAllWishLists/${this.state.customerDetails._id}`)
-            .then(response => {
-                
+   async getWishList() {
+       try{
+        const response = await getWishListService(this.state.customerDetails._id);
+       
                 // let finalList = [];
 
                 // response.data.object.object[0].productDetails.forEach(function (product) {
@@ -45,26 +46,24 @@ class wishList extends Component {
                 this.setState({
                     Items: response.data.object.object[0].productDetails,
                 })
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            }
     }
 
-    removeFromWishList(productData) {
-        console.log(productData, "add to cart")
-        axios.put(`${Baseurl}/api/v1/customer/WishList/REMOVE`, {
+    async removeFromWishList(productData) {
+        try{
+        const response = await removeFromCartService( {
             "productId": productData.productId,
             "userId": this.state.customerDetails._id
-        })
-            .then(response => {
+        });
+      
                 toast.success("Product Removed to WishList");
                 this.getWishList();
                 console.log(response, "data")
-            })
-            .catch(error => {
+            }catch(error) {
                 console.log(error);
-            });
+            }
     }
 
 

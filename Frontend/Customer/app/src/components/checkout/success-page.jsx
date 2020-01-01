@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../api/url';
+import {getOrderDetailsService} from "../../services/userService";
 
 class orderSuccess extends Component {
 
@@ -28,15 +29,15 @@ class orderSuccess extends Component {
 
     }
 
-    componentDidMount() {
+   async componentDidMount() {
         const { match: { params } } = this.props;
         console.log(params, "params")
         let orderId = params.orderId
         console.log("orderId", orderId);
-        // alert("init");
-        axios.get(`${Baseurl}/api/v1/common/getOrderDetails/${orderId}`)
-            .then(response => {
-                // toast.success("Address Fetched")
+
+        try{
+            const response = await getOrderDetailsService(orderId);
+        
                 console.log(response, "orderId details");
                 console.log("response.data.object.object.getOrderData", response.data.object.object.getOrderData.orderList)
                 console.log("response.data.object.object.getPaymentData", response.data.object.object.getPaymentData.paymentDetails)
@@ -47,10 +48,9 @@ class orderSuccess extends Component {
                     paymentData: response.data.object.object.getPaymentData.paymentDetails
                 })
 
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            };
     }
 
     render() {

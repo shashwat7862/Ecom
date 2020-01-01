@@ -9,6 +9,7 @@ import ProductListing from "./common/product-listing";
 import Baseurl from '../../api/url';
 import axios from 'axios';
 import Caurosel from '../common/carousel';
+import {ProductsListElectronicsService} from "../../services/userService";
 
  
 class CollectionLeftSidebar extends Component {
@@ -31,11 +32,11 @@ class CollectionLeftSidebar extends Component {
 		document.querySelector(".collection-filter").style = "left: -15px";
 	}
 
-	componentDidMount() {
-		axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/10/0`)
-			.then(response => {
-				let scrollData = []
+	async componentDidMount() {
 
+		try{
+	        	const response = await ProductsListElectronicsService();
+				let scrollData = []
 				response.data.object.object.forEach(function (val) {
 					let obj = {}
 					obj.src = Baseurl + '/' + val.productImage
@@ -47,10 +48,9 @@ class CollectionLeftSidebar extends Component {
 					scrollData: scrollData
 				});
 
-			})
-			.catch(error => {
+			}catch(error){
 				console.log(error);
-			});
+			}
 	}
 
 	render() {

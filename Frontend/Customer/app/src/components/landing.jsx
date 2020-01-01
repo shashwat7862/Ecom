@@ -16,6 +16,7 @@ import MultiSlider from "../components/layouts/multiple-slider";
 import BlogSection from "../components/layouts/common/blogsection";
 import Baseurl from '../api/url';
 import axios from 'axios';
+import {ProductsListElectronicsService} from '../services/userService';
 import {
     svgFreeShipping,
     svgservice,
@@ -36,10 +37,9 @@ class Landing extends Component {
         }
     }
 
-    componentDidMount() {
-
-        axios.get(`${Baseurl}/api/v1/All/ProductsList/electronics/true/10/0`)
-            .then(response => {
+    async componentDidMount() {
+        try{
+             const response = await ProductsListElectronicsService();
                 let scrollData = []
 
                 response.data.object.object.forEach(function (val) {
@@ -53,10 +53,9 @@ class Landing extends Component {
                     scrollData: scrollData
                 });
 
-            })
-            .catch(error => {
+            }catch(error){
                 console.log(error);
-            });
+            }
 
         setTimeout(function () {
             document.querySelector(".loader-wrapper").style = "display: none";
