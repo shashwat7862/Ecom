@@ -2492,7 +2492,10 @@ header{
     position: fixed;
     width: 100%;
     z-index: 100;
-    background-color: #232f3f;
+  }
+
+  .sticky.fixed{
+    transition: none !important;
   }
   
   .logo-cover{
@@ -2540,9 +2543,13 @@ header{
       margin-left:25px;
        a{
          font-size:13px;
-         color:white !important;
+         color:#fff !important;
        }
     }
+  }
+
+  #sticky{
+    background-color: #232f3f;
   }
 
   .nav-strip{
@@ -2553,6 +2560,7 @@ header{
     margin-top:70px;
     width:100%;
     box-shadow: 0px 0px 5px 0px rgba(153, 153, 153, 0.62);
+    background-color: #333;
         .nav-strip-list{
           display:inline-block;
           margin:0;
@@ -2563,7 +2571,7 @@ header{
               height:100%;
               cursor: pointer;
                 a{
-                  color:#222 !important;
+                  color:#fff !important;
                   display: block;
                   padding:0px 10px;
                   line-height: 35px;
