@@ -11,7 +11,7 @@ module.exports = function () {
 		this.services.authService.registerVendor(vendor, callback);
 	}
 
-	
+
 
 	var registerCustomer = function (req, res, callback) {
 		var salt = uuid.v4();
@@ -31,7 +31,7 @@ module.exports = function () {
 		this.services.authService.Customer_Login(req.body, callback);
 	}
 
-	
+
 
 	var Send_OTP = function (req, res, callback) {
 		this.services.authService.Send_OTP(req.body, callback);
@@ -48,10 +48,20 @@ module.exports = function () {
 	var Reset_Password = function (req, res, callback) {
 		this.services.authService.Reset_Password(req.body, callback);
 	}
-	
+
 	var get_CustomerList = function (req, res, callback) {
 		this.services.authService.get_CustomerList(req.params, callback);
 	}
+
+	var delete_Customer = function (req, res, callback) {
+		this.services.authService.delete_Customer(req.params, callback);
+	}
+
+	var Customer_Profile_Update = function (req, res, callback) {
+		this.services.authService.Customer_Profile_Update(req.params, req.body, callback);
+	}
+
+
 
 	return {
 		registerVendor,
@@ -62,7 +72,9 @@ module.exports = function () {
 		Verify_OTP,
 		Forgot_Password,
 		Reset_Password,
-		get_CustomerList
+		get_CustomerList,
+		delete_Customer,
+		Customer_Profile_Update
 
 	}
 };

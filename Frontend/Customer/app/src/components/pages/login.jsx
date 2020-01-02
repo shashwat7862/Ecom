@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Baseurl from '../../api/url'
 import Breadcrumb from "../common/breadcrumb";
-import {loginCustomerService} from '../../services/userService';
+import { loginCustomerService } from '../../services/userService';
 
 class Login extends Component {
 
@@ -18,28 +18,31 @@ class Login extends Component {
     }
 
     async loginCustomer() {
-             try{
-                const response = await loginCustomerService({
-                    "email": this.state.email,
-                    "password": this.state.password,
-                    "loginFrom": "email"
-                })
-                localStorage.removeItem('customerDetails');
-                localStorage.removeItem('authToken');
-                console.log(response, "data")
-                console.log(response.data.object.object.authToken);
-                localStorage.setItem('authToken', response.data.object.object.authToken);
-                localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
-                let prevUrl = localStorage.getItem('prevUrl');
-                localStorage.removeItem('prevUrl')
-                if (prevUrl) {
-                    this.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
-                } else {
-                    this.props.history.push(`${process.env.PUBLIC_URL}/products`);
-                }
-            }catch(error){
-                console.log(error);
-            };
+        try {
+            const response = await loginCustomerService({
+                "email": this.state.email,
+                "password": this.state.password,
+                "loginFrom": "email"
+            })
+            localStorage.removeItem('customerDetails');
+            localStorage.removeItem('authToken');
+            console.log(response, "data")
+            console.log(response.data.object.object.authToken);
+            let prevUrl = localStorage.getItem('prevUrl');
+            if (prevUrl == 'cart') {
+                localStorage.setItem('prevUrl','redirectedFromLogin')
+            }
+            localStorage.setItem('authToken', response.data.object.object.authToken);
+            localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
+            
+            if (prevUrl == 'cart') {
+                this.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
+            } else {
+                this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+            }
+        } catch (error) {
+            console.log(error);
+        };
     }
 
     onUpdateFormValue = (e) => {

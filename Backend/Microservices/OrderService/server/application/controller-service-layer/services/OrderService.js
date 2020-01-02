@@ -43,15 +43,15 @@ class OrderService extends BaseService {
                 stockUpdateInProductTable: ['saveDataInPaymentTable', function (results, cb) {
                     domain.Cart.remove({
                         UserId: payload.UserId
-                    },{
-                        multi:true
-                    },function(err,data){
-                        cb(null,{
-                            data:data,
-                            userId:payload.UserId
+                    }, {
+                            multi: true
+                        }, function (err, data) {
+                            cb(null, {
+                                data: data,
+                                userId: payload.UserId
+                            })
                         })
-                    })
-                    
+
                 }],
             }, function (err, results) {
                 console.log('err = ', err);
@@ -117,7 +117,7 @@ class OrderService extends BaseService {
         }
     }
 
-    async get_OrderList(userId,VendorId, page, callback) {
+    async get_OrderList(userId, VendorId, page, callback) {
 
         var query;
         if (page.fetch == 'All') {
@@ -125,10 +125,10 @@ class OrderService extends BaseService {
                 where: {},
                 offset: page.skip, limit: page.limit
             }
-        }else if (page.fetch == 'Vendor') {
+        } else if (page.fetch == 'Vendor') {
             query = {
                 where: {
-                    VendorId:VendorId
+                    VendorId: VendorId
                 },
                 offset: page.skip, limit: page.limit
             }
@@ -229,7 +229,7 @@ class OrderService extends BaseService {
         var str = '';
         Object.keys(payload)
             .forEach(function eachKey(key) {
-                str = str + key + ' = ' + "'"+payload[key]+ "'" + ' and '
+                str = str + key + ' = ' + "'" + payload[key] + "'" + ' and '
 
             });
 
@@ -237,14 +237,86 @@ class OrderService extends BaseService {
         query = query.slice(0, query.length - 4)
 
         sequelize.query(`UPDATE addresses SET ${query} WHERE id = ${params.addressId}`).then(([results, metadata]) => {
-            callback(null,{
-                data:"Edited Success"
+            callback(null, {
+                data: "Edited Success"
             })
         })
     }
 
     delete_Address(params, callback) {
 
+    }
+
+    Save_Complaint(complaintData,callback){
+
+        let payload ={
+            productName:complaintData.productName,
+            complaintProductImage:complaintData.complaintProductImage,
+            ordersComplaintStatus:complaintData.ordersComplaintStatus,
+            orderId:complaintData.orderId,
+            UserId:complaintData.UserId,
+            vendorId:complaintData.vendorId,
+            productId:complaintData.productId,
+            complainType:complaintData.complainType,
+            problemDes:complaintData.problemDes
+        }
+
+        console.log(payload,"payload")
+        domain.OrdersComplaint.create(payload).then((results) => {
+            callback(null, {
+                "message": "Complaint Has been Saved successfully",
+                "status": results,
+         
+            });
+        });
+    }
+
+
+    get_CustomerList(params, callback) {
+        async.auto({
+            getOrderDataOfVendor: function (cb) {
+                domain.Order.findAll({
+                    where: {
+                        VendorId: params.vendorId,
+                        orderStatus: "CREATED"
+
+                    }
+                }).then(orders => {
+                    let orderList = JSON.stringify(orders)
+                    cb(null, {
+                        orderList: orders
+                    })
+                })
+            },
+            getPaymentData: ['getOrderDataOfVendor', function (results, cb) {
+                var finalCustomerList=[];
+                async.forEachSeries(results.getOrderDataOfVendor.orderList, function (orderData, next) {
+                    console.log(JSON.stringify(orderData), 'orderData');
+                    var obj={}
+                    domain.Customer.find({
+                        _id: orderData.UserId
+                    }).exec(function (err, results) {
+                        obj.orderData = orderData
+                        obj.userData = results;
+                        finalCustomerList.push(obj);
+                        next();
+                    });
+
+                   
+                }, function () {
+                    cb(null,finalCustomerList)
+                });
+            }]
+        }, function (err, results) {
+            console.log('err = ', err);
+            console.log('results = ', results);
+            if (!err) {
+                callback(null, results)
+            } else {
+                callback(err, null)
+            }
+
+        });
     }
 }
 

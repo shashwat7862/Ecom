@@ -144,6 +144,27 @@ class VendorService extends BaseService {
     }
 
 
+     async getBrandList(req, callback) {
+        let searchResult = await get_BrandList(req.params);
+        callback(null, searchResult)
+    }
+
+    async FilterRatings(req, callback) {
+        let list = await Filter_Ratings(req.query);
+        callback(null, list)
+    }
+
+    async deleteCustomer(req, callback) {
+        let status = await delete_Customer(req.params);
+        callback(null, status)
+    }
+
+    async getCustomerList(req, callback) {
+        let customerlist = await get_CustomerList(req.params);
+        callback(null, customerlist)
+    }
+
+    
 
 
 }

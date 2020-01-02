@@ -80,7 +80,14 @@ module.exports = function () {
 		this.services.customerService.getCustomerList(req, callback);
 	}
 
- 
+	var CustomerProfileUpdate = function(req,res,callback){
+		this.services.customerService.CustomerProfileUpdate(req,callback);
+	}
+
+	var SaveComplaint = function(req,res,callback){
+		this.services.customerService.SaveComplaint(req,callback);
+	}
+
 
 
 	return {
@@ -101,7 +108,9 @@ module.exports = function () {
 		deleteAddress,
 		saveProductReview,
 		getProductReview,
-		getCustomerList
+		getCustomerList,
+		CustomerProfileUpdate,
+		SaveComplaint
 
 	}
 };

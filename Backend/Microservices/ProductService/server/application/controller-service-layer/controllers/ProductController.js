@@ -176,10 +176,16 @@ module.exports = function () {
 	}
 
 	var get_ProductReview = function (req, res, callback) {
-		this.services.productService.get_ProductReview(callback);
+		this.services.productService.get_ProductReview(req.params,callback);
 	}
 
+	var get_BrandList = function (req, res, callback) {
+		this.services.productService.get_BrandList(req.params, callback);
+	}
 
+	var Filter_Ratings = function (req, res, callback) {
+		this.services.productService.Filter_Ratings(req.query, callback);
+	}
 
 
 	return {
@@ -197,7 +203,9 @@ module.exports = function () {
 		productSearchForCustomers,
 		All_Products_List,
 		save_ProductReview,
-		get_ProductReview
+		get_ProductReview,
+		get_BrandList,
+		Filter_Ratings
 	}
 
 

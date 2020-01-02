@@ -104,7 +104,7 @@ class checkOut extends Component {
 
     async getAddress(){
         try{
-            const response = await getAddressService();
+            const response = await getAddressService(this.state.customerDetails._id);
             // toast.success("Address Fetched")
             console.log(response, "address")
             // let addressList = response.object.object.Data;

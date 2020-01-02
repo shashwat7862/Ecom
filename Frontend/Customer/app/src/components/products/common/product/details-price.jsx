@@ -158,7 +158,7 @@ class DetailsWithPrice extends Component {
             }
 
             localStorage.setItem('GuestCart', JSON.stringify(loadCart));
-            toast.success("Product Add to Cart")
+            toast.success("Product Add to Cart from Guest")
         }
     }
 

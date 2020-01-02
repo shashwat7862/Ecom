@@ -41,8 +41,8 @@ class cartComponent extends Component {
     }
 
    async getCartList() {
-        let prevUrl = localStorage.getItem('prevUrl');
-        if (this.state.customerDetails && prevUrl ) {
+        let prevUrl = localStorage.getItem('prevUrl')
+        if (this.state.customerDetails && prevUrl !== "redirectedFromLogin" ) {
               try {
                 const response = await getCartListService(this.state.customerDetails._id);
                 console.log("response", response);

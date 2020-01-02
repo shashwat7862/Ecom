@@ -45,6 +45,12 @@ module.exports = function () {
 		this.services.vendorService.ProfileUpdate(req,callback);
 	}
 
+	var CustomerProfileUpdate = function(req,res,callback){
+		this.services.vendorService.CustomerProfileUpdate(req,callback);
+	}
+
+	
+
 	var DeleteProduct = function(req,res,callback){
 		this.services.vendorService.DeleteProduct(req,callback);
 	}
@@ -65,8 +71,21 @@ module.exports = function () {
 		this.services.vendorService.saveAllImages(req,callback);
 	}
 
-	
-	
+	var getBrandList = function(req,res,callback){
+		this.services.vendorService.getBrandList(req,callback);
+	}
+
+	var FilterRatings = function (req, res, callback) {
+		this.services.vendorService.FilterRatings(req, callback);
+	}
+
+	var deleteCustomer = function (req, res, callback) {
+		this.services.vendorService.deleteCustomer(req, callback);
+	}
+
+	var getCustomerList  = function (req, res, callback) {
+		this.services.vendorService.getCustomerList(req, callback);
+	}
 
 	return {
 		registerVendor,
@@ -84,6 +103,11 @@ module.exports = function () {
 		FilterProducts,
 		SearchProducts,
 		AllProductsList,
-		saveAllImages
+		saveAllImages,
+		getBrandList,
+		FilterRatings,
+		deleteCustomer,
+		CustomerProfileUpdate,
+		getCustomerList
 	}
 };

@@ -118,7 +118,7 @@
 	            }
 			}],
 
-			"/get_ProductReview": [{
+			"/get_ProductReview/:vendorId": [{
 	            method: "GET",
 	            action: controllers.productController.get_ProductReview,
 	            views: {
@@ -126,8 +126,26 @@
 	            }
 			}],
 
+			"/get_BrandList/:skip/:limit/:FetchFor": [{
+	            method: "GET",
+	            action: controllers.productController.get_BrandList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			"/Filter_Ratings": [{
+	            method: "GET",
+	            action: controllers.productController.Filter_Ratings,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			
  
   
+			
  
 			
 			

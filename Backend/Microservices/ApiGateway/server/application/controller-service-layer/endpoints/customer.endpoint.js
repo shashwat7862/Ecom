@@ -28,6 +28,15 @@ exports.module = get_CustomerList = async (qs) => (
   Userwrapper.proxyJsonRequest(`get_CustomerList/${qs.skip}/${qs.limit}/${qs.FetchFor}`, 'GET')
 );
 
+exports.module = Customer_Profile_Update = async (qs, body) => (
+  Userwrapper.proxyJsonRequest(`Customer_Profile_Update/${qs.userId}`, 'PUT', {
+    body,
+  })
+);
+
+
+
+
 
 exports.module = create_Order = async (body) => (
   Orderwrapper.proxyJsonRequest('create_Order', 'POST', {
@@ -68,6 +77,15 @@ exports.module = delete_Address = async (qs) => (
   Orderwrapper.proxyJsonRequest(`delete_Address/${qs.userId}/${qs.addressId}`, 'DELETE')
 );
 
+exports.module = Save_Complaint = async (body) => (
+  Orderwrapper.proxyJsonRequest(`Save_Complaint`, 'POST', {
+    body,
+  })
+);
+
+
+
+
 
 
 
@@ -107,7 +125,7 @@ exports.module = save_ProductReview = async (userId, body) => (
 );
 
 exports.module = get_ProductReview = async (qs) => (
-  Productwrapper.proxyJsonRequest(`get_ProductReview`, 'GET')
+  Productwrapper.proxyJsonRequest(`get_ProductReview/${qs.vendorId}`, 'GET')
 );
 
 

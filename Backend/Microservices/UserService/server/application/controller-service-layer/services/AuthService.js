@@ -302,15 +302,51 @@ class AuthService extends BaseService {
     get_CustomerList(params, callback) {
 
         if (params.FetchFor = "admin") {
-            domain.Customer.find({}).exec(function(err,customerlist){
+            domain.Customer.find({}).exec(function (err, customerlist) {
                 callback(null, {
                     customerlist: customerlist
                 })
             })
         } else {
-            
+
         }
-       
+
+    }
+
+    delete_Customer(params, callback) {
+        console.log(params, params.userId)
+        domain.Customer.update({
+            deleted: false,
+            _id: params.userId
+        }, {
+                $set: {
+                    deleted: true,
+                    deletedAt: new Date()
+                }
+            }).exec(function (err, status) {
+                console.log(err, status, "----------------------")
+                callback(err, {
+                    status: status
+                })
+            })
+    }
+
+    Customer_Profile_Update(params,editedProfileData,callback){
+        try {
+            domain.Customer.findOneAndUpdate({
+                _id: params.userId
+            }, editedProfileData, (error, result) => {
+                    if (error) {
+                        callback(error, null)
+                    } else {
+                        callback(null, result)
+                    }
+                });
+        } catch (e) {
+            callback(null, {
+                "error": "error while saving"
+            })
+        }
     }
 
 }

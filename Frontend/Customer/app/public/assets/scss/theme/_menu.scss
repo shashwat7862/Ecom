@@ -2492,6 +2492,7 @@ header{
     position: fixed;
     width: 100%;
     z-index: 100;
+    background-color: #232f3f;
   }
   
   .logo-cover{
@@ -2539,7 +2540,7 @@ header{
       margin-left:25px;
        a{
          font-size:13px;
-         color:#222 !important;
+         color:white !important;
        }
     }
   }

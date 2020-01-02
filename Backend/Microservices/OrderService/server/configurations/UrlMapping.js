@@ -61,6 +61,20 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/get_CustomerList/:vendorId": [{
+	            method: "GET",
+	            action: controllers.orderController.get_CustomerList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/Save_Complaint": [{
+	            method: "POST",
+	            action: controllers.orderController.Save_Complaint,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
 
 			
 	    };

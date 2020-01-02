@@ -38,6 +38,14 @@ module.exports = function () {
 		this.services.orderService.delete_Address(req.params, callback);
 	}
 
+	var get_CustomerList = function (req, res, callback) {
+		this.services.orderService.get_CustomerList(req.params, callback);
+	}
+
+	var Save_Complaint = function (req, res, callback) {
+		this.services.orderService.Save_Complaint(req.body, callback);
+	}
+
 	
 
 
@@ -49,6 +57,8 @@ module.exports = function () {
 		save_Address,
 		get_Address,
 		edit_Address,
-		delete_Address
+		delete_Address,
+		get_CustomerList,
+		Save_Complaint
 	}
 };

@@ -85,6 +85,25 @@ module.exports = function (app) {
 			}
 		}],
 
+		"/delete_Customer/:userId": [{
+			method: "PUT",
+			action: controllers.authController.delete_Customer,
+			views: {
+				json: views.jsonView
+			}
+		}],
+		"/Customer_Profile_Update/:userId": [{
+			method: "PUT",
+			action: controllers.authController.Customer_Profile_Update,
+			views: {
+				json: views.jsonView
+			}
+		}],
+
+		
+
+		
+
 		
 		
 		

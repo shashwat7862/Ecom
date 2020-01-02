@@ -91,6 +91,13 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/api/v1/customer/ProfileUpdate/:userId": [{
+	            method: "PUT",
+	            action: controllers.customerController.CustomerProfileUpdate,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
 
 			"/api/v1/vendor/DeleteProduct/:category/:id": [{
 	            method: "DELETE",
@@ -243,7 +250,7 @@
 	                json: views.jsonView
 	            }
 			}],
-			"/api/v1/common/getProductReview": [{
+			"/api/v1/common/getProductReview/:vendorId": [{
 				method: "GET",
 	            action: controllers.customerController.getProductReview,
 	            views: {
@@ -256,7 +263,49 @@
 	            views: {
 	                json: views.jsonView
 	            }
-			}]
+			}],
+			"/api/v1/common/getBrandList/:skip/:limit/:FetchFor": [{
+				method: "GET",
+	            action: controllers.vendorController.getBrandList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/FilterRatings": [{
+				method: "GET",
+	            action: controllers.vendorController.FilterRatings,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/deleteCustomer/:userId": [{
+				method: "PUT",
+	            action: controllers.vendorController.deleteCustomer,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/vendor/getCustomerList/:vendorId": [{
+				method: "GET",
+	            action: controllers.vendorController.getCustomerList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/customer/SaveComplaint": [{
+				method: "POST",
+	            action: controllers.customerController.SaveComplaint,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/common/getComplaint/:for": [{
+				method: "GET",
+	            action: controllers.customerController.getComplaint,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
 	    };
 	};
 

@@ -3,7 +3,7 @@ let proxy = require('@3g/request-proxy');
 
 const Userwrapper = proxy.createWrapper("http://localhost:8001/");
 const Productwrapper = proxy.createWrapper("http://localhost:8002/");
-
+const Orderwrapper = proxy.createWrapper("http://localhost:8005/");
 /*
   User Miroservice Apis
 
@@ -45,11 +45,18 @@ exports.module = Reset_Password = async (body) => (
   })
 );
 
-exports.module = Vendor_Profile_Update = async (body,id) => (
+exports.module = Vendor_Profile_Update = async (body, id) => (
   Userwrapper.proxyJsonRequest(`Vendor_Profile_Update/${id}`, 'PUT', {
-      body,
+    body,
   })
 );
+
+exports.module = delete_Customer = async (qs) => (
+  Userwrapper.proxyJsonRequest(`delete_Customer/${qs.userId}`, 'PUT', {
+  })
+);
+
+
 
 /*
   Products Miroservice Apis
@@ -58,7 +65,7 @@ exports.module = Vendor_Profile_Update = async (body,id) => (
 
 exports.module = Save_Products = async (body, qs) => (
   Productwrapper.proxyJsonRequest(`Save_Products/${qs}`, 'POST', {
-      body,
+    body,
   })
 );
 
@@ -68,14 +75,14 @@ exports.module = Products_List = async (qs) => (
 
 exports.module = Product_ApprovalRequest = async (body, qs) => (
   Productwrapper.proxyJsonRequest(`Product_ApprovalRequest/${qs.category}`, 'PUT', {
-      body,
+    body,
   })
 );
 
 
 exports.module = Edit_ProductsDetails = async (body, qs) => (
   Productwrapper.proxyJsonRequest(`Edit_ProductsDetails/${qs.category}`, 'PUT', {
-      body,
+    body,
   })
 );
 
@@ -94,12 +101,26 @@ exports.module = Search_Products = async (params, qs) => (
 );
 
 
-exports.module = AllProducts_List = async ( qs) => (
+exports.module = AllProducts_List = async (qs) => (
   Productwrapper.proxyJsonRequest(`All_Products_List/${qs.category}/${qs.isApprove}/${qs.limit}/${qs.skip}`, 'GET')
 );
 
-exports.module = saveAll_Images = async ( qs) => (
+exports.module = saveAll_Images = async (qs) => (
   Productwrapper.proxyJsonRequest(`saveAll_Images`, 'POST')
+);
+
+exports.module = get_BrandList = async (qs) => (
+  Productwrapper.proxyJsonRequest(`get_BrandList/${qs.skip}/${qs.limit}/${qs.FetchFor}`, 'GET')
+);
+
+
+exports.module = Filter_Ratings = async (qs) => (
+  Productwrapper.proxyJsonRequest(`Filter_Ratings?rating=${qs.rating}`, 'GET')
+);
+
+
+exports.module = get_CustomerList = async (qs) => (
+  Orderwrapper.proxyJsonRequest(`get_CustomerList/${qs.vendorId}`, 'GET')
 );
 
 
@@ -121,6 +142,7 @@ module.exports = {
   Delete_Product,
   Search_Products,
   AllProducts_List,
-  saveAll_Images
+  saveAll_Images,
+  get_BrandList
 
 }

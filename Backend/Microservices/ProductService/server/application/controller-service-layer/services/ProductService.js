@@ -27,7 +27,7 @@ class ProductService extends BaseService {
                 isApproved: pagination.isApprove,
                 vendorId: pagination.vendor_id
             }).skip(pagination.skip).limit(pagination.limit).exec(function (error, productList) {
-          console.log("-----------------------in")      
+                console.log("-----------------------in")
                 if (error) {
                     callback(error, null)
                 } else {
@@ -279,12 +279,16 @@ class ProductService extends BaseService {
         });
     }
 
-    get_ProductReview(callback) {
-        console.log("get_ProductReview 3")
-        domain.ProductReview.find({}, function (err,result) {
-            console.log(err,result,"----------")
-            callback(null,{
-                reviewList:result
+    get_ProductReview(params, callback) {
+        console.log("get_ProductReview 3", params);
+
+
+        domain.ProductReview.find({
+            vendorId: params.vendorId
+        }, function (err, result) {
+            console.log(err, result, "----------")
+            callback(null, {
+                reviewList: result
             })
         })
     }
@@ -345,7 +349,7 @@ class ProductService extends BaseService {
                     $pull: { productDetails: { productId: body.productId } }
                 },
                 {
-                    multi:true
+                    multi: true
                 },
                 function (err, result) {
                     if (err) {
@@ -457,6 +461,44 @@ class ProductService extends BaseService {
                 }
             });
         }
+    }
+
+
+    get_BrandList(params, callback) {
+        domain.ElectronicsProduct.distinct("brandName", function (err, brandList) {
+            console.log(brandList, "-------------------")
+            if (err) {
+                console.log(err, "errors")
+                callback(err, null)
+            }
+            else {
+                callback(null, {
+                    brandList: brandList
+                })
+            }
+        });
+    }
+
+    Filter_Ratings(queryParams, callback) {
+
+        var dbQuery = {
+            $or: [{
+                startRating: new RegExp('(^' + queryParams.rating + '|' + queryParams.rating + ')', 'i')
+            }]
+        };
+
+        domain.ProductReview.find(dbQuery, function (err, filterList) {
+            console.log(filterList, "-------------------")
+            if (err) {
+                console.log(err, "errors")
+                callback(err, null)
+            }
+            else {
+                callback(null, {
+                    filterList: filterList
+                })
+            }
+        });
     }
 
 
