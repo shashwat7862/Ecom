@@ -30,7 +30,7 @@ export class Digital_pro_review extends Component {
         this.setState({
             checked
         });
-        this.props.getReviewList()
+        this.props.getReviewList(this.state.vendorData._id)
 
     }
 
@@ -49,7 +49,7 @@ export class Digital_pro_review extends Component {
         axios.delete(`${Baseurl}/api/v1/vendor/DeleteProduct/electronics/${data.original._id}`)
             .then(response => {
                 toast.success("Successfully Deleted !");
-                this.props.getReviewList();
+                this.props.getReviewList(this.state.vendorData._id);
                 setTimeout(function () {
                     window.location.reload()
                 }, 500)
@@ -67,7 +67,7 @@ export class Digital_pro_review extends Component {
 
 
     componentDidMount() {
-        this.props.getReviewList()
+        this.props.getReviewList(this.state.vendorData._id)
     }
 
 
@@ -167,7 +167,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getReviewList: () => { dispatch(reviewList()) },
+        getReviewList: (vendorId) => { dispatch(reviewList(vendorId)) },
         // productSearch: (query, vendor_id) => { dispatch(searchProducts(query, vendor_id)) }
     }
 }

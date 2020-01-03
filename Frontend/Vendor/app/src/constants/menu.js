@@ -54,12 +54,12 @@ export const MENUITEMS = [
     //         { path: '/menus/create-menu', title: 'Create Menu', type: 'link' },
     //     ]
     // },
-    // {
-    //     title: 'Users', icon: UserPlus, type: 'sub', active: false, children: [
-    //         { path: '/users/list-user', title: 'User List', type: 'link' },
-    //         { path: '/users/create-user', title: 'Create User', type: 'link' },
-    //     ]
-    // },
+    {
+        title: 'Customers', icon: UserPlus, type: 'sub', active: false, children: [
+            { path: '/users/list-user', title: 'Customer List', type: 'link' },
+            // { path: '/users/create-user', title: 'Create User', type: 'link' },
+        ]
+    },
     // {
     //     title: 'Vendors', icon: Users, type: 'sub', active: false, children: [
     //         { path: '/vendors/list_vendors', title: 'Vendor List', type: 'link' },

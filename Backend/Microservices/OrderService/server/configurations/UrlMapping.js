@@ -61,7 +61,7 @@
 	                json: views.jsonView
 	            }
 			}],
-			"/get_CustomerList/:vendorId": [{
+			"/get_Customer_List/:vendorId": [{
 	            method: "GET",
 	            action: controllers.orderController.get_CustomerList,
 	            views: {
@@ -75,6 +75,15 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/get_ComplaintList/:userId/:vendorId/:for": [{
+	            method: "GET",
+	            action: controllers.orderController.get_ComplaintList,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			
 
 			
 	    };

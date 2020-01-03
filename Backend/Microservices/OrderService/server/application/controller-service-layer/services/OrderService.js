@@ -225,6 +225,19 @@ class OrderService extends BaseService {
         });
     }
 
+    get_ComplaintList(params,cb){
+        domain.OrdersComplaint.findAll({
+            where: {
+                UserId: params.userId
+            }
+        }).then(paymentData => {
+            let response = JSON.stringify(paymentData)
+            cb(null, {
+                complaintList: JSON.parse(response)
+            })
+        })
+    }
+
     edit_Address(payload, params, callback) {
         var str = '';
         Object.keys(payload)
@@ -288,7 +301,7 @@ class OrderService extends BaseService {
                     })
                 })
             },
-            getPaymentData: ['getOrderDataOfVendor', function (results, cb) {
+            getCustomerList: ['getOrderDataOfVendor', function (results, cb) {
                 var finalCustomerList=[];
                 async.forEachSeries(results.getOrderDataOfVendor.orderList, function (orderData, next) {
                     console.log(JSON.stringify(orderData), 'orderData');

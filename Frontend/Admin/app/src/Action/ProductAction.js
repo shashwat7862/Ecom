@@ -58,13 +58,25 @@ export function orderList() {
 
 export function reviewList() {
   return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/common/getProductReview`)
+    return axios.get(`${Baseurl}/api/v1/common/getProductReview/null/null/admin`)
       .then(({ data }) => {
         console.log(data)
         dispatch(Review_List(data));
       });
   };
 }
+
+export function fetchVendorList() {
+  return function (dispatch) {
+    return axios.get(`${Baseurl}/api/v1/common/getProductReview/null/null/admin`)
+      .then(({ data }) => {
+        console.log(data)
+        dispatch(Review_List(data));
+      });
+  };
+}
+
+
 
 
 export function provideApproval(payload) {

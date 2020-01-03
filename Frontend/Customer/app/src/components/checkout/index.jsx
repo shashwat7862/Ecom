@@ -215,7 +215,7 @@ class checkOut extends Component {
                 state: this.state.state,
                 city: this.state.city,
                 location_area: this.state.area,
-                pincode: this.state.pincode,
+                pinCode: this.state.pincode,
                 nearBy: this.state.nearBy,
                 userName: this.state.customerDetails.fullName,
                 userId: this.state.customerDetails._id

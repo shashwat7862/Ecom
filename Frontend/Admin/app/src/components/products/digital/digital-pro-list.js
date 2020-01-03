@@ -45,7 +45,7 @@ export class Digital_pro_list extends Component {
 
 
     componentDidMount() {
-        this.props.getProductList()
+        this.props.getProductList(true)
     }
 
     provideApproval(val,props) {

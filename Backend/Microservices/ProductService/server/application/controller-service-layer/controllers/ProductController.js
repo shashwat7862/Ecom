@@ -6,8 +6,8 @@ module.exports = function () {
 		if (dynamicDomain) {
 			console.log("2")
 			let pagination = {
-				limit: req.params.limit,
-				skip: req.params.skip,
+				limit: parseInt(req.params.limit),
+				skip: parseInt(req.params.skip),
 				isApprove: req.params.isApprove,
 				vendor_id: req.params.vendor_id
 			}

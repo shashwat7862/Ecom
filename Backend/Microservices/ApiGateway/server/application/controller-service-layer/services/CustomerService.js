@@ -93,8 +93,8 @@ class CustomerService extends BaseService {
         callback(null, listReview)
     }
 
-    async getCustomerList(req,callback){
-        let list = await get_CustomerList(req.params);
+    async getAllCustomerList(req,callback){
+        let list = await getAll_CustomerList(req.params);
         callback(null, list)
     }
 
@@ -106,6 +106,11 @@ class CustomerService extends BaseService {
     async SaveComplaint(req,callback){
         let data = await Save_Complaint(req.body);
         callback(null, data)
+    }
+
+    async getComplaint(req,callback){
+        let getComplaintList = await get_ComplaintList(req.params);
+        callback(null, getComplaintList)
     }
 
     

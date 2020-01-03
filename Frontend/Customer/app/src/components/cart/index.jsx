@@ -16,7 +16,6 @@ class cartComponent extends Component {
     constructor(props) {
         super(props)
         const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
-        super(props)
         this.state = {
             customerDetails: customerDetails,
             cartItems: [{}],

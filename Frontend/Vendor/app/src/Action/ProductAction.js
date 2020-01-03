@@ -7,6 +7,7 @@ export const EditProduct = 'product:EditProduct';
 export const SearchProducts = 'product:SearchProducts';
 export const OrderList = 'product:OrderList';
 export const ReviewList = 'product:ReviewList';
+export const CustomerList = 'product.CustomerList'
 
 function Product_List(data) {
   return {
@@ -43,6 +44,13 @@ function Review_List(data) {
   };
 }
 
+function fetch_CustomerList(data){
+  return {
+    type: CustomerList,
+    payload: data
+  };
+}
+
 function Order_List(data) {
   return {
     type: OrderList,
@@ -70,9 +78,9 @@ export function productList(vendor_id, isApproved) {
   };
 }
 
-export function reviewList() {
+export function reviewList(vendorId) {
   return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/common/getProductReview`)
+    return axios.get(`${Baseurl}/api/v1/common/getProductReview/${vendorId}/null/vendor`)
       .then(({ data }) => {
         console.log(data)
         dispatch(Review_List(data));
@@ -109,6 +117,16 @@ export function searchProducts(searchQuery, vendor_id) {
       .then(({ data }) => {
         console.log(data)
         dispatch(Search_Products(data));
+      });
+  };
+}
+
+export function fetchCustomerList( vendor_id) {
+  return function (dispatch) {
+    return axios.get(`${Baseurl}/api/v1/vendor/getCustomerList/${vendor_id}`)
+      .then(({ data }) => {
+        console.log(data)
+        dispatch(fetch_CustomerList(data));
       });
   };
 }

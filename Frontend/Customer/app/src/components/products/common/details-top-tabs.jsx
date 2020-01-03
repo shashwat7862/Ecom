@@ -6,7 +6,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../../api/url';
-import {submitReviewService} from '../../../services/userService';
+import { submitReviewService,getReviews } from '../../../services/userService';
 
 class DetailsTopTabs extends Component {
 
@@ -21,32 +21,33 @@ class DetailsTopTabs extends Component {
             defaultImage: "https://www.mnn.com/static/img/not_available.png",
             review: '',
             reviewTitle: '',
-            startRating: ''
+            startRating: '',
+            reviewList:[{}]
         }
         this.onUpdateChange = this.onUpdateChange.bind(this);
     }
 
-    async submitReview(){
-      try{
-        const response = await submitReviewService(this.state.customerDetails._id,{
-            "title": this.state.reviewTitle,
-            "review": this.state.review,
-            "byUser": (this.state.customerDetails._id) ? this.state.customerDetails._id : 'Guest123',
-            "startRating": (this.state.startRating)?this.state.startRating : "5",
-            "productId": this.props.item._id,
-            "productName": this.props.item.productName,
-            "productImage": this.props.item.productImage,
-            "vendorId": this.props.item.vendorId._id,
-            "vendorName": this.props.item.vendorId.fullName
-        });
-                toast.success("Thanks For Review");
-                this.setState({
-                    reviewTitle: '',
-                    review: ''
-                })
-            }catch(error){
-                console.log(error);
-            };
+    submitReview = async () => {
+        try {
+            const response = await submitReviewService(this.state.customerDetails._id, {
+                "title": this.state.reviewTitle,
+                "review": this.state.review,
+                "byUser": (this.state.customerDetails._id) ? this.state.customerDetails._id : 'Guest123',
+                "startRating": (this.state.startRating) ? this.state.startRating : "5",
+                "productId": this.props.item._id,
+                "productName": this.props.item.productName,
+                "productImage": this.props.item.productImage,
+                "vendorId": this.props.item.vendorId._id,
+                "vendorName": this.props.item.vendorId.fullName
+            });
+            toast.success("Thanks For Review");
+            this.setState({
+                reviewTitle: '',
+                review: ''
+            })
+        } catch (error) {
+            console.log(error);
+        };
     }
 
     onUpdateChange(e) {
@@ -59,6 +60,14 @@ class DetailsTopTabs extends Component {
     setStatus = (e) => {
         this.setState({
             startRating: e.target.value
+        })
+    }
+
+    async componentDidMount(){
+        const list = await getReviews(this.state.customerDetails._id);
+        console.log(list,"list")
+        this.setState({
+            reviewList: list.data.object.object.reviewList
         })
     }
 
@@ -197,6 +206,15 @@ class DetailsTopTabs extends Component {
 
                                 </div>
                                 <button className="btn" onClick={this.submitReview} type="submit">Submit YOur Review</button>
+
+                                <br></br>
+                                <br></br>
+                                {/* <div >
+                                        {this.state.reviewList.map(function(listData,index){
+                                            <li >{listData.review} </li>
+                                        })}
+                                </div> */}
+                
 
                             </TabPanel>
                         </Tabs>

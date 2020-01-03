@@ -51,7 +51,11 @@ import Compare from './components/compare/index'
 import wishList from './components/wishlist'
 import checkOut from './components/checkout'
 import orderSuccess from './components/checkout/success-page'
-
+import OrderList from './components/order/orderlist'
+import ManageAddress from './components/profile/manageAddress'
+import RatingAndReviews from './components/profile/ratingAndreviews'
+import NotificationPreferences from './components/profile/notificationPreferences'
+import OrderComplaint from './components/profile/orderComplaint'
 // Extra Pages
 import aboutUs from './components/pages/about-us'
 import PageNotFound from './components/pages/404'
@@ -142,7 +146,15 @@ class Root extends React.Component {
 								<Route path={`${process.env.PUBLIC_URL}/checkout/:details`} component={checkOut}/>
 								<Route path={`${process.env.PUBLIC_URL}/order-success/:orderId`} component={orderSuccess}/>
 
-								<Route path={`${process.env.PUBLIC_URL}/sales/orders`} component={aboutUs}/>
+								<Route path={`${process.env.PUBLIC_URL}/profile/orders`} component={OrderList}/>
+                                <Route path={`${process.env.PUBLIC_URL}/profile/manageAddress`} component={ManageAddress}/>
+                                <Route path={`${process.env.PUBLIC_URL}/profile/reviews`} component={RatingAndReviews}/>
+                                <Route path={`${process.env.PUBLIC_URL}/profile/notificationPreferences`} component={NotificationPreferences}/>
+                                <Route path={`${process.env.PUBLIC_URL}/profile/orderComplaint`} component={OrderComplaint}/>
+                                
+                                
+                                
+                                
 
 								{/*Routes For Extra Pages*/}
                                 <Route path={`${process.env.PUBLIC_URL}/pages/about-us`} component={aboutUs}/>

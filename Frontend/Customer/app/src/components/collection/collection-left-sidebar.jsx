@@ -9,9 +9,9 @@ import ProductListing from "./common/product-listing";
 import Baseurl from '../../api/url';
 import axios from 'axios';
 import Caurosel from '../common/carousel';
-import {ProductsListElectronicsService} from "../../services/userService";
+import { ProductsListElectronicsService } from "../../services/userService";
 
- 
+
 class CollectionLeftSidebar extends Component {
 
 	state = {
@@ -34,23 +34,23 @@ class CollectionLeftSidebar extends Component {
 
 	async componentDidMount() {
 
-		try{
-	        	const response = await ProductsListElectronicsService();
-				let scrollData = []
-				response.data.object.object.forEach(function (val) {
-					let obj = {}
-					obj.src = Baseurl + '/' + val.productImage
-					obj.price =  val.price
-					obj.name = val.productName
-					scrollData.push(obj)
-				});
-				this.setState({
-					scrollData: scrollData
-				});
+		try {
+			const response = await ProductsListElectronicsService();
+			let scrollData = []
+			response.data.object.object.forEach(function (val) {
+				let obj = {}
+				obj.src = Baseurl + '/' + val.productImage
+				obj.price = val.price
+				obj.name = val.productName
+				scrollData.push(obj)
+			});
+			this.setState({
+				scrollData: scrollData
+			});
 
-			}catch(error){
-				console.log(error);
-			}
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	render() {
@@ -74,6 +74,13 @@ class CollectionLeftSidebar extends Component {
 
 				<section className="section-b-space">
 					<div className="collection-wrapper">
+						<div className="container-fluid">
+							<img src="https://images-eu.ssl-images-amazon.com/images/G/31/img19/Laptops/Microsoft/Co-op/Nov/ModernPCdigital-1500X300.jpg" style={{
+								marginLeft: -15 + 'px',
+								marginTop: -31 + 'px'
+							}}></img>
+						</div>
+						<br></br><br></br><br></br>
 						<div className="container">
 							<div className="row">
 								<div className="col-sm-3 collection-filter">
@@ -82,7 +89,7 @@ class CollectionLeftSidebar extends Component {
 										<div>
 											{/* <Filter/> */}
 											<NewProduct />
-											
+
 											{/* <div className="collection-sidebar-banner">
                                                 <a href="#">
                                                     <img src={`${process.env.PUBLIC_URL}/assets/images/side-banner.png`} className="img-fluid" alt="" />
@@ -90,7 +97,7 @@ class CollectionLeftSidebar extends Component {
                                             </div> */}
 										</div>
 									</StickyBox>
-									
+
 									{/*side-bar banner end here*/}
 								</div>
 								<div className="collection-content col-sm-9">
@@ -99,8 +106,8 @@ class CollectionLeftSidebar extends Component {
 											<div className="row">
 												<div className="col-sm-12">
 													<div className="top-banner-wrapper">
-													<a href="#"><img src="http://img5a.flixcart.com/www/promos/new/20150819-154015-slider-1.jpg" className="img-fluid" alt=""/></a>
-                                                        {/* <div className="top-banner-content small-section">
+														<a href="#"><img src="http://img5a.flixcart.com/www/promos/new/20151210-114111-1-5.jpg" className="img-fluid" alt="" /></a>
+														{/* <div className="top-banner-content small-section">
                                                             <h4>fashion</h4>
                                                             <h5>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h5>
                                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
@@ -121,7 +128,7 @@ class CollectionLeftSidebar extends Component {
 																</div>
 																<div className="row">
 																	<div className="col-12">
-																		<FilterBar onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)}/>
+																		<FilterBar onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)} />
 																	</div>
 																</div>
 															</div>

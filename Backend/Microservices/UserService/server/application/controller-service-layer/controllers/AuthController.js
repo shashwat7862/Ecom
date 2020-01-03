@@ -49,8 +49,8 @@ module.exports = function () {
 		this.services.authService.Reset_Password(req.body, callback);
 	}
 
-	var get_CustomerList = function (req, res, callback) {
-		this.services.authService.get_CustomerList(req.params, callback);
+	var getAll_CustomerList = function (req, res, callback) {
+		this.services.authService.getAll_CustomerList(req.params, callback);
 	}
 
 	var delete_Customer = function (req, res, callback) {
@@ -72,7 +72,7 @@ module.exports = function () {
 		Verify_OTP,
 		Forgot_Password,
 		Reset_Password,
-		get_CustomerList,
+		getAll_CustomerList,
 		delete_Customer,
 		Customer_Profile_Update
 

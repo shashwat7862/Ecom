@@ -46,6 +46,10 @@ module.exports = function () {
 		this.services.orderService.Save_Complaint(req.body, callback);
 	}
 
+	var get_ComplaintList = function (req, res, callback) {
+		this.services.orderService.get_ComplaintList(req.params, callback);
+	}
+
 	
 
 
@@ -59,6 +63,7 @@ module.exports = function () {
 		edit_Address,
 		delete_Address,
 		get_CustomerList,
-		Save_Complaint
+		Save_Complaint,
+		get_ComplaintList
 	}
 };

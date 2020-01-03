@@ -41,12 +41,16 @@ const Address = sequelize.define('address', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    pinCode: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
     userName: {
         type: Sequelize.STRING,
         allowNull: true
     },
 }, {
-    
+
     });
 
 

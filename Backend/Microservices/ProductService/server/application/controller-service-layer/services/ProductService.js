@@ -280,17 +280,27 @@ class ProductService extends BaseService {
     }
 
     get_ProductReview(params, callback) {
-        console.log("get_ProductReview 3", params);
+        var query;
+        if (params.for == 'vendor') {
+            query = {
+                vendorId: params.vendorId
+            }
+        } else if (params.for == 'user') {
+            query = {
+                byUser: params.userId
+            }
+        } else {
+            query = {}
+        }
 
-
-        domain.ProductReview.find({
-            vendorId: params.vendorId
-        }, function (err, result) {
+        domain.ProductReview.find(query, function (err, result) {
             console.log(err, result, "----------")
             callback(null, {
                 reviewList: result
             })
         })
+
+
     }
 
 

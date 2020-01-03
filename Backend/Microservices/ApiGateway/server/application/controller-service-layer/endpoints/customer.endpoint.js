@@ -24,8 +24,8 @@ exports.module = Customer_Login = async (body) => (
   })
 )
 
-exports.module = get_CustomerList = async (qs) => (
-  Userwrapper.proxyJsonRequest(`get_CustomerList/${qs.skip}/${qs.limit}/${qs.FetchFor}`, 'GET')
+exports.module = getAll_CustomerList = async (qs) => (
+  Userwrapper.proxyJsonRequest(`getAll_CustomerList/${qs.skip}/${qs.limit}/${qs.FetchFor}`, 'GET')
 );
 
 exports.module = Customer_Profile_Update = async (qs, body) => (
@@ -83,6 +83,10 @@ exports.module = Save_Complaint = async (body) => (
   })
 );
 
+exports.module = get_ComplaintList = async (qs) => (
+  Orderwrapper.proxyJsonRequest(`get_ComplaintList/${qs.userId}/${qs.vendorId}/${qs.for}`, 'GET')
+);
+
 
 
 
@@ -125,7 +129,7 @@ exports.module = save_ProductReview = async (userId, body) => (
 );
 
 exports.module = get_ProductReview = async (qs) => (
-  Productwrapper.proxyJsonRequest(`get_ProductReview/${qs.vendorId}`, 'GET')
+  Productwrapper.proxyJsonRequest(`get_ProductReview/${qs.vendorId}/${qs.userId}/${qs.for}`, 'GET')
 );
 
 
@@ -147,5 +151,5 @@ module.exports = {
   edit_Address,
   save_ProductReview,
   get_ProductReview,
-  get_CustomerList
+  getAll_CustomerList
 }

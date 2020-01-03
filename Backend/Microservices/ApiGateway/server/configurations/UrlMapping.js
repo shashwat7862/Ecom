@@ -250,7 +250,7 @@
 	                json: views.jsonView
 	            }
 			}],
-			"/api/v1/common/getProductReview/:vendorId": [{
+			"/api/v1/common/getProductReview/:vendorId/:userId/:for": [{
 				method: "GET",
 	            action: controllers.customerController.getProductReview,
 	            views: {
@@ -259,7 +259,7 @@
 			}],
 			"/api/v1/common/getUserList/:skip/:limit/:FetchFor": [{
 				method: "GET",
-	            action: controllers.customerController.getCustomerList,
+	            action: controllers.customerController.getAllCustomerList,
 	            views: {
 	                json: views.jsonView
 	            }
@@ -299,7 +299,7 @@
 	                json: views.jsonView
 	            }
 			}],
-			"/api/v1/common/getComplaint/:for": [{
+			"/api/v1/common/getComplaint/:userId/:vendorId/:for": [{
 				method: "GET",
 	            action: controllers.customerController.getComplaint,
 	            views: {

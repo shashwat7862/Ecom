@@ -76,16 +76,20 @@ module.exports = function () {
 		this.services.customerService.getProductReview(req, callback);
 	}
 
-	var getCustomerList = function (req, res, callback) {
-		this.services.customerService.getCustomerList(req, callback);
+	var getAllCustomerList = function (req, res, callback) {
+		this.services.customerService.getAllCustomerList(req, callback);
 	}
 
-	var CustomerProfileUpdate = function(req,res,callback){
-		this.services.customerService.CustomerProfileUpdate(req,callback);
+	var CustomerProfileUpdate = function (req, res, callback) {
+		this.services.customerService.CustomerProfileUpdate(req, callback);
 	}
 
-	var SaveComplaint = function(req,res,callback){
-		this.services.customerService.SaveComplaint(req,callback);
+	var SaveComplaint = function (req, res, callback) {
+		this.services.customerService.SaveComplaint(req, callback);
+	}
+
+	var getComplaint = function (req, res, callback) {
+		this.services.customerService.getComplaint(req, callback);
 	}
 
 
@@ -108,9 +112,10 @@ module.exports = function () {
 		deleteAddress,
 		saveProductReview,
 		getProductReview,
-		getCustomerList,
+		getAllCustomerList,
 		CustomerProfileUpdate,
-		SaveComplaint
+		SaveComplaint,
+		getComplaint
 
 	}
 };

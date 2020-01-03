@@ -118,7 +118,7 @@
 	            }
 			}],
 
-			"/get_ProductReview/:vendorId": [{
+			"/get_ProductReview/:vendorId/:userId/:for": [{
 	            method: "GET",
 	            action: controllers.productController.get_ProductReview,
 	            views: {

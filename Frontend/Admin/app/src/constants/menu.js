@@ -59,12 +59,12 @@ export const MENUITEMS = [
             // { path: '/users/create-user', title: 'Create User', type: 'link' },
         ]
     },
-    // {
-    //     title: 'Vendors', icon: Users, type: 'sub', active: false, children: [
-    //         { path: '/vendors/list_vendors', title: 'Vendor List', type: 'link' },
-    //         { path: '/vendors/create-vendors', title: 'Create Vendor', type: 'link' },
-    //     ]
-    // },
+    {
+        title: 'Vendors', icon: Users, type: 'sub', active: false, children: [
+            { path: '/vendors/list_vendors', title: 'Vendor List', type: 'link' },
+            // { path: '/vendors/create-vendors', title: 'Create Vendor', type: 'link' },
+        ]
+    },
     // {
     //     title: 'Localization', icon: Chrome, type: 'sub', children: [
     //         { path: '/localization/transactions', title: 'Translations', type: 'link' },

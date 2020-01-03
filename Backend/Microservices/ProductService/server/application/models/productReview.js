@@ -33,6 +33,8 @@ var ProductReviewSchema = new mongooseSchema({
     }
 });
 
+ProductReviewSchema.plugin(mongoose_softDelete);
+ProductReviewSchema.plugin(mongoose_timestamps);
 
 
 

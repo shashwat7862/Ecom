@@ -279,12 +279,14 @@ Rohit Goyal
 1: Make Proper Architecture  // done
 2: Header and myAccount UI Issues // will done today
 3: Compare Order Functionality and remaining code merge // will done today
+zoom issue fixed , header color issue fixed// done
 
 4: Shop and Category Functionality 
 5: Vendor and Admin Dashboard
 6: Multiple images Functionality
 login link update in customer Store
 try route can not access 
+
 
 
 Arihent
@@ -306,22 +308,30 @@ Home Page in customer Store
 
 
 shashwat
-
-Customer list in vendor Dashboard  
+Setting ->  profile   in Vendor Dashboard // done
 customer list in admin Dashboard // Done 
+edit profile  in customer Store // done
 customer searching in customer Store // Half Done
+order list in customer Store // done
+address list in customer Store // Done
+rating and review list  in customer Store // done
+notification Tab in customer Store  // done
+Order compliments in customer Store // done
+Customer list in vendor Dashboard // done
+===========================================
+
+
+product reviewers list on the product description page : APi created
+
 Vendor list -> admin with approval action 
 delete a customer in the admin panel
-address list in customer Store
-order list in customer Store
-rating and review list  in customer Store
-edit profile  in customer Store
-Setting ->  profile   in Vendor Dashboard // done
-notification Tab in customer Store 
-Order compliments in customer Store
-product reviewers list on the product description page
+
+multiple image
+---------------------------------------
 Stock Management
 Shipment Management(order Update)
+
+
 rest bugs()
 
 Api creation for team
