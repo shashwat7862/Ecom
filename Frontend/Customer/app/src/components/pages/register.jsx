@@ -18,7 +18,6 @@ class Register extends Component {
             fullName: ''
         }
         this.registerCustomer = this.registerCustomer.bind(this)
-
     }
 
     async registerCustomer() {
@@ -48,7 +47,6 @@ class Register extends Component {
     }
 
     onUpdateFormValue = (e) => {
-        console.log(e.target.name, e.target.value, "change")
         this.setState({
             [e.target.name]: e.target.value
         })

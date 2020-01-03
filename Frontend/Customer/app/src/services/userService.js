@@ -73,6 +73,10 @@ export function removeFromWishListService(obj) {
   return http.put(Baseurl+"/api/v1/customer/WishList/REMOVE",obj);
 }
 
+export function updateProfile(obj,userId){
+  return http.put(Baseurl+"/api/v1/customer/ProfileUpdate/"+userId,obj);
+}
+
 
 
 
