@@ -164,6 +164,11 @@ class VendorService extends BaseService {
         callback(null, customerlist)
     }
 
+    async getAllVendors(req, callback) {
+        let vendorList = await getAll_Vendors(req.params);
+        callback(null, vendorList)
+    }
+
     
 
 

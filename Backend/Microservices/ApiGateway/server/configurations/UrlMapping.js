@@ -306,6 +306,20 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/api/v1/admin/getAllVendors/:isApproved": [{
+				method: "GET",
+	            action: controllers.vendorController.getAllVendors,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/multiStore/createStore/:vendorId": [{
+				method: "POST",
+	            action: controllers.vendorController.getAllVendors,
+	            views: {
+	                json: views.jsonView
+	            }
+			}]
 	    };
 	};
 

@@ -56,6 +56,10 @@ exports.module = delete_Customer = async (qs) => (
   })
 );
 
+exports.module = getAll_Vendors = async (qs) => (
+  Userwrapper.proxyJsonRequest(`getAll_Vendors/${qs.isApproved}`, 'GET')
+);
+
 
 
 /*
@@ -143,6 +147,7 @@ module.exports = {
   Search_Products,
   AllProducts_List,
   saveAll_Images,
-  get_BrandList
+  get_BrandList,
+  getAll_Vendors
 
 }

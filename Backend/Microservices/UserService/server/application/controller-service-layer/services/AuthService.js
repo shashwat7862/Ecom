@@ -300,7 +300,6 @@ class AuthService extends BaseService {
     }
 
     getAll_CustomerList(params, callback) {
-
             domain.Customer.find({}).exec(function (err, customerlist) {
                 callback(null, {
                     customerlist: customerlist

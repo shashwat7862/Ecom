@@ -87,6 +87,10 @@ module.exports = function () {
 		this.services.vendorService.getCustomerList(req, callback);
 	}
 
+	var getAllVendors  = function (req, res, callback) {
+		this.services.vendorService.getAllVendors(req, callback);
+	}
+
 	return {
 		registerVendor,
 		login,
@@ -108,6 +112,7 @@ module.exports = function () {
 		FilterRatings,
 		deleteCustomer,
 		CustomerProfileUpdate,
-		getCustomerList
+		getCustomerList,
+		getAllVendors
 	}
 };

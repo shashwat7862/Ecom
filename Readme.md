@@ -318,23 +318,28 @@ rating and review list  in customer Store // done
 notification Tab in customer Store  // done
 Order compliments in customer Store // done
 Customer list in vendor Dashboard // done
+Vendor list -> admin with approval action  // done
 ===========================================
 
+Multi Store
+-----------------
+create shop
+shop list
+add new products to shop
+shop click -> percular shop product 
 
-product reviewers list on the product description page : APi created
-
-Vendor list -> admin with approval action 
-delete a customer in the admin panel
-
-multiple image
----------------------------------------
-Stock Management
-Shipment Management(order Update)
-
-
-rest bugs()
-
+order details
+Stock Management 1 hr
+Shipment Management(order Update) 1 :30 hr
+wishlist bug : 1 hr
+multiple image : 1 hr
+header update
+product reviewers list on the product description page : APi created : 1 hr
+delete a customer in the admin panel : 1/2 hr
+brandlist
+order print
 Api creation for team
+---------------------------------------------
 
 
 Backend /Api
@@ -373,3 +378,7 @@ sudo service mysql stop
 sudo apt-get --purge remove "mysql*"
 sudo rm -rf /etc/mysql/ 
 https://linuxize.com/post/how-to-install-mariadb-on-ubuntu-18-04/
+
+
+
+

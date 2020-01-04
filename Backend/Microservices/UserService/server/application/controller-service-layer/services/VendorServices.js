@@ -21,6 +21,19 @@ class VendorService extends BaseService {
             })
         }
     }
+
+    getAll_Vendors(params, callback) {
+        console.log(params,"params")
+        domain.Vendor.find({
+            isApproved: params.isApproved
+        }, (error, result) => {
+            if (error) {
+                callback(error, null)
+            } else {
+                callback(null, result)
+            }
+        });
+    }
 }
 
 

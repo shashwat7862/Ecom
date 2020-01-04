@@ -66,9 +66,9 @@ export function reviewList() {
   };
 }
 
-export function fetchVendorList() {
+export function fetchVendorList(isApprove) {
   return function (dispatch) {
-    return axios.get(`${Baseurl}/api/v1/common/getProductReview/null/null/admin`)
+    return axios.get(`${Baseurl}/api/v1/admin/getAllVendors/${isApprove}`)
       .then(({ data }) => {
         console.log(data)
         dispatch(Review_List(data));

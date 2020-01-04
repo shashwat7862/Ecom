@@ -100,6 +100,16 @@ module.exports = function (app) {
 			}
 		}],
 
+		"/getAll_Vendors/:isApproved": [{
+			method: "GET",
+			action: controllers.vendorController.getAll_Vendors,
+			views: {
+				json: views.jsonView
+			}
+		}],
+
+		
+
 		
 
 		
