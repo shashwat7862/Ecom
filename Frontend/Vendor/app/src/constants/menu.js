@@ -17,8 +17,9 @@ export const MENUITEMS = [
     //     path: '/dashboard', title: 'Dashboard', icon: Home, type: 'link', badgeType: 'primary', active: false
     // },
     {
-        title: 'Products', icon: Box, type: 'sub', active: false, children: [
-            // { path: '/products/digital/digital-category', title: 'Category', type: 'link' },
+        title: 'Store', icon: Box, type: 'sub', active: false, children: [
+            { path: '/store', title: 'Create Store', type: 'link' },
+            // { path: '/products/digital/digital-category', title: 'category', type: 'link' },
             // { path: '/products/digital/digital-sub-category', title: 'Sub Category', type: 'link' },
             { path: '/products/digital/digital-product-list', title: 'Product List', type: 'link' },
             { path: '/products/digital/digital-add-product', title: 'Add Product', type: 'link' },

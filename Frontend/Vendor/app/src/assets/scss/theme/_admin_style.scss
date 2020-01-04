@@ -1725,7 +1725,7 @@ $header-size: 80px;
 /*======= Page Header css Start ======= */
 .page-wrapper {
   .page-main-header {
-    background-color: $main-header-bg-color;
+    background-color: #232f3f;
     height: $header-size;
     position: $main-header-position;
     top: $main-header-top;
@@ -2224,7 +2224,7 @@ ul.notification-dropdown.onhover-show-div {
         height: $header-size;
         padding: $main-header-padding;
         align-items: center;
-        background-color: $main-header-left-bg-color;
+        background-color: #232f3f;
         z-index: $main-header-z-index;
         box-shadow: -3px 1px 3px 1px rgba(68, 102, 242, 0.1);
         .logo-wrapper {
@@ -2232,6 +2232,7 @@ ul.notification-dropdown.onhover-show-div {
           height: 100%;
           display: flex;
           align-items: center;
+          background-color: #232f3f
         }
       }
       .sidebar-user {
@@ -3337,11 +3338,13 @@ $i: 1;
       width: 100%;
       z-index: 11;
       .main-header-left {
+        background-color: #232f3f !important;
         .logo-wrapper {
           img {
             height: 23px;
             margin-top: 0;
             margin-right: 15px;
+            
           }
         }
       }

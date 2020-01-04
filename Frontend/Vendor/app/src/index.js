@@ -22,6 +22,7 @@ import Digital_pro_list from './components/products/digital/digital-pro-list';
 import Digital_add_pro from './components/products/digital/digital-add-pro';
 import Digital_edit_product from './components/products/digital/digital-edit-Product';
 import Digital_pro_review from './components/products/digital/digital-pro-review';
+import createStore from './components/Store/createStore'
 
 
 //Sales
@@ -80,7 +81,7 @@ class Root extends Component {
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/:data`} component={Digital_edit_product} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital_pro_review`} component={Digital_pro_review} />
                             
-
+                            <Route path={`${process.env.PUBLIC_URL}/store`} component={createStore} />
                             <Route path={`${process.env.PUBLIC_URL}/sales/orders`} component={Orders} />
                             <Route path={`${process.env.PUBLIC_URL}/sales/transactions`} component={Transactions_sales} />
 
