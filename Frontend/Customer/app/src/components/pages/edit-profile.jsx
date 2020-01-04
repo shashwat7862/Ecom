@@ -31,7 +31,7 @@ class EditProfile extends Component {
             axios.post(`${Baseurl}/api/v1/common/aws/saveAllImages`, fd)
                 .then(response => {
                     const userObj = {...this.state.userObj};
-                    userObj.CustomerImage = fileName;
+                    userObj.CustomerImage = response.data.object.name
                     this.setState({userObj: userObj});
                     const customerDetails =  JSON.parse(localStorage.getItem('customerDetails'));
                     customerDetails.CustomerImage = userObj.CustomerImage;
