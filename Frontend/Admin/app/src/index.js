@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './index.scss';
 import App from './components/app';
+import { checkLogin } from './utils/common';
+import PrivateRoute from './components/auth/privateRoute';
 import { ScrollContext } from 'react-router-scroll-4';
 
 // Components
@@ -74,7 +76,7 @@ class Root extends Component {
 
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-category`} component={Digital_category} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-sub-category`} component={Digital_sub_category} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-product-list`} component={Digital_pro_list} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/products/digital/digital-product-list`} component={Digital_pro_list} authed={checkLogin()} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-add-product`} component={Digital_add_pro} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/:data`} component={Digital_edit_product} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-pro-review`} component={Digital_pro_review} />

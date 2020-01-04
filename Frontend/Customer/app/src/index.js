@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import { IntlReducer as Intl, IntlProvider } from 'react-redux-multilingual'
 import './index.scss';
-
+import { checkLogin } from './utils/common';
 // Import custom components
 import store from './store';
 import translations from './constants/translations'
@@ -88,7 +88,24 @@ import ElementProductBox from "./components/features/product/element-product-box
 import ElementProductSlider from "./components/features/product/element-product-slider"
 import ElementProductNoSlider from "./components/features/product/element-product-no-slider"
 import ElementMultipleSlider from "./components/features/product/element-multiple-slider"
-import ElementProductTab from "./components/features/product/element-product-tab"
+import ElementProductTab from "./components/features/product/element-product-tab";
+
+const PrivateRoute = ({ authed, component: Component, logout, ...rest }) => {
+  console.log('PrivateRoute ****', authed, 'Component', Component)
+  return(
+  <Route
+    {...rest}
+    render={props =>
+      authed ? (
+        <Component {...props}  />
+      ) : (
+        <Redirect to="/auth/login" />
+      )
+    }
+  />
+);}
+
+export default PrivateRoute;
 
 class Root extends React.Component {
 
@@ -115,7 +132,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/fashion`} component={Fashion}/>
 
                                 {/*Routes For Features (Product Collection) */}
-                                <Route path={`${process.env.PUBLIC_URL}/products`} component={CollectionLeftSidebar}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/products`} component={CollectionLeftSidebar} authed={checkLogin()} />
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route path={`${process.env.PUBLIC_URL}/search/:q`} component={SearchProduct}/>

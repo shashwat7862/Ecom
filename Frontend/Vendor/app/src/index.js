@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './index.scss';
 import App from './components/app';
+import { checkLogin } from './utils/common';
 import { ScrollContext } from 'react-router-scroll-4';
 
 // Components
@@ -53,7 +54,20 @@ import Login from './components/auth/login';
 import store from './store/store'
 import { Provider } from 'react-redux'
 
-
+const PrivateRoute = ({ authed, component: Component, logout, ...rest }) => {
+    console.log('PrivateRoute ****', authed, 'Component', Component)
+    return(
+    <Route
+      {...rest}
+      render={props =>
+        authed ? (
+          <Component {...props}  />
+        ) : (
+          <Redirect to="/auth/login" />
+        )
+      }
+    />
+  );}
 
 class Root extends Component {
     render() {
@@ -75,7 +89,7 @@ class Root extends Component {
 
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-category`} component={Digital_category} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-sub-category`} component={Digital_sub_category} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-product-list`} component={Digital_pro_list} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/products/digital/digital-product-list`} component={Digital_pro_list} authed={checkLogin()} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-add-product`} component={Digital_add_pro} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/:data`} component={Digital_edit_product} />
                             <Route path={`${process.env.PUBLIC_URL}/products/digital/digital_pro_review`} component={Digital_pro_review} />

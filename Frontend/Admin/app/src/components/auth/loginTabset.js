@@ -30,6 +30,9 @@ export class LoginTabset extends Component {
         console.log(this.state)
         if(this.state.loginEmail == "admin@gmail.com" && this.state.loginPassword =="admin@123"){
             toast.success("Successfully login");
+            localStorage.setItem('auth', JSON.stringify({
+                email: this.state.loginEmail
+            }))
              this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
         }
     }

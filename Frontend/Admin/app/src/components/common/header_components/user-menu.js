@@ -18,8 +18,8 @@ export class User_menu extends Component {
 
     logout(){
         localStorage.removeItem('authToken');
+        localStorage.removeItem('auth');
         this.setState({ redirect: true })
-
     }
 
     render() {
