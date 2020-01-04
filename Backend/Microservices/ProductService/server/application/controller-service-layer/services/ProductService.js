@@ -21,6 +21,22 @@ class ProductService extends BaseService {
         });
     }
 
+    create_Store(Store, callback) {
+        Store.save((err, storeResult) => {
+            console.log("storeResult", storeResult, err)
+
+            if (err || !storeResult) {
+                callback(err, null);
+
+            } else {
+                callback(err, {
+                    storeList: storeResult,
+                    Message: "Store Has Been Created Successfully"
+                });
+            }
+        });
+    }
+
     async Products_List(category, pagination, callback) {
         try {
             domain[category].find({
@@ -509,6 +525,29 @@ class ProductService extends BaseService {
                 })
             }
         });
+    }
+
+    getAll_Store(params, callback) {
+        var query = {};
+
+        if (params.for == 'vendor') {
+            query = {
+                vendorId: params.vendorId
+            }
+        }
+        domain.Store.find(query, function (err, storeList) {
+            console.log(storeList, params, "-------------------")
+            if (err) {
+                console.log(err, "errors")
+                callback(err, null)
+            }
+            else {
+                callback(null, {
+                    storeList: storeList
+                })
+            }
+        });
+
     }
 
 

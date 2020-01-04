@@ -92,8 +92,7 @@ module.exports = function () {
 		this.services.customerService.getComplaint(req, callback);
 	}
 
-
-
+	
 	return {
 		registerCustomer,
 		CustomerLogin,
@@ -115,7 +114,7 @@ module.exports = function () {
 		getAllCustomerList,
 		CustomerProfileUpdate,
 		SaveComplaint,
-		getComplaint
+		getComplaint,
 
 	}
 };

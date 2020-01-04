@@ -101,7 +101,7 @@ class VendorService extends BaseService {
         let file = req.files.file
         console.log("file", file);
         var paths = path.join(__dirname, "../../public/productImages/");
-        var imageName = new Date().getTime() +".jpg"
+        var imageName = new Date().getTime() + ".jpg"
         var writeFilePath = paths + '/' + imageName;
         fs.readFile(file.path, function (err, data) {
             if (err) { } else {
@@ -144,7 +144,7 @@ class VendorService extends BaseService {
     }
 
 
-     async getBrandList(req, callback) {
+    async getBrandList(req, callback) {
         let searchResult = await get_BrandList(req.params);
         callback(null, searchResult)
     }
@@ -169,7 +169,18 @@ class VendorService extends BaseService {
         callback(null, vendorList)
     }
 
-    
+    async createStore(req, callback) {
+        let storeDetails = await create_Store(req.body, req.params);
+        callback(null, storeDetails)
+    }
+
+    async getAllStore(req, callback) {
+        console.log(req.params)
+        let storeList = await getAll_Store(req.params);
+        callback(null, storeList)
+    }
+
+
 
 
 }

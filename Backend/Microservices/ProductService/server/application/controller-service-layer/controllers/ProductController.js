@@ -176,7 +176,7 @@ module.exports = function () {
 	}
 
 	var get_ProductReview = function (req, res, callback) {
-		this.services.productService.get_ProductReview(req.params,callback);
+		this.services.productService.get_ProductReview(req.params, callback);
 	}
 
 	var get_BrandList = function (req, res, callback) {
@@ -185,6 +185,18 @@ module.exports = function () {
 
 	var Filter_Ratings = function (req, res, callback) {
 		this.services.productService.Filter_Ratings(req.query, callback);
+	}
+
+	var create_Store = function (req, res, callback) {
+		req.body.vendorId = req.params.vendorId
+		var Store = new domain.Store(req.body);
+
+		console.log(Store)
+		this.services.productService.create_Store(Store, callback);
+	}
+
+	var getAll_Store = function (req, res, callback) {
+		this.services.productService.getAll_Store(req.params, callback);
 	}
 
 
@@ -205,7 +217,9 @@ module.exports = function () {
 		save_ProductReview,
 		get_ProductReview,
 		get_BrandList,
-		Filter_Ratings
+		Filter_Ratings,
+		create_Store,
+		getAll_Store
 	}
 
 

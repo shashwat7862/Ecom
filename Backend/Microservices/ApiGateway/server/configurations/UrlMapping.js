@@ -313,9 +313,16 @@
 	                json: views.jsonView
 	            }
 			}],
-			"/api/v1/multiStore/createStore/:vendorId": [{
+			"/api/v1/vendor/multiStore/createStore/:vendorId": [{
 				method: "POST",
-	            action: controllers.vendorController.getAllVendors,
+	            action: controllers.vendorController.createStore,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/api/v1/vendor/multiStore/getAllStore/:vendorId/:for": [{
+				method: "GET",
+	            action: controllers.vendorController.getAllStore,
 	            views: {
 	                json: views.jsonView
 	            }

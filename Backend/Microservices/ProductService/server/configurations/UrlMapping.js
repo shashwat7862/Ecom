@@ -141,6 +141,22 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/create_Store/:vendorId": [{
+	            method: "POST",
+	            action: controllers.productController.create_Store,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+			"/getAll_Store/:vendorId/:for": [{
+	            method: "GET",
+	            action: controllers.productController.getAll_Store,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			
 
 			
  

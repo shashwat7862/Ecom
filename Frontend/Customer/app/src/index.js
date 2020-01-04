@@ -119,7 +119,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route path={`${process.env.PUBLIC_URL}/search/:q`} component={SearchProduct}/>
-                                <Route path={`${process.env.PUBLIC_URL}/edit-profile`} component={EditProfile}/>
+                                
                                 
 
 								<Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
@@ -153,7 +153,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/profile/reviews`} component={RatingAndReviews}/>
                                 <Route path={`${process.env.PUBLIC_URL}/profile/notificationPreferences`} component={NotificationPreferences}/>
                                 <Route path={`${process.env.PUBLIC_URL}/profile/orderComplaint`} component={OrderComplaint}/>
-                                
+                                <Route path={`${process.env.PUBLIC_URL}/profile/edit-profile`} component={EditProfile}/>
                                 
                                 
                                 

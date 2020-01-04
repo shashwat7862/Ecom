@@ -144,9 +144,17 @@ class TopBar extends Component {
                 </div>  
 
                 <ul className="user-profile-list">
-                   <li><Link to={`${process.env.PUBLIC_URL}/edit-profile`}>Edit Profile</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/cart`}>Your Cart</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/wishlist`}>Your WishList</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/profile/edit-profile`}>Edit Profile</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/profile/notificationPreferences`}>Notification Preferences</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/profile/manageAddress`}>Manage Address</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/profile/orders`}>Your Orders</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/profile/reviews`}>Your Reviews</Link></li>
+                   <li><Link to={`${process.env.PUBLIC_URL}/profile/orderComplaint`}>Order Complaints</Link></li>
                    <li><a onClick={this.logOut}>Logout</a></li>
                 </ul>
+                                
              </div>
              </li> 
           }
