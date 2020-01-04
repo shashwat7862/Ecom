@@ -4,8 +4,7 @@ import Baseurl from '../../api/url';
 import Breadcrumb from "../common/breadcrumb";
 import { loginCustomerService } from '../../services/userService';
 import {connect} from 'react-redux';
-import {fetchLogin,fetchLoginSuccess,fetchLoginFailure} from '../../reducers/login/login-action';
-
+import {fetchLogin,fetchLoginSuccess,fetchLoginFailure, IsLoggeIn} from '../../reducers/login/login-action';
 class Login extends Component {
 
     constructor(props) {
@@ -33,13 +32,13 @@ class Login extends Component {
             }
             localStorage.setItem('authToken', response.data.object.object.authToken);
             localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
-            
+            this.props.IsLoggeIn(true);
             if (prevUrl == 'cart') {
                 this.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
-                window.location.reload();
+                // window.location.reload();
             } else {
                 this.props.history.push(`${process.env.PUBLIC_URL}/products`);
-                window.location.reload();
+                // window.location.reload();
             }
         } catch (error) {
             console.log(error);
@@ -106,7 +105,20 @@ class Login extends Component {
 
 
 
-export default Login
+// export default Login
 
 //export default connect(mapStateToProps)(Login);
 
+const mapStateToProps = (state) => {
+	return {
+		isLogin: state.login.isLogin
+	}
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		IsLoggeIn: (status) => { dispatch(IsLoggeIn(status)) },
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

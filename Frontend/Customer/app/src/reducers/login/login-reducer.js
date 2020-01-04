@@ -1,13 +1,15 @@
 import {
     FETCH_LOGIN,
     FETCH_LOGIN_SUCCESS,
-    FETCH_LOGIN_FAILURE
+    FETCH_LOGIN_FAILURE,
+    IS_LOGIN
   } from './login-action';
   
   const initialState = {
     userData: {},
     loading:false,
-    error: null
+    error: null,
+    isLogin: false
   };
   
 export default function loginReducer(state = initialState, action) {
@@ -33,6 +35,12 @@ export default function loginReducer(state = initialState, action) {
           error: action.payload,
           userData: {}
         };
+
+      case IS_LOGIN: 
+        return {
+          ...state,
+          isLogin: action.isLogin
+        }
   
       default:
         return state;
