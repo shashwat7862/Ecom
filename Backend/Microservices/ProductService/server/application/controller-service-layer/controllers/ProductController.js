@@ -199,6 +199,10 @@ module.exports = function () {
 		this.services.productService.getAll_Store(req.params, callback);
 	}
 
+	var get_StoreDetails = function (req, res, callback) {
+		this.services.productService.get_StoreDetails(req.params, callback);
+	}
+
 
 	return {
 		Save_Products,
@@ -219,7 +223,8 @@ module.exports = function () {
 		get_BrandList,
 		Filter_Ratings,
 		create_Store,
-		getAll_Store
+		getAll_Store,
+		get_StoreDetails
 	}
 
 

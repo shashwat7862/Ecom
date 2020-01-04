@@ -155,6 +155,15 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/get_StoreDetails/:storeId": [{
+	            method: "GET",
+	            action: controllers.productController.get_StoreDetails,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			
 
 			
 

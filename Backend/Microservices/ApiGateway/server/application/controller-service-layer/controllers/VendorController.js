@@ -99,6 +99,10 @@ module.exports = function () {
 		this.services.vendorService.getAllStore(req, callback);
 	}
 
+	var getStoreDetails = function (req, res, callback) {
+		this.services.vendorService.getStoreDetails(req, callback);
+	}
+
 
 	return {
 		registerVendor,
@@ -124,6 +128,7 @@ module.exports = function () {
 		getCustomerList,
 		getAllVendors,
 		createStore,
-		getAllStore
+		getAllStore,
+		getStoreDetails
 	}
 };

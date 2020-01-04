@@ -327,14 +327,17 @@ create shop
 shop list
 add new products to shop
 shop click -> percular shop product 
-
 order details
+product reviewers list on the product description page : APi created : 1 hr
+header update
+
+
 Stock Management 1 hr
 Shipment Management(order Update) 1 :30 hr
 wishlist bug : 1 hr
 multiple image : 1 hr
-header update
-product reviewers list on the product description page : APi created : 1 hr
+
+
 delete a customer in the admin panel : 1/2 hr
 brandlist
 order print

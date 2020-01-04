@@ -122,8 +122,8 @@ exports.module = Filter_Ratings = async (qs) => (
   Productwrapper.proxyJsonRequest(`Filter_Ratings?rating=${qs.rating}`, 'GET')
 );
 
-exports.module = create_Store = async (body,qs) => (
-  Productwrapper.proxyJsonRequest(`create_Store/${qs.vendorId}`, 'POST',{
+exports.module = create_Store = async (body, qs) => (
+  Productwrapper.proxyJsonRequest(`create_Store/${qs.vendorId}`, 'POST', {
     body
   })
 );
@@ -131,6 +131,12 @@ exports.module = create_Store = async (body,qs) => (
 exports.module = getAll_Store = async (qs) => (
   Productwrapper.proxyJsonRequest(`getAll_Store/${qs.vendorId}/${qs.for}`, 'GET')
 );
+
+exports.module = get_StoreDetails = async (qs) => (
+  Productwrapper.proxyJsonRequest(`get_StoreDetails/${qs.storeId}`, 'GET')
+);
+
+
 
 
 

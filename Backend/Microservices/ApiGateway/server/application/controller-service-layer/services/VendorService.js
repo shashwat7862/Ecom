@@ -175,11 +175,14 @@ class VendorService extends BaseService {
     }
 
     async getAllStore(req, callback) {
-        console.log(req.params)
         let storeList = await getAll_Store(req.params);
         callback(null, storeList)
     }
 
+    async getStoreDetails(req,callback){
+        let storeDetails = await get_StoreDetails(req.params);
+        callback(null, storeDetails)
+    }
 
 
 

@@ -547,7 +547,23 @@ class ProductService extends BaseService {
                 })
             }
         });
+    }
 
+    get_StoreDetails(params,callback){
+        domain.ElectronicsProduct.find({
+            shopIds: { $elemMatch: { $eq: params.storeId } } 
+        }, function (err, storeList) {
+            console.log(storeList, params, "-------------------")
+            if (err) {
+                console.log(err, "errors")
+                callback(err, null)
+            }
+            else {
+                callback(null, {
+                    storeList: storeList
+                })
+            }
+        });
     }
 
 
