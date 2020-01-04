@@ -8,6 +8,7 @@ import { addProduct } from '../../../Action/ProductAction';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import _ from 'underscore';
+import Select from 'react-select';
 
 
 
@@ -30,8 +31,12 @@ export class Digital_add_pro extends Component {
             customValue: '',
             AdditionalFeatures: {},
             productImage: '',
+            selectedOption: null,
+            shopList: [{}],
             vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
         }
+
+
 
         this.onUpdateChange = this.onUpdateChange.bind(this);
         this.onDescriptionChange = this.onDescriptionChange.bind(this);
@@ -39,6 +44,43 @@ export class Digital_add_pro extends Component {
         this.uploadProductImage = this.uploadProductImage.bind(this);
 
 
+    }
+
+
+    handleChange = selectedOption => {
+        this.setState({ selectedOption });
+        console.log(`Option selected:`, selectedOption);
+    };
+
+    async  fetchShopList(data) {
+        axios.get(`${Baseurl}/api/v1/vendor/multiStore/getAllStore/${this.state.vendorData._id}/all`)
+            .then(response => {
+                console.log(response, "product--------------- Data");
+                let shopLists = []
+                response.data.object.object.storeList.forEach(function (val) {
+                    let obj = {}
+                    obj.value = val.storeName
+                    obj.label = val.storeName
+                    Object.assign(obj, val)
+                    shopLists.push(obj)
+                });
+                console.log("shopLists", shopLists)
+                this.setState({
+                    shopList: shopLists
+                })
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+
+
+    }
+
+
+    componentDidMount() {
+        this.fetchShopList();
     }
 
     onUpdateChange(e) {
@@ -85,6 +127,8 @@ export class Digital_add_pro extends Component {
 
     addProductToDB() {
         let VendorData = localStorage.getItem('VendorData');
+        var storeId = [];
+        storeId.push(this.state.selectedOption._id)
         this.props.AddProductToDB({
             subCategory: this.state.category,
             productName: this.state.productName,
@@ -95,13 +139,14 @@ export class Digital_add_pro extends Component {
                 size: this.state.size,
                 Material_type: this.state.Material_type
             },
+            shopIds: storeId,
             modelNo: this.state.model,
             price: this.state.price,
             isAvailable: (this.state.isAvailable == 'on') ? true : false,
             title: this.state.title,
             vendorId: this.state.vendorData._id,
             productImage: this.state.productImage,
-            addCustomeFeatures:this.state.AdditionalFeatures
+            addCustomeFeatures: this.state.AdditionalFeatures
         })
     }
 
@@ -145,20 +190,21 @@ export class Digital_add_pro extends Component {
         console.log(this.state.customField);
         console.log(this.state.customValue);
         let obj = this.state.AdditionalFeatures;
-        obj[this.state.customField] =  this.state.customValue
-        console.log("add feta",obj);
+        obj[this.state.customField] = this.state.customValue
+        console.log("add feta", obj);
 
         this.setState({
             AdditionalFeatures: obj,
-            customField:'',
-            customValue:''
+            customField: '',
+            customValue: ''
         })
     }
 
 
     render() {
 
-        console.log(this.state, "this.state")
+        console.log(this.state, "this.state");
+        const { selectedOption } = this.state;
         return (
             <Fragment>
                 <ToastContainer />
@@ -171,7 +217,16 @@ export class Digital_add_pro extends Component {
                                     <h5>General</h5>
                                 </div>
                                 <div className="card-body">
+
                                     <div className="digital-add needs-validation">
+                                        <div className="form-group">
+                                            <label className="col-form-label pt-0"><span>*</span> Select Store</label>
+                                            <Select
+                                                value={selectedOption}
+                                                onChange={this.handleChange}
+                                                options={this.state.shopList}
+                                            />
+                                        </div>
                                         <div className="form-group">
                                             <label className="col-form-label pt-0"><span>*</span> Title</label>
                                             <input className="form-control" name="title" value={this.state.title} onChange={this.onUpdateChange} id="validationCustom01" type="text" required="" />
@@ -228,17 +283,17 @@ export class Digital_add_pro extends Component {
                                         </div>
 
                                         <div>
-                                                            {(() => {
-                                                                let container = []; _.each(this.state.AdditionalFeatures, function(value, key) {
-                                                                    console.log(key, value);
-                                                                
-                                                                    container.push(
-                                                                        <div   key={key} >
-                                                                                <span>{key}- {value}</span>
-                                                                        </div>)
-                                                                }); return container;
-                                                            })()}
-                                                        </div>
+                                            {(() => {
+                                                let container = []; _.each(this.state.AdditionalFeatures, function (value, key) {
+                                                    console.log(key, value);
+
+                                                    container.push(
+                                                        <div key={key} >
+                                                            <span>{key}- {value}</span>
+                                                        </div>)
+                                                }); return container;
+                                            })()}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

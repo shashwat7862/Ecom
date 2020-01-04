@@ -33,6 +33,18 @@ var ElectronicProductSchema = new mongooseSchema({
         required: false,
         trim: true,
     },
+    imageVarients: [{
+        type: String,
+        default: '',
+        required: false,
+        trim: true,
+    }],
+    shopIds: [{
+        type: String,
+        default: '',
+        required: false,
+        trim: true,
+    }],
     modelNo: {
         type: String,
         default: '',
@@ -103,9 +115,9 @@ ElectronicProductSchema.plugin(mongoose_softDelete);
 
 ElectronicProductSchema.plugin(mongoosastic, {
     hosts: [
-      'localhost:9200',
+        'localhost:9200',
     ]
-  })
+})
 
 
 var ElectronicProduct = mongoose.model('ElectronicProduct', ElectronicProductSchema);

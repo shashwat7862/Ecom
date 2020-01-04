@@ -55,87 +55,7 @@ class ProductListItem extends Component {
                 console.log(error);
             };
     }
-    // addToCart(productData) {
-    //     console.log(productData,"add to cart")
-    //     axios.put(`${Baseurl}/api/v1/customer/Cart/ADD`, {
-    //         "productData": {
-    //             "productId": productData._id,
-    //             "productName": productData.productName,
-    //             "price": productData.price,
-    //             "productCount": this.state.quantity,
-    //             "category": productData.category,
-    //             "productImage":productData.productImage,
-    //             "VendorId": productData.vendorId._id,
-    //             "VendorName": productData.vendorId.fullName,
-    //         },
-    //         "userId": this.state.customerDetails._id
-    //     })
-    //         .then(response => {
-    //             toast.success("Product Add to Cart")
-    //             console.log(response, "data")
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
 
-    // addToCart = async(productData) => {
-    //    console.log("------------called")
-    //     if (this.state.customerDetails) {
-    //         try{
-    //         const response = await addToCartService({
-    //             "productData": {
-    //                 "productId": productData._id,
-    //                 "productName": productData.productName,
-    //                 "price": productData.price,
-    //                 "productCount": this.state.quantity,
-    //                 "category": productData.category,
-    //                 "productImage": productData.productImage,
-    //                 "VendorId": productData.vendorId._id,
-    //                 "VendorName": productData.vendorId.fullName,
-    //             },
-    //             "userId": this.state.customerDetails._id
-    //         });
-    //                 toast.success("Product Add to Cart")
-    //                 console.log(response, "data")
-    //             }catch(error){
-    //                 console.log(error);
-    //             }
-    //     } else {
-    //         let guestCart = [];
-    //         let payload = {
-    //             "productId": productData._id,
-    //             "productName": productData.productName,
-    //             "price": productData.price,
-    //             "productCount": this.state.quantity,
-    //             "category": productData.category,
-    //             "productImage": productData.productImage,
-    //             "VendorId": productData.vendorId._id,
-    //             "VendorName": productData.vendorId.fullName,
-    //             "userId": 'Guest'
-    //         }
-
-
-    //         let loadCart = (localStorage.getItem('GuestCart')) ? JSON.parse(localStorage.getItem('GuestCart')) : []
-
-    //         var isCartUpdated = false;
-    //         if (loadCart.length > 0) {
-    //             loadCart.forEach(function (product) {
-    //                 if (product.productId == payload.productId) {
-    //                     product.productCount = product.productCount + payload.productCount;
-    //                     isCartUpdated = true
-    //                 }
-    //             })
-    //         }
-
-    //         if (!isCartUpdated) {
-    //             loadCart.push(payload);
-    //         }
-
-    //         localStorage.setItem('GuestCart', JSON.stringify(loadCart));
-    //         toast.success("Product Add to Cart")
-    //     }
-    // }
 
     addToCart = (productData) => {
         console.log(productData, "add to cart")
@@ -220,7 +140,7 @@ class ProductListItem extends Component {
 
 
     render() {
-        const { product,onAddToCartClicked } = this.props;
+        const { product } = this.props;
         console.log("------------child", product);
 
 

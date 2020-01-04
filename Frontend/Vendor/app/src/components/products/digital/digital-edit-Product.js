@@ -234,6 +234,23 @@ export class Digital_edit_product extends Component {
                                         </div>
                                         <label className="col-form-label pt-0"> Product Upload</label><br></br>
                                         <input type="file" onChange={this.uploadProductImage} ></input>
+                                        <div className="col-xl-3 xl-50 col-sm-6 col-3">
+                                                        <ul className="file-upload-product">
+                                                            {
+                                                                this.state.dummyimgs.map((res, i) => {
+                                                                    return (
+                                                                        <li key={i}>
+                                                                            <div className="box-input-file">
+                                                                                <input className="upload" type="file" onChange={(e) => this._handleImgChange(e, i)} />
+                                                                                <img src={res.img} style={{ width: 50, height: 50 }} />
+                                                                                <a id="result1" onClick={(e) => this._handleSubmit(e.target.id)}></a>
+                                                                            </div>
+                                                                        </li>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </ul>
+                                                    </div>
                                     </div>
                                 </div>
                             </div>
