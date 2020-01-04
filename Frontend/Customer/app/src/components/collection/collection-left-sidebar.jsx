@@ -33,7 +33,6 @@ class CollectionLeftSidebar extends Component {
 	}
 
 	async componentDidMount() {
-
 		try{
 	        	const response = await ProductsListElectronicsService();
 				let scrollData = []

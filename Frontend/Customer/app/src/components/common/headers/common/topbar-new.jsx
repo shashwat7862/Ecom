@@ -14,6 +14,7 @@ var client = new elasticsearch.Client({
 });
 
 class TopBar extends Component {
+  
 
   constructor(props) {
     const customerDetails = JSON.parse(localStorage.getItem('customerDetails'))
@@ -21,6 +22,15 @@ class TopBar extends Component {
     this.state = {
       customerDetails: customerDetails,
       defaultImage: "https://www.mnn.com/static/img/not_available.png",
+      isLogin:false
+    }
+  }
+
+  componentDidMount(){
+    if(JSON.parse(localStorage.getItem("customerDetails"))){
+      this.setState({isLogin:true});
+    }else{
+      this.setState({isLogin:false});
     }
   }
 
@@ -31,7 +41,7 @@ class TopBar extends Component {
     localStorage.removeItem('customerDetails');
     localStorage.removeItem('GuestCart');
     localStorage.removeItem('prevUrl');
-    // this.props.history.push(`${process.env.PUBLIC_URL}/login`);
+    this.props.history.push(`${process.env.PUBLIC_URL}/login`);
     toast.success("logout Successfully ");
     window.location.reload()
   }
@@ -62,6 +72,8 @@ class TopBar extends Component {
 
   render() {
     const { translate } = this.props;
+    const {isLogin} = this.state;
+
     let data = [
       {
         key: 'key',
@@ -116,9 +128,30 @@ class TopBar extends Component {
         <ul className="header-list">
             <li><CartContainer /></li> 
             <li><Link to={`${process.env.PUBLIC_URL}/wishlist`} data-lng="en">wishlist</Link></li> 
-            <li><Link to={`${process.env.PUBLIC_URL}/login`}>Login</Link></li> 
-            <li><Link to={`${process.env.PUBLIC_URL}/register`}>Register</Link></li> 
-            <li><Link to={`${process.env.PUBLIC_URL}/edit-profile`}>Edit Profile</Link></li> 
+
+            {!isLogin &&
+            <React.Fragment>
+              <li><Link to={`${process.env.PUBLIC_URL}/login`}>Login</Link></li> 
+              <li><Link to={`${process.env.PUBLIC_URL}/register`}>Register</Link></li> 
+            </React.Fragment>
+           }
+
+         {isLogin &&
+            <li>
+             <div className="userProfileCover">
+                <div className="userProfileImg">
+                  <img src="/assets/images/default.png"/>
+                </div>  
+
+                <ul className="user-profile-list">
+                   <li><Link to={`${process.env.PUBLIC_URL}/edit-profile`}>Edit Profile</Link></li>
+                   <li><a onClick={this.logOut}>Logout</a></li>
+                </ul>
+             </div>
+             </li> 
+          }
+               
+              
         </ul>
       </div>
     </div>

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Baseurl from '../../api/url'
+import Baseurl from '../../api/url';
 import Breadcrumb from "../common/breadcrumb";
 import { loginCustomerService } from '../../services/userService';
+import {connect} from 'react-redux';
+import {fetchLogin,fetchLoginSuccess,fetchLoginFailure} from '../../reducers/login/login-action';
 
 class Login extends Component {
 
@@ -14,10 +16,9 @@ class Login extends Component {
             Password: '',
         }
         this.loginCustomer = this.loginCustomer.bind(this)
-
     }
 
-    async loginCustomer() {
+     async loginCustomer() {
         try {
             const response = await loginCustomerService({
                 "email": this.state.email,
@@ -26,8 +27,6 @@ class Login extends Component {
             })
             localStorage.removeItem('customerDetails');
             localStorage.removeItem('authToken');
-            console.log(response, "data")
-            console.log(response.data.object.object.authToken);
             let prevUrl = localStorage.getItem('prevUrl');
             if (prevUrl == 'cart') {
                 localStorage.setItem('prevUrl','redirectedFromLogin')
@@ -37,8 +36,10 @@ class Login extends Component {
             
             if (prevUrl == 'cart') {
                 this.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
+                window.location.reload();
             } else {
                 this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+                window.location.reload();
             }
         } catch (error) {
             console.log(error);
@@ -46,21 +47,17 @@ class Login extends Component {
     }
 
     onUpdateFormValue = (e) => {
-        console.log(e.target.name, e.target.value, "change")
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
     render() {
-
-
+        const {userData,loading,error} =  this.props;
+        console.log(this.userData);
         return (
             <div>
                 <Breadcrumb title={'Login'} />
-
-
-                {/*Login section*/}
                 <section className="login-page section-b-space">
                     <div className="container">
                         <div className="row">
@@ -101,4 +98,15 @@ class Login extends Component {
     }
 }
 
+// const mapStateToProps = state => ({
+//     userData:state.login.userData,
+//     loading:state.login.loading,
+//     error:state.login.error
+// })
+
+
+
 export default Login
+
+//export default connect(mapStateToProps)(Login);
+

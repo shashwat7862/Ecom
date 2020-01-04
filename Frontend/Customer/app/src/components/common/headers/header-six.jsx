@@ -25,7 +25,6 @@ class HeaderSix extends Component {
       setTimeout(function() {
           document.querySelector(".loader-wrapper").style = "display: none";
       }, 2000);
-
       this.setState({ open: true });
     }
 
@@ -99,7 +98,6 @@ class HeaderSix extends Component {
 	
 	render() {
 		return (
-
       <React.Fragment>
       <header id="sticky" className="sticky">
         <div className="container-fluid clearfix">
@@ -122,10 +120,6 @@ class HeaderSix extends Component {
          <li><a href="#email">About Us</a></li>
        </ul>
     </div>    
-
-                      
-                                                
-   
 
     </React.Fragment>
 
