@@ -33,24 +33,23 @@ class CollectionLeftSidebar extends Component {
 	}
 
 	async componentDidMount() {
+		try{
+	        	const response = await ProductsListElectronicsService();
+				let scrollData = []
+				response.data.object.object.forEach(function (val) {
+					let obj = {}
+					obj.src = Baseurl + '/' + val.productImage
+					obj.price =  val.price
+					obj.name = val.productName
+					scrollData.push(obj)
+				});
+				this.setState({
+					scrollData: scrollData
+				});
 
-		try {
-			const response = await ProductsListElectronicsService();
-			let scrollData = []
-			response.data.object.object.forEach(function (val) {
-				let obj = {}
-				obj.src = Baseurl + '/' + val.productImage
-				obj.price = val.price
-				obj.name = val.productName
-				scrollData.push(obj)
-			});
-			this.setState({
-				scrollData: scrollData
-			});
-
-		} catch (error) {
-			console.log(error);
-		}
+			}catch(error){
+				console.log(error);
+			}
 	}
 
 	render() {

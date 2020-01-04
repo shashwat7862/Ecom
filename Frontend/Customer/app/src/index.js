@@ -62,6 +62,7 @@ import PageNotFound from './components/pages/404'
 import lookbook from './components/pages/lookbook'
 import Login from './components/pages/login'
 import Register from './components/pages/register'
+import EditProfile from './components/pages/edit-profile'
 import Search from './components/pages/search'
 import Collection from './components/pages/collection'
 import ForgetPassword from './components/pages/forget-password'
@@ -118,6 +119,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route path={`${process.env.PUBLIC_URL}/search/:q`} component={SearchProduct}/>
+                                <Route path={`${process.env.PUBLIC_URL}/edit-profile`} component={EditProfile}/>
                                 
 
 								<Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>

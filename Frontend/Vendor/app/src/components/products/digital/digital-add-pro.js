@@ -128,7 +128,6 @@ export class Digital_add_pro extends Component {
                 title: '',
                 size: '',
                 model: ''
-
             })
 
         }
