@@ -2682,3 +2682,41 @@ header{
      border-radius: 100%;
    }
 }
+
+
+/* compare cart css starts here */
+
+.product-detail-page{
+  position: relative;
+}
+
+.add-to-comapre{
+  position: absolute;
+  top:5%;
+  right:5%;
+  font-size:16px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.compare-cart{
+  position: fixed;
+  top:80%;
+  right:5%;
+  z-index: 200;
+  padding:10px;
+  background:#f5f5f5;
+  border-radius: 5px;
+
+
+  .compare-cart-btn{
+    cursor: pointer;
+  }
+}
+
+.inner-detail{
+  text-align: center;
+}
+
+
+/* compare cart css ends here */

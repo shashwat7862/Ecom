@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Helmet } from 'react-helmet';
 import _isEmpty from 'lodash/isEmpty';
 import '../common/index.scss';
+import { Link } from 'react-router-dom';
 
 // import custom Components
 import Service from "./common/service";
@@ -29,7 +30,8 @@ class LeftSideBar extends Component {
       currentImage: "https://www.mnn.com/static/img/not_available.png",
       productDetails: {},
       hoverImage: null,
-     
+      compareCheck:false,
+      compareListCount:0
     };
   }
 
@@ -51,7 +53,21 @@ class LeftSideBar extends Component {
     }
     this.setState({ productDetails });
     this.chooseCurrentImage(productDetails.productImage);
-    // this.chooseCurrentImage(ImgData);
+
+    
+
+    var compareList = JSON.parse(localStorage.getItem("comapareList")) || [];
+    
+    for(let i=0; i<compareList.length;i++){
+     if(compareList[i]._id == productDetails._id){
+       this.setState({compareCheck:true});
+       break;
+     }
+    }
+
+    this.setState({compareListCount:compareList.length});
+
+    this.chooseCurrentImage(ImgData);
   }
 
   chooseCurrentImage(item) {
@@ -67,6 +83,25 @@ class LeftSideBar extends Component {
       // do nothing
     }
   }
+
+  handleCompareCheck=(e)=>{
+     const isCheck = e.target.checked;
+     var compareList = JSON.parse(localStorage.getItem("comapareList")) || [];
+     if(isCheck){
+        if(compareList.length <= 4){
+          compareList.push(this.state.productDetails); 
+          localStorage.setItem("comapareList",JSON.stringify(compareList));
+          this.setState({compareListCount:compareList.length});
+        }
+     }else{
+      if(compareList.length > 0){
+        compareList = compareList.filter(item => item._id != this.state.productDetails._id); 
+        localStorage.setItem("comapareList",JSON.stringify(compareList));
+        this.setState({compareListCount:compareList.length});
+      }
+     }
+  }
+
 
   filterClick() {}
 
@@ -106,6 +141,7 @@ class LeftSideBar extends Component {
   render() {
     const { symbol, addToCart, addToCartUnsafe, addToWishlist } = this.props;
     const { currentImage, productDetails, hoverImage } = this.state;
+
     return (
       <div>
         {/*SEO Support*/}
@@ -120,7 +156,30 @@ class LeftSideBar extends Component {
 
         {/*Section Start*/}
         {!(_isEmpty(productDetails)) ?
-          <section className="section-b-space">
+          <section className="section-b-space product-detail-page">
+
+          <div className="add-to-comapre">
+            <input defaultChecked={this.state.compareCheck} onChange={this.handleCompareCheck} type="checkbox"/> Add to Compare
+          </div>
+
+          {this.state.compareListCount == 1 && 
+            <div className="compare-cart">
+            <a className="btn btn-solid compare-cart-btn">Compare {this.state.compareListCount}</a>
+            </div>
+          }
+
+           
+
+         {this.state.compareListCount.length > 1 &&
+            <div className="compare-cart">
+             <Link className="btn btn-solid compare-cart-btn" to={`${process.env.PUBLIC_URL}/compare`}>Compare {this.state.compareListCount}</Link>
+             </div>
+        }
+
+      
+          }
+
+
             <div className="collection-wrapper">
               <div className="container">
                 <div className="row">
