@@ -74,7 +74,7 @@ class LeftSideBar extends Component {
     if (item) {
       if (item instanceof Array ) {
         console.log('in if')
-        this.setState({ currentImage: item[0].src})
+        //this.setState({ currentImage: item[0].src})
       } else if(item != "") {
         console.log('in else part')
         this.setState({ currentImage: Baseurl+'/'+item})
@@ -102,6 +102,9 @@ class LeftSideBar extends Component {
      }
   }
 
+  clearCompare=()=>{
+    localStorage.setItem("compareList",JSON.stringify([]))
+  }
 
   filterClick() {}
 
@@ -159,7 +162,8 @@ class LeftSideBar extends Component {
           <section className="section-b-space product-detail-page">
 
           <div className="add-to-comapre">
-            <input defaultChecked={this.state.compareCheck} onChange={this.handleCompareCheck} type="checkbox"/> Add to Compare
+            <div> <input defaultChecked={this.state.compareCheck} onChange={this.handleCompareCheck} type="checkbox"/> Add to Compare</div>
+            <div> <a className="clearCompare" onClick={this.clearCompare}> &#10005; Clear Compare</a> </div>
           </div>
 
           {this.state.compareListCount == 1 && 
@@ -168,9 +172,8 @@ class LeftSideBar extends Component {
             </div>
           }
 
-           
-
-         {this.state.compareListCount.length > 1 &&
+          
+         {this.state.compareListCount > 1 &&
             <div className="compare-cart">
              <Link className="btn btn-solid compare-cart-btn" to={`${process.env.PUBLIC_URL}/compare`}>Compare {this.state.compareListCount}</Link>
              </div>

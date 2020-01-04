@@ -77,6 +77,11 @@ export function updateProfile(obj,userId){
   return http.put(Baseurl+"/api/v1/customer/ProfileUpdate/"+userId,obj);
 }
 
+export function getAllStoreService(){
+  return http.get(Baseurl+"/api/v1/vendor/multiStore/getAllStore/5df3426dabdd0646103250f7/all");
+}
+
+
 
 
 
