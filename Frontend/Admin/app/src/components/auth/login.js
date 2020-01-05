@@ -29,19 +29,19 @@ export class Login extends Component {
                                         <Slider className="single-item" {...settings}>
                                             <div>
                                                 <div>
-                                                    <h3>Welcome to 45678 Multikart</h3>
+                                                    <h3>Admin Panel</h3>
+                                                    <p>Welcome to WeShop</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <h3>Welcome to WeShop</h3>
                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
                                                 </div>
                                             </div>
                                             <div>
                                                 <div>
-                                                    <h3>Welcome to Multikart</h3>
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div>
-                                                    <h3>Welcome to Multikart</h3>
+                                                    <h3>Welcome to WeShop</h3>
                                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
                                                 </div>
                                             </div>
@@ -56,7 +56,7 @@ export class Login extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <a href="https://react.pixelstrap.com/multikart" target="_blank" className="btn btn-primary back-btn"><ArrowLeft />back</a>
+                            {/* <a href="https://react.pixelstrap.com/multikart" target="_blank" className="btn btn-primary back-btn"><ArrowLeft />back</a> */}
                         </div>
                     </div>
                 </div>

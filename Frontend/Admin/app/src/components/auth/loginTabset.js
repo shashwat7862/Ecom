@@ -28,9 +28,9 @@ export class LoginTabset extends Component {
    
     loginAdmin() {
         console.log(this.state)
-        if(this.state.loginEmail == "admin@gmail.com" && this.state.loginPassword =="admin@123"){
+        if(this.state.loginEmail == "admin@weshop.com" && this.state.loginPassword =="admin@123"){
             toast.success("Successfully login");
-             this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+             this.props.history.push(`${process.env.PUBLIC_URL}/Admin/products/digital/digital-product-list`);
         }
     }
 
@@ -65,9 +65,9 @@ export class LoginTabset extends Component {
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                 </div>
-                                <input type="text" name="loginPassword" className="form-control" placeholder="Password" onChange={this.onUpdateChange} aria-label="First name" className="form-control" />
+                                <input type="password" name="loginPassword" className="form-control" placeholder="Password" onChange={this.onUpdateChange} aria-label="First name" className="form-control" />
                             </div>
-                            <button onClick={this.loginAdmin} className='btn btn-primary' >Login With Email</button>
+                            <button onClick={this.loginAdmin} className='btn btn-primary' >Login </button>
                             
                         </TabPanel>
                      </Tabs>

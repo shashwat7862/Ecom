@@ -511,7 +511,7 @@ a {
       padding: 50px;
       background-image: url("assets/images/dashboard/login-bg.png");
       background-position: center;
-      box-shadow: 1px 5px 24px 0 rgba(255, 128, 132, 0.8);
+      box-shadow: 1px 5px 24px 0 #232f3f
     }
     .form-group {
       margin-bottom: 1.5rem;
@@ -1812,10 +1812,10 @@ $header-size: 80px;
     padding: $main-header-right-padding;
     margin: 0;
     svg {
-      color: $main-header-right-toggle-color;
+      color: #ccc;
       line,
       polyline {
-        color: $main-header-right-toggle-color;
+        color: #ccc;
       }
     }
     .nav-left {

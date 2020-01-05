@@ -61,56 +61,56 @@ class Root extends Component {
                 <ScrollContext>
                     <Switch>
                         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Login} />
-                        <Route exact path={`${process.env.PUBLIC_URL}/auth/login`} component={Login} />
+                        <Route exact path={`${process.env.PUBLIC_URL}/Admin/auth/login`} component={Login} />
 
                         <App>
-                            <Route path={`${process.env.PUBLIC_URL}/dashboard`} component={Dashboard} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/dashboard`} component={Dashboard} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/products/physical/category`} component={Category} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/physical/sub-category`} component={Sub_category} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/physical/product-list`} component={Product_list} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/physical/product-detail`} component={Product_detail} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/physical/add-product`} component={Add_product} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/physical/category`} component={Category} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/physical/sub-category`} component={Sub_category} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/physical/product-list`} component={Product_list} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/physical/product-detail`} component={Product_detail} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/physical/add-product`} component={Add_product} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-category`} component={Digital_category} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-sub-category`} component={Digital_sub_category} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-product-list`} component={Digital_pro_list} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-add-product`} component={Digital_add_pro} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/:data`} component={Digital_edit_product} />
-                            <Route path={`${process.env.PUBLIC_URL}/products/digital/digital-pro-review`} component={Digital_pro_review} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-category`} component={Digital_category} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-sub-category`} component={Digital_sub_category} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-product-list`} component={Digital_pro_list} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-add-product`} component={Digital_add_pro} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-edit-product/:data`} component={Digital_edit_product} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-pro-review`} component={Digital_pro_review} />
                             
 
-                            <Route path={`${process.env.PUBLIC_URL}/sales/orders`} component={Orders} />
-                            <Route path={`${process.env.PUBLIC_URL}/sales/transactions`} component={Transactions_sales} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/sales/orders`} component={Orders} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/sales/transactions`} component={Transactions_sales} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/coupons/list-coupons`} component={ListCoupons} />
-                            <Route path={`${process.env.PUBLIC_URL}/coupons/create-coupons`} component={Create_coupons} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/coupons/list-coupons`} component={ListCoupons} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/coupons/create-coupons`} component={Create_coupons} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/pages/list-page`} component={ListPages} />
-                            <Route path={`${process.env.PUBLIC_URL}/pages/create-page`} component={Create_page} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/pages/list-page`} component={ListPages} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/pages/create-page`} component={Create_page} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/media`} component={Media} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/media`} component={Media} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/menus/list-menu`} component={List_menu} />
-                            <Route path={`${process.env.PUBLIC_URL}/menus/create-menu`} component={Create_menu} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/menus/list-menu`} component={List_menu} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/menus/create-menu`} component={Create_menu} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/users/list-user`} component={List_user} />
-                            <Route path={`${process.env.PUBLIC_URL}/users/create-user`} component={Create_user} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/users/list-user`} component={List_user} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/users/create-user`} component={Create_user} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/vendors/list_vendors`} component={List_vendors} />
-                            <Route path={`${process.env.PUBLIC_URL}/vendors/create-vendors`} component={Create_vendors} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/vendors/list_vendors`} component={List_vendors} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/vendors/create-vendors`} component={Create_vendors} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/localization/transactions`} component={Translations} />
-                            <Route path={`${process.env.PUBLIC_URL}/localization/currency-rates`} component={Rates} />
-                            <Route path={`${process.env.PUBLIC_URL}/localization/taxes`} component={Taxes} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/localization/transactions`} component={Translations} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/localization/currency-rates`} component={Rates} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/localization/taxes`} component={Taxes} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/reports/report`} component={Reports} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/reports/report`} component={Reports} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/settings/profile`} component={Profile} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/settings/profile`} component={Profile} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/invoice`} component={Invoice} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/invoice`} component={Invoice} />
 
-                            <Route path={`${process.env.PUBLIC_URL}/data-table`} component={Datatable} />
+                            <Route path={`${process.env.PUBLIC_URL}/Admin/data-table`} component={Datatable} />
 
                         </App>
 
