@@ -97,7 +97,7 @@ export class Orders extends Component {
 
     editProductData(data) {
         console.log(JSON.stringify(data.original), "JSON.stringify(data.original)")
-        this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/${JSON.stringify(data.original)}`);
+        this.props.history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-edit-product/${JSON.stringify(data.original)}`);
     }
 
 

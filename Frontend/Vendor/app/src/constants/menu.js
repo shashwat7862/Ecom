@@ -18,19 +18,19 @@ export const MENUITEMS = [
     // },
     {
         title: 'Store', icon: Box, type: 'sub', active: false, children: [
-            { path: '/store', title: 'Create Store', type: 'link' },
+            { path: '/Vendor/store', title: 'Create Store', type: 'link' },
             // { path: '/products/digital/digital-category', title: 'category', type: 'link' },
             // { path: '/products/digital/digital-sub-category', title: 'Sub Category', type: 'link' },
-            { path: '/products/digital/digital-product-list', title: 'Product List', type: 'link' },
-            { path: '/products/digital/digital-add-product', title: 'Add Product', type: 'link' },
-            { path: '/products/digital/digital_pro_review', title: 'Product Reviews', type: 'link' },
+            { path: '/Vendor/products/digital/digital-product-list', title: 'Product List', type: 'link' },
+            { path: '/Vendor/products/digital/digital-add-product', title: 'Add Product', type: 'link' },
+            { path: '/Vendor/products/digital/digital_pro_review', title: 'Product Reviews', type: 'link' },
         ]
             
         
     },
     {
         title: 'Sales', icon: DollarSign, type: 'sub', active: false, children: [
-            { path: '/sales/orders', title: 'Orders', type: 'link' },
+            { path: '/Vendor/sales/orders', title: 'Orders', type: 'link' },
             // { path: '/sales/transactions', title: 'Transactions', type: 'link' },
         ]
     },
@@ -57,7 +57,7 @@ export const MENUITEMS = [
     // },
     {
         title: 'Customers', icon: UserPlus, type: 'sub', active: false, children: [
-            { path: '/users/list-user', title: 'Customer List', type: 'link' },
+            { path: '/Vendor/users/list-user', title: 'Customer List', type: 'link' },
             // { path: '/users/create-user', title: 'Create User', type: 'link' },
         ]
     },
@@ -79,7 +79,7 @@ export const MENUITEMS = [
     // },
     {
         title: 'Settings', icon: Settings, type: 'sub', children: [
-            { path: '/settings/profile', title: 'Profile', type: 'link' },
+            { path: '/Vendor/settings/profile', title: 'Profile', type: 'link' },
         ]
     },
     // {

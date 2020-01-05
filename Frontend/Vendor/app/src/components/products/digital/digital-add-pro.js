@@ -160,7 +160,7 @@ export class Digital_add_pro extends Component {
             let history = this.props.history
 
             setTimeout(function () {
-                history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+                history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-product-list`);
             }, 1000)
 
             this.setState({
