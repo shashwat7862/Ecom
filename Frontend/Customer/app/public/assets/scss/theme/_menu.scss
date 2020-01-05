@@ -2733,6 +2733,7 @@ header{
       left:0;
       list-style: none;
       width:180px;
+      display: none;
       margin:0;
       padding:0;
       border:1px solid #f5f5f5;
@@ -2763,6 +2764,10 @@ header{
             }      
         }
     }
+}
+
+.shopMenu:hover ul{
+  display: inline-block !important;
 }
 
 
