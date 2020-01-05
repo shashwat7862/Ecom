@@ -74,6 +74,8 @@ class DetailsTopTabs extends Component {
 
     render() {
         const { item } = this.props
+        console.log(item ,"this.props.item.vendorId.fullName");
+        console.log(this.props.item.vendorId)
         return (
             <section className="tab-product m-0">
                 <div className="row">
@@ -138,21 +140,26 @@ class DetailsTopTabs extends Component {
                             </TabPanel>
                             <TabPanel>
                                 <table className="table table-striped mb-0">
-                                    <tbody>
-                                        <tr>
-                                            <th>
-                                                Vendor Name :
-                                            </th>
-                                            <td>{this.props.item.vendorId.fullName}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                Business Category :
-                                            </th>
-                                            <td>{(this.props.item.vendorId.business_category) ? this.props.item.vendorId.business_category : 'NA'}</td>
-                                        </tr>
-                                    </tbody>
+                                    {(this.props.item.vendorId)?
+                                     <tbody>
+                                     <tr>
+                                         <th>
+                                             Vendor Name :
+                                         </th>
+                                         <td>{this.props.item.vendorId.fullName}</td>
+                                     </tr>
+                                     <tr>
+                                         <th>
+                                             Business Category :
+                                         </th>
+                                         <td>{(this.props.item.vendorId.business_category) ? this.props.item.vendorId.business_category : 'NA'}</td>
+                                     </tr>
+                                 </tbody>
+                                 :null}
+                                    
                                 </table>
+                                    
+                                   
                             </TabPanel>
                             <TabPanel>
                                 {/* <form className="theme-form mt-4"> */}

@@ -270,6 +270,7 @@ class Landing extends Component {
 
                     <ShopCategory />
                     <HomeBanner />
+                    <br></br><br></br>
                     <section className="p-0">
                         <Slider className="slide-1 home-slider">
                             <div>
@@ -307,6 +308,7 @@ class Landing extends Component {
                             </div>
                         </Slider>
                     </section>
+                    <br></br>
                     <HomeDeal />
                     <HomeBanner2 />
                     <SuggestProduct />

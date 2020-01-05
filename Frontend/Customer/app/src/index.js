@@ -69,6 +69,7 @@ import ForgetPassword from './components/pages/forget-password'
 import Contact from './components/pages/contact'
 import Dashboard from './components/pages/dashboard'
 import Faq from './components/pages/faq'
+import Store from './components/multiStore/store'
 
 // Blog Pages
 import RightSide from './components/blogs/right-sidebar'
@@ -147,6 +148,8 @@ class Root extends React.Component {
 								<Route path={`${process.env.PUBLIC_URL}/compare`} component={Compare}/>
 								<Route path={`${process.env.PUBLIC_URL}/checkout/:details`} component={checkOut}/>
 								<Route path={`${process.env.PUBLIC_URL}/order-success/:orderId`} component={orderSuccess}/>
+                                <Route path={`${process.env.PUBLIC_URL}/multi-store/:storeId/:storeName`} component={Store}/>
+                                
 
 								<Route path={`${process.env.PUBLIC_URL}/profile/orders`} component={OrderList}/>
                                 <Route path={`${process.env.PUBLIC_URL}/profile/manageAddress`} component={ManageAddress}/>

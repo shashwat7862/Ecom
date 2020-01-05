@@ -382,3 +382,4 @@ https://linuxize.com/post/how-to-install-mariadb-on-ubuntu-18-04/
 
 
 
+sudo ssh root@2.56.213.241

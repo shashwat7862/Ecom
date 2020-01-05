@@ -82,14 +82,12 @@ class ProductService extends BaseService {
     async Product_ApprovalRequest(body, dynamicDomain, callback) {
         console.log(body, dynamicDomain)
         try {
-            domain[dynamicDomain].findOneAndUpdate({
+            domain[dynamicDomain].updateOne({
                 _id: body.id
             }, {
-                    isApproved: body.isApprove
-                }, {
-                    new: true
-                }, (error, result) => {
-                    if (error) {
+                $set: { isApproved: body.isApprove }
+            },(error, result) => {
+                    if(error) {
                         callback(error, null)
                     } else {
                         callback(null, result)
@@ -567,13 +565,13 @@ class ProductService extends BaseService {
     }
 
     stockUpdate(params, body, callback) {
-        console.log("in stock update", params, body,"---------------0000000000000000000")
+        console.log("in stock update", params, body, "---------------0000000000000000000")
         domain.ElectronicsProduct.updateOne({
             _id: params.productId
         }, {
-                    $inc: {
-                        orderCount: body.QTY
-                    }
+                $inc: {
+                    orderCount: body.QTY
+                }
             }, function (err, updateResponse) {
                 console.log(updateResponse, params, "-------------------")
                 if (err) {

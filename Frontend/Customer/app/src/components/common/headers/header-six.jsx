@@ -9,6 +9,7 @@ import NavBar from "./common/navbar";
 import SideBar from "./common/sidebar";
 import TopBar from "./common/topbar-new";
 import LogoImage from "./common/logo";
+
 import { changeCurrency } from '../../../actions';
 import {getAllStoreService} from '../../../services/userService';
 
@@ -129,11 +130,11 @@ class HeaderSix extends Component {
        <ul className="nav-strip-list clearfix">
          <li><a href="/products">New</a></li>
          <li className="shopMenu">
-           <a href='#img-bg'>Shop</a>
+           <a href='#'>Shop</a>
            <ul >
              {this.state.storeList.map((item,index) =>(
               <li key={index}>
-                 <a className="shopLink clearfix">
+                 <a className="shopLink clearfix" href={`/multi-store/${item._id}/${item.storeName}`}>
                      <img className="shopImg" width="50" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT14Yo80R9_7wHexzsqInYf_La3v5v9DlznWsVCO2U4n0Q6t8MD&s"}/>
                       <div className="shopName">{item.storeName}</div> 
                    </a>
@@ -144,9 +145,9 @@ class HeaderSix extends Component {
 
            </ul>
          </li>
-         <li><a href="#feature">Sell</a></li>
-         <li><a href="#admin">Help</a></li>
-         <li><a href="#email">About Us</a></li>
+         <li><a href="https://vendor.weshop.live">Sell</a></li>
+         <li><a href="/pages/contact">Help</a></li>
+         <li><a href="/pages/about-us">About Us</a></li>
        </ul>
     </div>    
 
