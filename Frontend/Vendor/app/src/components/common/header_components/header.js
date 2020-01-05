@@ -71,7 +71,7 @@ export class Header extends Component {
                         <div className="main-header-left d-lg-none" >
                             <div className="logo-wrapper">
                                 <a href="index.html">
-                                    <img className="blur-up lazyloaded" src={logo} alt="" />
+                                    <img className="blur-up lazyloaded" src={logo}  alt="" />
                                 </a>
                             </div>
                         </div>
@@ -85,15 +85,15 @@ export class Header extends Component {
                                 {/* <li>
                                     <SearchHeader />
                                 </li> */}
-                                <li><a onClick={this.goFull} className="text-dark" href="#!"><Maximize2 /></a></li>
-                                <li className="onhover-dropdown"><a className="txt-dark" href="#">
+                                {/* <li><a onClick={this.goFull} className="text-dark" href="#!"><Maximize2 /></a></li> */}
+                                {/* <li className="onhover-dropdown"><a className="txt-dark" href="#">
                                     <h6>EN</h6></a>
                                     <Language />
                                 </li>
 
                                 <li className="onhover-dropdown"><Bell /><span className="badge badge-pill badge-primary pull-right notification-badge">3</span><span className="dot"></span>
                                     <Notification />
-                                </li>
+                                </li> */}
                                 <li><a onClick={this.showRightSidebar}><MessageSquare /><span className="dot"></span></a></li>
                                 <User_menu />
                             </ul>

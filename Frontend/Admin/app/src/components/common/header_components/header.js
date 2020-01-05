@@ -75,9 +75,9 @@ export class Header extends Component {
                                 </a>
                             </div>
                         </div>
-                        <div className="mobile-sidebar">
+                        <div className="mobile-sidebar" >
                             <div className="media-body text-right switch-sm">
-                                <label className="switch"><a onClick={this.openCloseSidebar}><AlignLeft /></a></label>
+                                <label className="switch" ><a  onClick={this.openCloseSidebar}><AlignLeft /></a></label>
                             </div>
                         </div>
                         <div className="nav-right col">
@@ -86,15 +86,15 @@ export class Header extends Component {
                                     <SearchHeader />
                                 </li> */}
                                 <li><a onClick={this.goFull} className="text-dark" href="#!"><Maximize2 /></a></li>
-                                <li className="onhover-dropdown"><a className="txt-dark" href="#">
+                                {/* <li className="onhover-dropdown"><a className="txt-dark" href="#">
                                     <h6>EN</h6></a>
                                     <Language />
-                                </li>
+                                </li> */}
 
-                                <li className="onhover-dropdown"><Bell /><span className="badge badge-pill badge-primary pull-right notification-badge">3</span><span className="dot"></span>
+                                {/* <li className="onhover-dropdown"><Bell /><span className="badge badge-pill badge-primary pull-right notification-badge">3</span><span className="dot"></span>
                                     <Notification />
-                                </li>
-                                <li><a onClick={this.showRightSidebar}><MessageSquare /><span className="dot"></span></a></li>
+                                </li> */}
+                                {/* <li><a onClick={this.showRightSidebar}><MessageSquare /><span className="dot"></span></a></li> */}
                                 <User_menu />
                             </ul>
                             <div className="d-lg-none mobile-toggle pull-right" onClick={() => this.toggle()}><MoreHorizontal /></div>

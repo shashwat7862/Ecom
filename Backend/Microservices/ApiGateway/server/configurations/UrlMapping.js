@@ -333,7 +333,15 @@ module.exports = function (app) {
 			views: {
 				json: views.jsonView
 			}
-		}]
+		}],
+		"/api/v1/vendor/shipment/orderUpdate/:orderId": [{
+			method: "PUT",
+			action: controllers.vendorController.orderUpdate,
+			views: {
+				json: views.jsonView
+			}
+		}],
+
 	};
 };
 

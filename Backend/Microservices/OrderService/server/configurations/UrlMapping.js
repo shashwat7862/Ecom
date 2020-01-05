@@ -82,6 +82,15 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/update_Order/:orderId": [{
+	            method: "PUT",
+	            action: controllers.orderController.update_Order,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
+
+			
 
 			
 

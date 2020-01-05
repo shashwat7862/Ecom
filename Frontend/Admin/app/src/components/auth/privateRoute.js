@@ -10,7 +10,7 @@ const PrivateRoute = ({ authed, component: Component, logout, ...rest }) => {
       authed ? (
         <Component {...props}  />
       ) : (
-        <Redirect to="/auth/login" />
+        <Redirect to="/Admin/auth/login" />
       )
     }
   />

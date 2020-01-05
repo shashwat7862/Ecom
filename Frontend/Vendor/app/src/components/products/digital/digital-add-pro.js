@@ -20,6 +20,7 @@ export class Digital_add_pro extends Component {
             title: '',
             productName: "",
             Material_type: "",
+            stockCount:0,
             productDescription: "",
             brandName: "",
             price: 0,
@@ -140,6 +141,7 @@ export class Digital_add_pro extends Component {
                 Material_type: this.state.Material_type
             },
             shopIds: storeId,
+            inStockCount:this.state.stockCount,
             modelNo: this.state.model,
             price: this.state.price,
             isAvailable: (this.state.isAvailable == 'on') ? true : false,
@@ -158,7 +160,7 @@ export class Digital_add_pro extends Component {
             let history = this.props.history
 
             setTimeout(function () {
-                history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+                history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-product-list`);
             }, 1000)
 
             this.setState({
@@ -268,7 +270,8 @@ export class Digital_add_pro extends Component {
                                             </label>
                                             </div>
                                         </div>
-                                        <label className="col-form-label pt-0"> Product Upload</label><br></br>
+                                        <label className="col-form-label"><span>*</span>  Product Upload</label>
+                                        <br></br>
                                         <input type="file" onChange={this.uploadProductImage} ></input>
                                         <div className="form-group">
                                             <br />
@@ -329,8 +332,12 @@ export class Digital_add_pro extends Component {
                                 <div className="card-body">
                                     <div className="digital-add needs-validation">
                                         <div className="form-group">
-                                            <label className="col-form-label pt-0"> Brand Name</label>
+                                        <label className="col-form-label"><span>*</span>  Brand Name</label>
                                             <input className="form-control" value={this.state.brandName} name="brandName" onChange={this.onUpdateChange} id="validationCustom05" type="text" required="" />
+                                        </div>
+                                        <div className="form-group">
+                                        <label className="col-form-label"><span>*</span>  Available Products in Stock</label>
+                                            <input className="form-control" value={this.state.stockCount} name="stockCount" onChange={this.onUpdateChange} id="validationCustom05" type="number" required="" />
                                         </div>
                                         <div className="form-group">
                                             <label className="col-form-label pt-0"> Size</label>
@@ -342,7 +349,7 @@ export class Digital_add_pro extends Component {
                                         </div>
                                         <div className="form-group mb-0">
                                             <div className="product-buttons text-center">
-                                                <button type="button" onClick={this.addProductToDB} className="btn btn-primary">Add Product</button>
+                                                <button type="button" onClick={this.addProductToDB} className="btn btn-default">Add Product</button>
                                                 {/* <button type="button" className="btn btn-light">Discard</button> */}
                                             </div>
                                         </div>

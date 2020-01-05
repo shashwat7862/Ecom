@@ -40,7 +40,7 @@ class OrderService extends BaseService {
                         });
                     });
                 }],
-                stockUpdateInProductTable: ['saveDataInPaymentTable', function (results, cb) {
+                cartUpdate: ['saveDataInPaymentTable', function (results, cb) {
                     domain.Cart.remove({
                         UserId: payload.UserId
                     }, {
@@ -50,7 +50,19 @@ class OrderService extends BaseService {
                                 data: data,
                                 userId: payload.UserId
                             })
+                        });
+                }],
+                stockUpdateInProductTable: ['saveDataInPaymentTable', function (results, cb) {
+                    var stock = stockUpdate({
+                        QTY: OrderData.QTY
+                    }, OrderData.productId);
+                    console.log(stock, "stock")
+                    stock.then(function (err, result) {
+                        console.log("in stock result", err, result)
+                        cb(null, {
+                            stockUpdateResult: result
                         })
+                    })
 
                 }],
             }, function (err, results) {
@@ -225,7 +237,7 @@ class OrderService extends BaseService {
         });
     }
 
-    get_ComplaintList(params,cb){
+    get_ComplaintList(params, cb) {
         domain.OrdersComplaint.findAll({
             where: {
                 UserId: params.userId
@@ -256,30 +268,42 @@ class OrderService extends BaseService {
         })
     }
 
+    update_Order(params, body, callback) {
+        console.log(params,body)
+        var query = "orderStatus="+"'"+body.orderStatus+"'" 
+        sequelize.query(`UPDATE orders SET ${query} WHERE orderId = '${params.orderId}'`).then(([results, metadata]) => {
+            console.log(results,metadata)
+            callback(null, {
+                data: "Order Updated Successfully",
+                updateResult:results
+            })
+        })
+    }
+
     delete_Address(params, callback) {
 
     }
 
-    Save_Complaint(complaintData,callback){
+    Save_Complaint(complaintData, callback) {
 
-        let payload ={
-            productName:complaintData.productName,
-            complaintProductImage:complaintData.complaintProductImage,
-            ordersComplaintStatus:complaintData.ordersComplaintStatus,
-            orderId:complaintData.orderId,
-            UserId:complaintData.UserId,
-            vendorId:complaintData.vendorId,
-            productId:complaintData.productId,
-            complainType:complaintData.complainType,
-            problemDes:complaintData.problemDes
+        let payload = {
+            productName: complaintData.productName,
+            complaintProductImage: complaintData.complaintProductImage,
+            ordersComplaintStatus: complaintData.ordersComplaintStatus,
+            orderId: complaintData.orderId,
+            UserId: complaintData.UserId,
+            vendorId: complaintData.vendorId,
+            productId: complaintData.productId,
+            complainType: complaintData.complainType,
+            problemDes: complaintData.problemDes
         }
 
-        console.log(payload,"payload")
+        console.log(payload, "payload")
         domain.OrdersComplaint.create(payload).then((results) => {
             callback(null, {
                 "message": "Complaint Has been Saved successfully",
                 "status": results,
-         
+
             });
         });
     }
@@ -302,10 +326,10 @@ class OrderService extends BaseService {
                 })
             },
             getCustomerList: ['getOrderDataOfVendor', function (results, cb) {
-                var finalCustomerList=[];
+                var finalCustomerList = [];
                 async.forEachSeries(results.getOrderDataOfVendor.orderList, function (orderData, next) {
                     console.log(JSON.stringify(orderData), 'orderData');
-                    var obj={}
+                    var obj = {}
                     domain.Customer.find({
                         _id: orderData.UserId
                     }).exec(function (err, results) {
@@ -315,9 +339,9 @@ class OrderService extends BaseService {
                         next();
                     });
 
-                   
+
                 }, function () {
-                    cb(null,finalCustomerList)
+                    cb(null, finalCustomerList)
                 });
             }]
         }, function (err, results) {

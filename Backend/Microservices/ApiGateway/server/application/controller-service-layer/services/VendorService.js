@@ -184,6 +184,10 @@ class VendorService extends BaseService {
         callback(null, storeDetails)
     }
 
+    async orderUpdate(req,callback){
+        let updateOrderResult = await update_Order(req.params,req.body);
+        callback(null, updateOrderResult)
+    }
 
 
 }

@@ -20,15 +20,15 @@ export const MENUITEMS = [
         title: 'Catalogue', icon: Box, type: 'sub', active: false, children: [
             // { path: '/products/digital/digital-category', title: 'Category', type: 'link' },
             // { path: '/products/digital/digital-sub-category', title: 'Sub Category', type: 'link' },
-            { path: '/products/digital/digital-product-list', title: 'All Product List', type: 'link' },
-            { path: '/products/digital/digital-pro-review', title: 'Product Review', type: 'link' },
+            { path: '/Admin/products/digital/digital-product-list', title: 'All Product List', type: 'link' },
+            { path: '/Admin/products/digital/digital-pro-review', title: 'Product Review', type: 'link' },
         ]
             
         
     },
     {
         title: 'Order', icon: DollarSign, type: 'sub', active: false, children: [
-            { path: '/sales/orders', title: 'Orders', type: 'link' },
+            { path: '/Admin/sales/orders', title: 'Orders', type: 'link' },
             // { path: '/sales/transactions', title: 'Orders', type: 'link' },
         ]
     },
@@ -55,13 +55,13 @@ export const MENUITEMS = [
     // },
     {
         title: 'Customers', icon: UserPlus, type: 'sub', active: false, children: [
-            { path: '/users/list-user', title: 'Customer List', type: 'link' },
+            { path: '/Admin/users/list-user', title: 'Customer List', type: 'link' },
             // { path: '/users/create-user', title: 'Create User', type: 'link' },
         ]
     },
     {
         title: 'Vendors', icon: Users, type: 'sub', active: false, children: [
-            { path: '/vendors/list_vendors', title: 'Vendor List', type: 'link' },
+            { path: '/Admin/vendors/list_vendors', title: 'Vendor List', type: 'link' },
             // { path: '/vendors/create-vendors', title: 'Create Vendor', type: 'link' },
         ]
     },

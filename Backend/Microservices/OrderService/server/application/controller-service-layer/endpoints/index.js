@@ -1,9 +1,9 @@
-let DayService = require('./day.endpoints');
+let ProductService = require('./product.endpoints');
 
 
 module.exports = function () {
 
   return {
-    DayService,
+    ProductService,
   };
 }

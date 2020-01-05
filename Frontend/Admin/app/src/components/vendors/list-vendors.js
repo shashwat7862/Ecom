@@ -15,6 +15,7 @@ export class List_vendors extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            list:[{}],
             orderList: [{}],
             cols: ["productName", "Age"],
             isLoading: false,
@@ -102,7 +103,7 @@ export class List_vendors extends Component {
             },
             minWidth: 100
         }, {
-            Header: 'Vendor Name',
+            Header: 'Name',
             accessor: 'fullName',
             style: {
                 "textAlign": "center"
