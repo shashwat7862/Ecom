@@ -16,7 +16,14 @@ import MultiSlider from "../components/layouts/multiple-slider";
 import BlogSection from "../components/layouts/common/blogsection";
 import Baseurl from '../api/url';
 import axios from 'axios';
-import {ProductsListElectronicsService} from '../services/userService';
+import ProductSlider from './Header/productSlider';
+import HomeBanner from './Header/banner';
+import HomeDeal from './Header/deal';
+import HomeBanner2 from './Header/banner2';
+import FullBanner from './Header/fullBanner';
+import SuggestProduct from './Header/suggestProduct';
+import ShopCategory from './Header/shopCategory';
+import { ProductsListElectronicsService } from '../services/userService';
 import {
     svgFreeShipping,
     svgservice,
@@ -38,24 +45,24 @@ class Landing extends Component {
     }
 
     async componentDidMount() {
-        try{
-             const response = await ProductsListElectronicsService();
-                let scrollData = []
+        try {
+            const response = await ProductsListElectronicsService();
+            let scrollData = []
 
-                response.data.object.object.forEach(function (val) {
-                    let obj = {}
-                    obj.src = Baseurl + '/' + val.productImage
-                    obj.price = val.price
-                    obj.name = val.productName
-                    scrollData.push(obj)
-                });
-                this.setState({
-                    scrollData: scrollData
-                });
+            response.data.object.object.forEach(function (val) {
+                let obj = {}
+                obj.src = Baseurl + '/' + val.productImage
+                obj.price = val.price
+                obj.name = val.productName
+                scrollData.push(obj)
+            });
+            this.setState({
+                scrollData: scrollData
+            });
 
-            }catch(error){
-                console.log(error);
-            }
+        } catch (error) {
+            console.log(error);
+        }
 
         setTimeout(function () {
             document.querySelector(".loader-wrapper").style = "display: none";
@@ -96,47 +103,14 @@ class Landing extends Component {
 
 
 
-
-                <section className="p-0">
-                    <Slider className="slide-1 home-slider">
-                        <div>
-                            <div className="home home21 text-center p-right">
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col">
-                                            <div className="slider-contain">
-                                                <div>
-                                                    {/* <h4>for kids</h4> */}
-                                                    {/* <h1>spring collection</h1><a href="#" className="btn btn-solid">shop now</a> */}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div className="home home22 text-center">
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col">
-                                            <div className="slider-contain">
-                                                <div>
-                                                    {/* <h4>30% off</h4> */}
-                                                    {/* <h1>lowest price</h1> */}
-                                                    {/* <a href="#" className="btn btn-solid">shop now</a> */}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Slider>
+                <section>
+                    <ProductSlider />
                 </section>
+
 
                 {/*collection banner layout*/}
                 <section className="banner-padding absolute-banner pb-0 ratio2_1">
+
                     <div className="container absolute-bg">
                         <div className="row partition2">
                             <div className="col-md-6">
@@ -286,17 +260,68 @@ class Landing extends Component {
                 </section>
 
                 <br></br>
-                <section>
+                {/* <section>
                     <Caurosel data={this.state.scrollData} settings={setting} />
 
-                </section>
+                </section> */}
+                <div className="homepage-content">
+
+                    {/* <Header/> */}
+
+                    <ShopCategory />
+                    <HomeBanner />
+                    <section className="p-0">
+                        <Slider className="slide-1 home-slider">
+                            <div>
+                                <div className="home home21 text-center p-right">
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col">
+                                                <div className="slider-contain">
+                                                    <div>
+                                                        {/* <h4>for kids</h4> */}
+                                                        {/* <h1>spring collection</h1><a href="#" className="btn btn-solid">shop now</a> */}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="home home22 text-center">
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col">
+                                                <div className="slider-contain">
+                                                    <div>
+                                                        {/* <h4>30% off</h4> */}
+                                                        {/* <h1>lowest price</h1> */}
+                                                        {/* <a href="#" className="btn btn-solid">shop now</a> */}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Slider>
+                    </section>
+                    <HomeDeal />
+                    <HomeBanner2 />
+                    <SuggestProduct />
+                    <FullBanner />
+
+                    {/* <FooterOne /> */}
+
+                </div>
 
 
 
 
 
 
-              
+
                 {/*Blog Section end*/}
                 <div className="container">
                     <div className="row">
@@ -361,7 +386,7 @@ class Landing extends Component {
                                     </div>
                                 </a>
                             </div>
-                            
+
                         </div>
                     </div>
                 </section>
@@ -374,7 +399,7 @@ class Landing extends Component {
                             <div className="col">
                                 <div className="footer-section">
                                     <div>
-                                         
+
                                         <h2>More items to Explore</h2>
                                         <a target="_blank"
                                             href="https://themeforest.net/item/multikart-responsive-react-ecommerce-template/23067773?s_rank=3"
@@ -420,7 +445,7 @@ class Landing extends Component {
                                     </div>
                                 </a>
                             </div>
-                                                      
+
                         </div>
                     </div>
                 </section>
@@ -429,9 +454,9 @@ class Landing extends Component {
                     <img src="https://images-eu.ssl-images-amazon.com/images/G/31/img19/Audio/Blaupunkt/BPWEEK/D14632060_Blaukpunt-week_3_1500X300.jpg"></img>
                 </section>
 
-                
-                  {/*service layout*/}
-                  <div className="container">
+
+                {/*service layout*/}
+                <div className="container">
                     <section className="service border-section small-section ">
                         <div className="row">
                             <div className="col-md-4 service-block">

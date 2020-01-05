@@ -37,9 +37,9 @@ const store = createStore(rootReducer, persistedState, compose(
     applyMiddleware(thunkMiddleware),
 
     //For working redux dev tools in chrome (https://github.com/zalmoxisus/redux-devtools-extension)
-    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : function (f) {
-        return f;
-    }
+    // window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : function (f) {
+    //     return f;
+    // }
 ));
 
 const unsubscribe = store.subscribe(() => {

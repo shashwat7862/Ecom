@@ -95,3 +95,6 @@ export function fetchComplaintList(userId) {
 }
 
 
+export function getAllStoreService() {
+  return http.get(Baseurl + `/api/v1/vendor/multiStore/getAllStore/null/all`);
+}

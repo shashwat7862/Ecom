@@ -6,7 +6,7 @@ import rootReducer from '../reducer/index'
 const defaultState = {};
 let enhancer = compose(
   applyMiddleware(logger,thunk),
-  window.devToolsExtension && window.devToolsExtension()
+  // window.devToolsExtension && window.devToolsExtension()
 )
 
 
