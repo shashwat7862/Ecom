@@ -36,10 +36,17 @@ class Register extends Component {
                 localStorage.setItem('customerDetails', JSON.stringify(response.data.object.object.customerDetails));
                 let prevUrl = localStorage.getItem('prevUrl');
                 localStorage.removeItem('prevUrl')
+                var self = this;
                 if (prevUrl) {
-                    this.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
+                    setTimeout(function(){
+                        self.props.history.push(`${process.env.PUBLIC_URL}/${prevUrl}`);
+                    },1000)
+                    
                 } else {
-                    this.props.history.push(`${process.env.PUBLIC_URL}/products`);
+                    setTimeout(function(){
+                        self.props.history.push(`${process.env.PUBLIC_URL}/login`);
+                    },1000)
+                   
                 }
             }catch(error){
                 console.log(error);
