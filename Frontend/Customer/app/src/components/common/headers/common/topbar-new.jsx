@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { IsLoggeIn } from '../../../../reducers/login/login-action';
 import { withTranslate } from 'react-redux-multilingual';
 import CartContainer from "../../../../containers/CartContainer";
 import { ToastContainer, toast } from 'react-toastify';
@@ -43,7 +45,8 @@ class TopBar extends Component {
     localStorage.removeItem('prevUrl');
     this.props.history.push(`${process.env.PUBLIC_URL}/login`);
     toast.success("logout Successfully ");
-    window.location.reload()
+    this.props.IsLoggeIn(false);
+    // window.location.reload()
   }
 
   async searchChange(q) {
@@ -71,8 +74,8 @@ class TopBar extends Component {
   }
 
   render() {
-    const { translate } = this.props;
-    const {isLogin} = this.state;
+    const { translate, isLogin } = this.props;
+    // const {isLogin} = this.state;
 
     let data = [
       {
@@ -267,4 +270,16 @@ class TopBar extends Component {
   }
 }
 
-export default withRouter(withTranslate(TopBar))
+const mapStateToProps = (state) => {
+  return {
+    isLogin: state.login.isLogin
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    IsLoggeIn: (status) => { dispatch(IsLoggeIn(status)) },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withTranslate(TopBar)));
