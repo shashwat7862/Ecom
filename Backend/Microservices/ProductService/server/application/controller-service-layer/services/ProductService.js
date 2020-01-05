@@ -549,9 +549,9 @@ class ProductService extends BaseService {
         });
     }
 
-    get_StoreDetails(params,callback){
+    get_StoreDetails(params, callback) {
         domain.ElectronicsProduct.find({
-            shopIds: { $elemMatch: { $eq: params.storeId } } 
+            shopIds: { $elemMatch: { $eq: params.storeId } }
         }, function (err, storeList) {
             console.log(storeList, params, "-------------------")
             if (err) {
@@ -565,6 +565,32 @@ class ProductService extends BaseService {
             }
         });
     }
+
+    stockUpdate(params, body, callback) {
+        console.log("in stock update", params, body,"---------------0000000000000000000")
+        domain.ElectronicsProduct.updateOne({
+            _id: params.productId
+        }, {
+                    $inc: {
+                        orderCount: body.QTY
+                    }
+            }, function (err, updateResponse) {
+                console.log(updateResponse, params, "-------------------")
+                if (err) {
+                    console.log(err, "errors")
+                    callback(err, null)
+                }
+                else {
+                    callback(null, {
+                        result: updateResponse
+                    })
+                }
+            });
+    }
+
+
+
+
 
 
 }

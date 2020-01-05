@@ -6,7 +6,7 @@ module.exports = function () {
 	}
 
 	var get_OrderList = function (req, res, callback) {
-		this.services.orderService.get_OrderList(req.params.userId,req.params.vendorId, {
+		this.services.orderService.get_OrderList(req.params.userId, req.params.vendorId, {
 			fetch: req.params.fetch,
 			limit: parseInt(req.params.limit),
 			skip: parseInt(req.params.skip)
@@ -22,19 +22,19 @@ module.exports = function () {
 		this.services.orderService.search_Orders(req.query.q, callback);
 	}
 
-	var save_Address  = function (req, res, callback) {
+	var save_Address = function (req, res, callback) {
 		this.services.orderService.save_Address(req.body, callback);
 	}
 
-	var get_Address  = function (req, res, callback) {
+	var get_Address = function (req, res, callback) {
 		this.services.orderService.get_Address(req.params.userId, callback);
 	}
 
-	var edit_Address  = function (req, res, callback) {
-		this.services.orderService.edit_Address(req.body,req.params, callback);
+	var edit_Address = function (req, res, callback) {
+		this.services.orderService.edit_Address(req.body, req.params, callback);
 	}
 
-	var delete_Address  = function (req, res, callback) {
+	var delete_Address = function (req, res, callback) {
 		this.services.orderService.delete_Address(req.params, callback);
 	}
 
@@ -50,7 +50,11 @@ module.exports = function () {
 		this.services.orderService.get_ComplaintList(req.params, callback);
 	}
 
-	
+	var update_Order = function (req, res, callback) {
+		this.services.orderService.update_Order(req.params, req.body, callback);
+	}
+
+
 
 
 	return {
@@ -64,6 +68,7 @@ module.exports = function () {
 		delete_Address,
 		get_CustomerList,
 		Save_Complaint,
-		get_ComplaintList
+		get_ComplaintList,
+		update_Order
 	}
 };

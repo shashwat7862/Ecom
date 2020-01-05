@@ -6,7 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Baseurl from '../../assets/data/urls'
 import { orderList } from '../../Action/ProductAction';
 import { connect } from 'react-redux';
-import Switch from "react-switch";
+import Select from 'react-select';
+import axios from 'axios';
+import { css } from 'glamor';
 
 export class Orders extends Component {
 
@@ -14,23 +16,70 @@ export class Orders extends Component {
         super(props);
         this.state = {
             orderList: [{}],
-            cols: ["productName", "Age"],
             isLoading: false,
+            selectedOption: null,
+            orderStatusOptions: [{
+                value: 'CREATED',
+                label: 'CREATED'
+            }, {
+                value: 'PACKED',
+                label: 'PACKED'
+            }, {
+                value: 'SHIPPED',
+                label: 'SHIPPED'
+            }, {
+                value: 'DELIVERED',
+                label: 'DELIVERED'
+            }, {
+                value: 'CANCEL',
+                label: 'CANCEL'
+            },
+            {
+                value: 'HOLD',
+                label: 'HOLD'
+            }],
             checked: true,
             defaultImage: "https://www.mnn.com/static/img/not_available.png",
             vendorData: JSON.parse(localStorage.getItem('vendorDetails'))
         };
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
 
     }
 
-    handleChange(checked) {
-        console.log(checked)
-        this.setState({
-            checked
-        });
-        this.props.getOrderList(this.state.vendorData._id)
+    
 
+    handleChange = e => {
+        let data = JSON.parse(e.target.value)
+        this.setState({ selectedOption: data });
+        console.log(`Option selected:`, data);
+
+        this.orderUpdate(data)
+    };
+
+
+    orderUpdate = (data) => {
+        axios.put(`${Baseurl}/api/v1/vendor/shipment/orderUpdate/${data.id}`, {
+            orderStatus: data.action
+        })
+            .then(response => {
+                if(response){
+                    this.props.getOrderList(this.state.vendorData._id);
+                    toast.success("Order Has been Updated", {
+                        position: toast.POSITION.TOP_CENTER,
+                        autoClose:2000,
+                        draggablePercent: 60,
+                        hideProgressBar:true,
+                        bodyClassName:css({
+                            height: '24px',
+                            fontSize: '16px'
+                          }),
+                      });
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                toast.error("Error Occurs !")
+            });
     }
 
 
@@ -69,10 +118,17 @@ export class Orders extends Component {
             style: {
                 "textAlign": "center"
             },
-            minWidth: 100
+            minWidth: 70
         }, {
             Header: 'Product ID',
             accessor: 'productId',
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 50
+        },{
+            Header: 'Status',
+            accessor: 'orderStatus',
             style: {
                 "textAlign": "center"
             },
@@ -86,20 +142,30 @@ export class Orders extends Component {
                 </div>
             ),
             minWidth: 55
-        }, {
-            Header: 'Status',
-            accessor: 'orderStatus',
+        },
+        {
+            Header: 'Action',
+            Cell: props => (
+                <select className="form-control" value={props.original.orderStatus} onChange={this.handleChange}>
+                    <option value={JSON.stringify({ action: 'CREATED', id: props.original.orderId })} >CREATED</option>
+                    <option value={JSON.stringify({ action: 'PACKED', id: props.original.orderId })}>PACKED</option>
+                    <option value={JSON.stringify({ action: 'SHIPPED', id: props.original.orderId })}>SHIPPED</option>
+                    <option value={JSON.stringify({ action: 'DELIVERED', id: props.original.orderId })}>DELIVERED</option>
+                    <option value={JSON.stringify({ action: 'HOLD', id: props.original.orderId })}>HOLD</option>
+                    <option value={JSON.stringify({ action: 'CANCEL', id: props.original.orderId })}>CANCEL</option>
+                </select>
+            ),
             style: {
                 "textAlign": "center"
             },
-            minWidth: 50
+            minWidth: 80
         }, {
             Header: 'Product Price',
             accessor: 'productPrice',
             style: {
                 "textAlign": "center"
             },
-            minWidth: 40
+            minWidth: 90
         }, {
             Header: 'Product',
             accessor: 'productName',

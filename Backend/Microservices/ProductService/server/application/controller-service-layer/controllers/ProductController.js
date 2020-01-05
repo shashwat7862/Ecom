@@ -203,6 +203,11 @@ module.exports = function () {
 		this.services.productService.get_StoreDetails(req.params, callback);
 	}
 
+	var stockUpdate = function (req, res, callback) {
+		this.services.productService.stockUpdate(req.params,req.body, callback);
+	}
+
+
 
 	return {
 		Save_Products,
@@ -224,7 +229,8 @@ module.exports = function () {
 		Filter_Ratings,
 		create_Store,
 		getAll_Store,
-		get_StoreDetails
+		get_StoreDetails,
+		stockUpdate
 	}
 
 
