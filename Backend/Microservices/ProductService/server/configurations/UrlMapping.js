@@ -162,6 +162,13 @@
 	                json: views.jsonView
 	            }
 			}],
+			"/stockUpdate/:productId": [{
+	            method: "PUT",
+	            action: controllers.productController.stockUpdate,
+	            views: {
+	                json: views.jsonView
+	            }
+			}],
 
 			
 

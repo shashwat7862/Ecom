@@ -26,7 +26,7 @@ export class Digital_pro_list extends Component {
     }
 
     handleChange(checked) {
-    console.log(checked)
+        console.log(checked)
         this.setState({
             checked
         });
@@ -62,7 +62,7 @@ export class Digital_pro_list extends Component {
 
     editProductData(data) {
         console.log(JSON.stringify(data.original), "JSON.stringify(data.original)")
-        this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-edit-product/${JSON.stringify(data.original)}`);
+        this.props.history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-edit-product/${JSON.stringify(data.original)}`);
     }
 
 
@@ -83,7 +83,7 @@ export class Digital_pro_list extends Component {
             style: {
                 "textAlign": "center"
             },
-            minWidth: 130
+            minWidth: 40
         },
         {
             Header: 'Image',
@@ -92,29 +92,41 @@ export class Digital_pro_list extends Component {
                     <img className="img-responsive" style={{ height: 50 + 'px', width: 50 + 'px' }} src={(props.original.productImage !== "") ? Baseurl + "/" + props.original.productImage : this.state.defaultImage} />
                 </div>
             ),
-            minWidth: 55
+            minWidth: 45
         }, {
             Header: 'Product Name',
             accessor: 'productName',
             style: {
                 "textAlign": "center"
             },
-            minWidth: 100
+            minWidth: 50
         }, {
-            Header: 'Brand Name',
+            Header: 'Brand',
             accessor: 'brandName',
             style: {
                 "textAlign": "center"
             },
-            minWidth: 90
+            minWidth: 50
         }, {
-            Header: 'Price',
-            accessor: 'price',
+            Header: 'TotalStock ',
+            accessor: 'inStockCount',
             sortable: false,
             style: {
                 "textAlign": "center"
             },
-            minWidth: 50
+            minWidth: 60
+        }, {
+            Header: 'Available/Sold',
+            Cell: props => (
+                <div>
+                    <span style={{ color: 'green' }}>{props.original.inStockCount - props.original.orderCount}</span>&nbsp;&nbsp;/&nbsp;&nbsp;<span style={{ color: 'red' }}>{props.original.orderCount}</span>
+                </div>
+            ),
+            sortable: false,
+            style: {
+                "textAlign": "center"
+            },
+            minWidth: 80
         }, {
             Header: "Date",
             accessor: 'createdAt',

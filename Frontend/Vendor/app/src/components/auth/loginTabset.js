@@ -52,7 +52,7 @@ export class LoginTabset extends Component {
 
             localStorage.setItem('authToken', nextProps.url.LoginReducer.object.object.authToken);
             localStorage.setItem('vendorDetails', JSON.stringify(nextProps.url.LoginReducer.object.object.vendorDetails));
-            this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+            this.props.history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-product-list`);
         }
 
     }
@@ -125,7 +125,7 @@ export class LoginTabset extends Component {
                 console.log(response.data.object.object.authToken);
                 localStorage.setItem('authToken', response.data.object.object.authToken);
                 localStorage.setItem('vendorDetails', JSON.stringify(response.data.object.object.vendorDetails));
-                this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+                this.props.history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-product-list`);
             })
             .catch(error => {
                 console.log(error);
@@ -144,7 +144,7 @@ export class LoginTabset extends Component {
                 console.log(response.data.object.object.authToken);
                 localStorage.setItem('authToken', response.data.object.object.authToken);
                 localStorage.setItem('vendorDetails', JSON.stringify(response.data.object.object.vendorDetails));
-                this.props.history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+                this.props.history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-product-list`);
             })
             .catch(error => {
                 console.log(error);
@@ -176,9 +176,9 @@ export class LoginTabset extends Component {
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                 </div>
-                                <input type="text" name="loginPassword" className="form-control" placeholder="Password" onChange={this.onUpdateFormValue} aria-label="First name" className="form-control" />
+                                <input type="password" name="loginPassword" className="form-control" placeholder="Password" onChange={this.onUpdateFormValue} aria-label="First name" className="form-control" />
                             </div>
-                            <button onClick={this.loginVendor} className='btn btn-primary' >Login With Email</button>
+                            <button onClick={this.loginVendor} className='btn btn-primary' >Login</button>
                             <br></br><hr></hr><br></br>
                             {/* <input type="number" name="mobileFromOTPForm" className="form-control" onChange={this.onUpdateOTPForm} placeholder="Enter Your Number"></input> */}
 

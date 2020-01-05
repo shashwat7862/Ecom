@@ -134,7 +134,7 @@ export class Digital_edit_product extends Component {
             let history =this.props.history
 
             setTimeout(function(){
-                history.push(`${process.env.PUBLIC_URL}/products/digital/digital-product-list`);
+                history.push(`${process.env.PUBLIC_URL}/Vendor/products/digital/digital-product-list`);
             },1000)
 
 

@@ -103,6 +103,11 @@ module.exports = function () {
 		this.services.vendorService.getStoreDetails(req, callback);
 	}
 
+	var orderUpdate   = function (req, res, callback) {
+		this.services.vendorService.orderUpdate(req, callback);
+	}
+
+
 
 	return {
 		registerVendor,
@@ -129,6 +134,7 @@ module.exports = function () {
 		getAllVendors,
 		createStore,
 		getAllStore,
-		getStoreDetails
+		getStoreDetails,
+		orderUpdate
 	}
 };

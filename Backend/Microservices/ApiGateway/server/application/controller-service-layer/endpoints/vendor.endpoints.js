@@ -141,11 +141,17 @@ exports.module = get_StoreDetails = async (qs) => (
 
 
 
+
+
 exports.module = get_CustomerList = async (qs) => (
   Orderwrapper.proxyJsonRequest(`get_CustomerList/${qs.vendorId}`, 'GET')
 );
 
-
+exports.module = update_Order = async (qs, body) => (
+  Orderwrapper.proxyJsonRequest(`update_Order/${qs.orderId}`, 'PUT', {
+    body
+  })
+);
 
 
 module.exports = {

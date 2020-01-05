@@ -104,7 +104,35 @@ var ElectronicProductSchema = new mongooseSchema({
     },
     addCustomeFeatures: {
         type: Object
-    }
+    },
+    discount: {
+        type: Number,
+        default:0
+    },
+    sku: {
+        type: String,
+        default:''
+    },
+    tags: {
+        type: Array,
+        default:[]
+    },
+    visitCount: {
+        type: Number,
+        default:0
+    },
+    enquiryCount: {
+        type: Number,
+        default:0
+    },
+    inStockCount: {
+        type: Number,
+        default:0
+    },
+    orderCount: {
+        type: Number,
+        default:0
+    },
 
 });
 
