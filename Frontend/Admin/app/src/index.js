@@ -51,10 +51,8 @@ import Invoice from './components/invoice';
 import Datatable from './components/common/datatable'
 import Login from './components/auth/login';
 
-import store from './store/store'
-import { Provider } from 'react-redux'
-
-
+import store from './store/store';
+import { Provider } from 'react-redux';
 
 class Root extends Component {
     render() {
@@ -66,52 +64,52 @@ class Root extends Component {
                         <Route exact path={`${process.env.PUBLIC_URL}/Admin/auth/login`} component={Login} />
 
                         <App>
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/dashboard`} component={Dashboard} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/dashboard`} component={Dashboard} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/category`} component={Category} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/sub-category`} component={Sub_category} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/product-list`} component={Product_list} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/product-detail`} component={Product_detail} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/add-product`} component={Add_product} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/category`} component={Category} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/sub-category`} component={Sub_category} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/product-list`} component={Product_list} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/product-detail`} component={Product_detail} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/physical/add-product`} component={Add_product} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-category`} component={Digital_category} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-sub-category`} component={Digital_sub_category} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-product-list`} component={Digital_pro_list} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-add-product`} component={Digital_add_pro} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-edit-product/:data`} component={Digital_edit_product} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-pro-review`} component={Digital_pro_review} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-category`} component={Digital_category} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-sub-category`} component={Digital_sub_category} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-product-list`} component={Digital_pro_list} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-add-product`} component={Digital_add_pro} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-edit-product/:data`} component={Digital_edit_product} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/products/digital/digital-pro-review`} component={Digital_pro_review} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/sales/orders`} component={Orders} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/sales/transactions`} component={Transactions_sales} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/sales/orders`} component={Orders} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/sales/transactions`} component={Transactions_sales} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/coupons/list-coupons`} component={ListCoupons} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/coupons/create-coupons`} component={Create_coupons} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/coupons/list-coupons`} component={ListCoupons} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/coupons/create-coupons`} component={Create_coupons} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/pages/list-page`} component={ListPages} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/pages/create-page`} component={Create_page} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/pages/list-page`} component={ListPages} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/pages/create-page`} component={Create_page} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/media`} component={Media} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/media`} component={Media} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/menus/list-menu`} component={List_menu} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/menus/create-menu`} component={Create_menu} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/menus/list-menu`} component={List_menu} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/menus/create-menu`} component={Create_menu} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/users/list-user`} component={List_user} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/users/create-user`} component={Create_user} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/users/list-user`} component={List_user} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/users/create-user`} component={Create_user} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/vendors/list_vendors`} component={List_vendors} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/vendors/create-vendors`} component={Create_vendors} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/vendors/list_vendors`} component={List_vendors} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/vendors/create-vendors`} component={Create_vendors} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/localization/transactions`} component={Translations} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/localization/currency-rates`} component={Rates} authed={checkLogin()} />
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/localization/taxes`} component={Taxes} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/localization/transactions`} component={Translations} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/localization/currency-rates`} component={Rates} authed={checkLogin} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/localization/taxes`} component={Taxes} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/reports/report`} component={Reports} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/reports/report`} component={Reports} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/settings/profile`} component={Profile} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/settings/profile`} component={Profile} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/invoice`} component={Invoice} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/invoice`} component={Invoice} authed={checkLogin} />
 
-                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/data-table`} component={Datatable} authed={checkLogin()} />
+                            <PrivateRoute path={`${process.env.PUBLIC_URL}/Admin/data-table`} component={Datatable} authed={checkLogin} />
 
                         </App>
 

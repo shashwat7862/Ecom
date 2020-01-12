@@ -11,7 +11,6 @@ const rootReducer = combineReducers({
   ProductReducer: ProductReducer,
   ProfileReducer: ProfileReducer,
   CustomerReducer:CustomerReducer
-
 });
 
 export default rootReducer;
