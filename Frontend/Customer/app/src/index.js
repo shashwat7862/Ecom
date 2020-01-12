@@ -90,13 +90,13 @@ import ElementProductNoSlider from "./components/features/product/element-produc
 import ElementMultipleSlider from "./components/features/product/element-multiple-slider"
 import ElementProductTab from "./components/features/product/element-product-tab";
 
+
 const PrivateRoute = ({ authed, component: Component, logout, ...rest }) => {
-  console.log('PrivateRoute ****', authed, 'Component', Component)
   return (
     <Route
       {...rest}
       render={props =>
-        authed ? (
+        authed() ? (
           <Component {...props} />
         ) : (
             <Redirect to="/auth/login" />
@@ -105,9 +105,6 @@ const PrivateRoute = ({ authed, component: Component, logout, ...rest }) => {
     />
   );
 }
-
-export default PrivateRoute;
-
 class Root extends React.Component {
 
   render() {
@@ -133,7 +130,7 @@ class Root extends React.Component {
                   <Route path={`${process.env.PUBLIC_URL}/fashion`} component={Fashion} />
 
                   {/*Routes For Features (Product Collection) */}
-                  <PrivateRoute path={`${process.env.PUBLIC_URL}/products`} component={CollectionLeftSidebar} authed={checkLogin()} />
+                  <PrivateRoute path={`${process.env.PUBLIC_URL}/products`} component={CollectionLeftSidebar} authed={checkLogin} />
                   <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
                   <Route path={`${process.env.PUBLIC_URL}/register`} component={Register} />
                   <Route path={`${process.env.PUBLIC_URL}/search/:q`} component={SearchProduct} />
