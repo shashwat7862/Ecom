@@ -42,7 +42,7 @@
     "mongoosemask": "0.0.6",
     "node-promise": "0.5.12",
     "node-uuid": "1.4.3",
-    "nodemailer": "4.4.1",
+    "nodemailer": "6.4.16",
     "request": "^2.83.0",
     "serve-favicon": "2.3.0",
     "serve-index": "1.7.2",
